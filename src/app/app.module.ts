@@ -1,27 +1,31 @@
-import { NgModule }      from '@angular/core';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent} from './app.component';
+import { LoginModule } from './login.module';
+import { MainModule } from "./component/main/main.module";
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AppComponent }  from './app.component';
-import { RouterModule, Routes } from '@angular/router';
-export const routes : Routes = [
-	{
-		path: '',
-		redirectTo: 'login',
-		pathMatch : 'full' 
-	},
-	{
-		path : 'login',
-		loadChildren : 'app/login/login.module#LoginModule'
-	},
-	{
-		path : 'home',
-		loadChildren : 'app/home/home.module#HomeModule'
-	}
-	];
+
 @NgModule({
-  imports:      [ ReactiveFormsModule, BrowserModule, RouterModule.forRoot(routes),FormsModule],
-  declarations: [ AppComponent ],
-  bootstrap:    [ AppComponent ]
+	imports : [ LoginModule, MainModule , BrowserModule, RouterModule.forRoot([
+		{
+			path : '',
+			redirectTo : 'login',
+			pathMatch : 'full'
+		},
+		{
+			path : 'login',
+			loadChildren : 'app/login.module#LoginModule'
+		},
+		{
+			path : 'main',
+			loadChildren : 'app/component/main/main.module#MainModule'
+		}
+	]) ],
+
+	declarations : [AppComponent],
+
+	bootstrap : [AppComponent]
 })
-export class AppModule { }
+export class AppModule{
+}
