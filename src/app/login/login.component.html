@@ -1,0 +1,11 @@
+<h1>Login Page</h1>
+
+<form [formGroup]="login" (submit)="onSubmit()">
+<label for="uname"> Username </label>
+<input type="text" id="uname" formControlName="username" name="username"/>
+<label for="upass"> Password </label>
+<input type="password" id="upass" formControlName="password" name="password"/>
+<input type="submit"/>
+</form>
+
+<p>{{value}}</p>
