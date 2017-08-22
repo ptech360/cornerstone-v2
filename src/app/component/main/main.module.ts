@@ -5,44 +5,21 @@ import { XHRBackend, RequestOptions, HttpModule } from '@angular/http';
 
 import { MainComponent } from "./main.component";
 import { ForgotPassword } from "../login/forgot.password";
-import { DashboardComponent } from "../dashboard/dashboard.component";
 import { ComplaintComponent } from "../complaint/complaint.component";
-import { CircularComponent } from "../circular/circular.component";
-import { AddCircular } from "../circular/add/add";
-import { HomeworkComponent } from "../homework/homework.component";
-import { CurrentHomework } from "../homework/current/homework";
-import { PassedHomework } from "../homework/passed/homework";
-import { HomeworkAddComponent } from "../homework/add/add";
-import { AccountComponent } from "../account/account.component";
-import { AddEmployeeComponent } from "../addEmployee/addEmployee.component";
-import { AddStudentComponent } from "../addStudent/addStudent.component";
-import { NewStudentComponent } from "../addStudent/newStudent/newStudent.component";
-import { ExistingStudentComponent } from "../addStudent/existingStudent/existingStudent.component";
 import { AppreciationComponent } from "../appreciation/appreciation.component";
 import { ForMeComponent } from "../appreciation/for-me/forme";
 import { ByMeComponent } from "../appreciation/by-me/byme";
 import { AddAppreciation } from "../appreciation/add/add";
-import { PollComponent } from "../poll/poll.component";
-import { ClosedPollComponent } from "../poll/closed/poll";
-import { CurrentPollComponent } from "../poll/current/poll";
-import { AddPollComponent } from "../poll/add/add";
-import { MessageComponent } from "../message/message.component";
 import { EventComponent } from "../event/event.component";
-import { SurveyComponent } from "../survey/survey.component";
-import { CurrentSurveyComponent } from "../survey/current/survey";
-import { ClosedSurveyComponent } from "../survey/closed/survey";
-import { AddSurveyComponent } from "../survey/add/add";
-import { StudentRatingComponent } from "../studentRating/studentRating.component";
 import { ViewSurveyComponent } from "../survey/view/survey";
 import { SuggestionComponent } from "../suggestion/suggestion.component";
 import { SuggestionForMe } from "../suggestion/for-me/forme";
 import { SuggestionForStudent } from "../suggestion/for-student/forstudent";
 import { SuggestionAddComponent } from "../suggestion/add/add";
-import { GoogleChart } from '../../customComponent/chart.directive';
-import { CustomLoader} from '../../customComponent/loader.component';
+
 import { CalendarComponent } from "../../angular2-fullcalendar/src/calendar/calendar";
 
-
+import { SharedModule } from '../../shared.module';
 import { LoggedInGuard } from "../login/login.gaurd";
 import { Configuration } from "../../providers/app.constant";
 import { CommonService } from "../../providers/common.service";
@@ -61,8 +38,6 @@ import { SuggestionService } from "../../providers/suggestion.service";
 import { StudentRatingService } from "../../providers/studentRating.service";
 import { SurveyService } from "../../providers/survey.service";
 import { MessageService } from "../../providers/message.service";
-import { CommonModule } from "@angular/common";
-import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { ErrorComponent } from "../error/error.component";
 import { Error404Component } from "../error/error404";
 
@@ -71,31 +46,19 @@ const rootRouterConfig:Routes = [
   { path: '', component: MainComponent,
   children:[
     { path: 'forgot-password', component: ForgotPassword },
-    { path: 'dashboard', component: DashboardComponent, canActivate: [LoggedInGuard] },
+    { path: 'dashboard', loadChildren: 'app/component/dashboard/dashboard.module#DashboardModule', canActivate: [LoggedInGuard] },
     { path: 'complaint', component: ComplaintComponent, canActivate: [LoggedInGuard] },
     { path: 'complaint/status/:statusId', component: ComplaintComponent, canActivate: [LoggedInGuard] },
     { path: 'complaint/category-status/category/:categoryId', component: ComplaintComponent, canActivate: [LoggedInGuard] },
     { path: 'complaint/category-status/:categoryId/:statusId', component: ComplaintComponent, canActivate: [LoggedInGuard] },
-    { path: 'circular', component: CircularComponent, canActivate: [LoggedInGuard] },
-    { path: 'add-circular', component: AddCircular, canActivate: [LoggedInGuard] },
-    {
-      path: 'homework', component: HomeworkComponent, canActivate: [LoggedInGuard],
-      children: [
-        { path: 'current-homework', component: CurrentHomework, canActivate: [LoggedInGuard] },
-        { path: 'passed-homework', component: PassedHomework, canActivate: [LoggedInGuard] }
-      ]
-    },
-    { path: 'homework-add', component: HomeworkAddComponent, canActivate: [LoggedInGuard] },
-    { path: 'account', component: AccountComponent },
-    { path: 'add-employee', component: AddEmployeeComponent, canActivate: [LoggedInGuard] },
-    {
-      path: 'add-student', component: AddStudentComponent, canActivate: [LoggedInGuard],
-      children: [
-        { path: 'new-student', component: NewStudentComponent, canActivate: [LoggedInGuard] },
-        { path: 'existing-student', component: ExistingStudentComponent, canActivate: [LoggedInGuard] },
-
-      ]
-    },
+    { path: 'circular', loadChildren: 'app/component/circular/circular.module#CircularModule', canActivate: [LoggedInGuard] },
+    { path: 'add-circular', loadChildren: 'app/component/circular/add/add.module#AddModule', canActivate: [LoggedInGuard] },
+    
+    { path: 'homework', loadChildren: 'app/component/homework/homework.module#HomeworkModule', canActivate: [LoggedInGuard],},
+    { path: 'homework-add', loadChildren: 'app/component/homework/add/add.module#HomeworkAddModule', canActivate: [LoggedInGuard] },
+    { path: 'account', loadChildren : 'app/component/account/account.module#AccountModule', canActivate: [LoggedInGuard] },
+    { path: 'add-employee', loadChildren : 'app/component/addEmployee/addEmployee.module#AddEmployeeModule', canActivate: [LoggedInGuard] },
+    { path: 'add-student', loadChildren: 'app/component/addStudent/addStudent.module#AddStudentModule', canActivate: [LoggedInGuard] },
     {
       path: 'appreciation', component: AppreciationComponent, canActivate: [LoggedInGuard],
       children: [
@@ -104,37 +67,12 @@ const rootRouterConfig:Routes = [
       ]
     },
     { path: 'add-appreciation', component: AddAppreciation, canActivate: [LoggedInGuard] },
-    {
-      path: 'poll', component: PollComponent, canActivate: [LoggedInGuard],
-      children: [
-        { path: 'current-poll', component: CurrentPollComponent, canActivate: [LoggedInGuard] },
-        { path: 'closed-poll', component: ClosedPollComponent, canActivate: [LoggedInGuard] }
-      ]
-    },
-    { path: 'add-poll', component: AddPollComponent, canActivate: [LoggedInGuard] },
-    { path: 'conversation', component: MessageComponent, canActivate: [LoggedInGuard], },
+    { path: 'poll', loadChildren: 'app/component/poll/poll.module#PollModule', canActivate: [LoggedInGuard] },
+    { path: 'conversation', loadChildren: 'app/component/message/message.module#MessageModule', canActivate: [LoggedInGuard], },
     { path: 'event', component: EventComponent, canActivate: [LoggedInGuard] },
-    {
-      path: 'survey', component: SurveyComponent, canActivate: [LoggedInGuard],
-      children: [
-        {
-          path: 'current-survey', component: CurrentSurveyComponent, canActivate: [LoggedInGuard],
-        },
-        { path: 'closed-survey', component: ClosedSurveyComponent, canActivate: [LoggedInGuard] },
-
-      ]
-    },
-    { path: 'add-survey', component: AddSurveyComponent, canActivate: [LoggedInGuard] },
-    {
-      path: 'poll', component: PollComponent, canActivate: [LoggedInGuard],
-      children: [
-        { path: 'current-poll', component: CurrentPollComponent, canActivate: [LoggedInGuard] },
-        { path: 'closed-poll', component: ClosedPollComponent, canActivate: [LoggedInGuard] }
-      ]
-    },
-    { path: 'add-poll', component: AddPollComponent, canActivate: [LoggedInGuard] },
-    { path: 'add-employee', component: AddEmployeeComponent, canActivate: [LoggedInGuard] },
-    { path: 'student-profile', component: StudentRatingComponent, canActivate: [LoggedInGuard] },
+    { path: 'survey', loadChildren: 'app/component/survey/survey.module#SurveyModule', canActivate: [LoggedInGuard] },
+    
+    { path: 'student-profile', loadChildren: 'app/component/studentRating/studentRating.module#StudentRatingModule', canActivate: [LoggedInGuard] },
     { path: 'view-survey/:id', component: ViewSurveyComponent, canActivate: [LoggedInGuard] },
     {
       path: 'suggestion', component: SuggestionComponent,
@@ -155,57 +93,28 @@ const rootRouterConfig:Routes = [
 
 @NgModule({
 imports: [
-  CommonModule,
+  SharedModule,
   HttpModule,
-  FormsModule,
-  ReactiveFormsModule,
   RouterModule.forChild(rootRouterConfig),
   ],
   declarations: [
     MainComponent,
     ForgotPassword,
-    DashboardComponent,
     ComplaintComponent,
-    CircularComponent,
-    AddCircular,
-    HomeworkComponent,
-    HomeworkAddComponent,
-    CurrentHomework,
-    PassedHomework,
-    GoogleChart,
-    CustomLoader,
-    AccountComponent,
+
     AppreciationComponent,
     ForMeComponent,
     ByMeComponent,
-    AddEmployeeComponent,
     AddAppreciation,
-    PollComponent,
-    AddPollComponent,
-    CurrentPollComponent,
-    ClosedPollComponent,
     CalendarComponent,
     EventComponent,
-    SurveyComponent,
-    AddSurveyComponent,
-    CurrentSurveyComponent,
-    ClosedSurveyComponent,
-    PollComponent,
-    AddPollComponent,
-    CurrentPollComponent,
-    ClosedPollComponent,
-    StudentRatingComponent,
     ViewSurveyComponent,
     SuggestionComponent,
     SuggestionForMe,
     SuggestionForStudent,
     SuggestionAddComponent,
-    MessageComponent,
     ErrorComponent,
     Error404Component,
-    AddStudentComponent,
-    NewStudentComponent,
-    ExistingStudentComponent,
     ],
   providers: [
     LoggedInGuard,

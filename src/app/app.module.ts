@@ -5,6 +5,8 @@ import { AppComponent} from './app.component';
 import { AuthGuard } from './AuthGuard';
 
 @NgModule({
+		declarations : [AppComponent],
+
 	imports : [  BrowserModule, RouterModule.forRoot([
 		//{
 		//	path : '',
@@ -20,8 +22,7 @@ import { AuthGuard } from './AuthGuard';
 			loadChildren : 'app/component/main/main.module#MainModule' , canActivate : [AuthGuard]
 		}
 	]) ],
-
-	declarations : [AppComponent],
+	exports: [],
 	bootstrap : [AppComponent],
 	providers : [AuthGuard]
 })
