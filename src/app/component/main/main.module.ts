@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainRoutingModule } from "./main.routing.module";
-import { XHRBackend, RequestOptions } from '@angular/http';
+import { XHRBackend, RequestOptions, HttpModule } from '@angular/http';
 
 import { MainComponent } from "./main.component";
 import { ForgotPassword } from "../login/forgot.password";
@@ -67,6 +67,7 @@ import { ErrorComponent } from "../error/error.component";
 import { Error404Component } from "../error/error404";
 
 const rootRouterConfig:Routes = [
+{path : '' , redirectTo:'dashboard' , pathMatch:'full'},
   { path: '', component: MainComponent,
   children:[
     { path: 'forgot-password', component: ForgotPassword },
@@ -148,13 +149,14 @@ const rootRouterConfig:Routes = [
   },
   { path: 'error', component: ErrorComponent, canActivate: [LoggedInGuard] },
   { path: 'error404', component: Error404Component, canActivate: [LoggedInGuard] },
-  { path: '**', redirectTo: '/error404', canActivate: [LoggedInGuard] },
+ { path: '**', redirectTo: '/error404', canActivate: [LoggedInGuard] },
 ];
 
 
 @NgModule({
 imports: [
   CommonModule,
+  HttpModule,
   FormsModule,
   ReactiveFormsModule,
   RouterModule.forChild(rootRouterConfig),
