@@ -10,6 +10,7 @@ import { Configuration } from './app.constant';
 
 @Injectable()
 export class AdminService {
+  public id:any;
   private baseUrl: string = "";
 
   constructor(private http: CustomHttpService,
@@ -17,7 +18,7 @@ export class AdminService {
     private con: Configuration,
   ) {
     this.baseUrl = this.con.baseUrl;
-    // console.log('base',this.baseUrl);
+    this.id=localStorage.getItem('id');
   }
 
   getSubjects() {
@@ -27,7 +28,7 @@ export class AdminService {
   }
 
   getStandards() {
-    return this.http.get(this.baseUrl + "standard")
+    return this.http.get(this.baseUrl + "admin/" +this.id +"/homework/standard")
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -38,8 +39,8 @@ export class AdminService {
   //     .catch(this.handleError);
   // }
 
-  getStudents() {
-    return this.http.get(this.baseUrl + "admin/student")
+  getStudents(stdId:any) {
+    return this.http.get(this.baseUrl + "admin/student-by-standard/" +stdId)
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -59,6 +60,13 @@ export class AdminService {
     return this.http.post(this.baseUrl + "admin/student", data, option)
       .map(this.extractData)
       .catch(this.handleError);
+  }
+
+  public getAllStudents(stdId:any){
+    return this.http.get(this.baseUrl + "admin/student/" + stdId + "/parent-sibling")
+    .map(this.extractData)
+    .catch(this.handleError);
+
   }
 
   public uploadParentImage(id: any, data: any, ) {

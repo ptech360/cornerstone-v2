@@ -75,7 +75,7 @@
                     <div class="col-sm-10">
                         <div class="description" >
                             <label for="description" >Description:</label>
-                            <div id="description">{{eventsInfo.description}}</div>
+                            <div id="description"><span class="white-space">{{eventsInfo.description}}</span></div>
                         </div>
                     </div>
                 </div>
@@ -93,8 +93,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-toggle="modal" data-dismiss="modal" data-target="#modal-edit" [disabled]="!disable">Edit</button>
-                <button type="button" class="btn btn-default" data-toggle="modal" data-dismiss="modal" data-target="#modal-delete" (click)="deleteEvent()" [disabled]="!disable">Delete</button>              
+                <button type="button" class="btn btn-default" data-toggle="modal" data-dismiss="modal" data-target="#modal-edit" [disabled]="disable">Edit</button>
+                <button type="button" class="btn btn-default" data-toggle="modal" data-dismiss="modal" data-target="#modal-delete" (click)="deleteEvent()" [disabled]="disable">Delete</button>              
                 <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
             </div>
         </div>

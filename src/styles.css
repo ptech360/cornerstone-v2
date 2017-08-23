@@ -464,3 +464,7 @@ list-style:none;
  margin: 0 1rem 0 0;
  cursor: pointer;
 }
+
+.white-space{
+    white-space: pre-line;
+}

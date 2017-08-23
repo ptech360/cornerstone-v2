@@ -159,3 +159,55 @@ tr,td,table
 .loader {
   text-align: center !important;
 }
+
+
+.badge{
+  float: right;
+   /* margin-right: 5%; */
+}
+
+/* .view-btn{
+  float: right;
+} */
+
+.student-image{
+  width: 30px;
+  border-radius: 100%
+}
+
+.inner-table{
+  width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+.inner-table>tbody>tr>td, .inner-table>tbody>tr>th, .inner-table>thead>tr>td, .inner-table>thead>tr>th {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-top:none !important;
+    border-right: 1px solid #ddd !important;
+}
+  .inner-table>thead>tr>td{
+    border-bottom:1px solid #ddd !important;
+  }
+/* td{
+  border-right-style: solid !important;
+} */
+
+ .detail-table>tbody>tr>td{
+  border-right:1px solid #ddd !important;
+} 
+.glyphicon-pencil{
+  top:-32px !important;
+}
+
+.fixed{
+  /* position: fixed; */
+}
+/* .table{
+  display: block;
+  height: 100px;
+  overflow-x: auto;
+  overflow-y: auto;
+} */

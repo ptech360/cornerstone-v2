@@ -5,7 +5,7 @@ import {CommonService} from '../../providers/common.service';
 import * as moment_ from 'moment';
 import { Http } from '@angular/http';
 import 'fullcalendar';
-// import * as _ from 'jquery';
+import * as _ from 'jquery';
 declare let $: any;
 
 @Component({
@@ -35,7 +35,7 @@ export class EventComponent implements OnInit, AfterViewInit {
   public loader:boolean=true;
   public empId:any;
   public id:any;
-  public disable:any;
+  public disable:boolean=false;
 public standardId:any[]=[];
   
   // public startT:any;
@@ -47,6 +47,7 @@ public standardId:any[]=[];
     private element:ElementRef,
     private cs:CommonService,
   ) {
+    $.noConflict();
     this.getPlanner();
     this.getStandardId();
      
@@ -59,7 +60,7 @@ public standardId:any[]=[];
   }
 
   ngAfterViewInit(){
-      $('#calendar').fullCalendar('renderEvents', this.calendarOptions.events, true); 
+      _('#calendar').fullCalendar('renderEvents', this.calendarOptions.events, true); 
   }
     
      public calendarOptions:any={
@@ -81,6 +82,9 @@ public standardId:any[]=[];
           this.selectedEvent=event;   
           this.empId=event.employeeId; 
           if(this.empId==this.id){
+            this.disable=false;
+          }
+          else{
             this.disable=true;
           }
           this.editEvent=this.editForm();
@@ -91,7 +95,7 @@ public standardId:any[]=[];
 
         select: (start:any, end:any)=> {
         if(start.isBefore(moment_().subtract(1, "days"))) {
-          $('#calendar').fullCalendar('unselect');
+          _('#calendar').fullCalendar('unselect');
           $('#modal-unselect').modal();
           return false;
           }
@@ -114,7 +118,7 @@ public standardId:any[]=[];
         },
       
        viewRender: (view:any, element:any)=> {
-          var b = $('#calendar').fullCalendar('getDate');
+          var b = _('#calendar').fullCalendar('getDate');
           var check = moment_(b, 'YYYY/MM/DD');
           var month = check.format('MM');
           var year  = check.format('YYYY');       
@@ -214,8 +218,8 @@ public endT(e:any){
         else{ 
           this.loader=false;
       this.newEvents=res;
-      $('#calendar').fullCalendar('removeEvents');
-      $('#calendar').fullCalendar('addEventSource', this.newEvents);
+      _('#calendar').fullCalendar('removeEvents');
+      _('#calendar').fullCalendar('addEventSource', this.newEvents);
         }
       
     }, (err) => {

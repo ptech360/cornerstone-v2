@@ -28,7 +28,9 @@ export class HomeworkAddComponent implements OnInit {
   constructor(private homeworkService: HomeworkService,
     private commonService: CommonService,
     private _location: Location,
-    public router: Router) { }
+    public router: Router) {        
+      $.noConflict(); 
+ }
 
 
   ngOnInit() {

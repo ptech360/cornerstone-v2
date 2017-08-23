@@ -1,36 +1,147 @@
 <div class="existing">
 <div class="panel panel-default">
   <div class="panel-body">
-    <input class="form-control" *ngIf="selectedStudent==null" type="text" placeholder="Search by Student Name ... " (keyup)="dropdown=false;searchStudents($event)"
-      style="display:inline;width:95%">
-    <input *ngIf="selectedStudent" class="form-control" type="text" value="{{selectedStudent.name}}" onfocus="this.value= ''"
-      (keyup)="dropdown=false;searchStudents($event)" style="display:inline;width:95%">
-    <button style="background:none;border:none;outline:none;margin-left: -28px;" (click)="dropdown ? dropdown = false : dropdown = true;selected=false"> <span class="glyphicon glyphicon-chevron-down custom-icon" ></span></button>
+    <div class="fixed">
+        <div>
+          <label for="standardId">Standard</label>
+          <div class="row">
+            <div class="col-lg-10 col-sm-8 col-xs-12">
+              <select (change)="onSelectStandard($event.target.value)" class="form-control">
+                <option *ngIf="loader"><loader [condition]="loader"></loader></option>
+                <option disabled="disabled" selected="selected">Select a standard</option>
+                <option *ngFor="let s of standards" [value]="s.id" >{{s.name}}</option>
+              </select>
+            </div>
+            <div class="col-lg-2 col-sm-4 col-xs-12">
+              <button class="btn btn-primary view-btn" [disabled]="!selectedStandardId" (click)="getStudentsByStd()">View All Students</button>  
+              <!-- <button id="export">Export</button> -->
+            </div>
+            </div>          
+        </div>
 
-    <div class="studentList" *ngIf="(selected)">
-      <ul class="list-group">
-         <li class="list-group-item" *ngIf="emptySearchResult && !loader">No Data to Display</li> 
-        <li class=""><div class="row text-center"><loader [condition]="loader" class="loader"></loader></div></li>
-        <span *ngFor="let s of students">
-                
-               <li class="list-group-item" (click)="addForm=null;getStudentDetails(s.id)"> {{s.name}} </li> 
-               </span>
-      </ul>
+        <div *ngIf="showSearch" style="margin-top:20px;">
+          <span class="badge" *ngIf="students" >Total Students : {{totalStudents}}</span>
+        <!-- <div class="form-group row">
+          <div class="col-lg-12">
+            <input class="form-control" type="search" placeholder="Search by complaint title .,. " id="example-search-input" (keyup)="searchStudents($event)">
+          </div>
+        </div> -->
+
+
+          <label >Student</label>
+          <div>
+              <input class="form-control" *ngIf="selectedStudent==null" type="text" placeholder="Search by Student Name ... " (keyup)="searchStudents($event)">
+              <input *ngIf="selectedStudent" class="form-control" type="text" value="{{selectedStudent.name}}" onfocus="this.value= ''"
+                (keyup)="searchStudents($event)">
+              <!-- <button style="background:none;border:none;outline:none;margin-left: -28px;" (click)="dropdown ? dropdown = false : dropdown = true;selected=false"> <span class="glyphicon glyphicon-chevron-down custom-icon" ></span></button> -->
+
+              <div class="studentList" *ngIf="(selected)">
+                <ul class="list-group">
+                  <li class="list-group-item" *ngIf="emptySearchResult && !loader">No Data to Display</li> 
+                  <li class="">
+                    <div class="row text-center">
+                      <loader [condition]="loader" class="loader"></loader>
+                    </div>
+                  </li>
+                  <span *ngFor="let s of students">
+                      <li class="list-group-item" (click)="addForm=null;getStudentDetails(s.id)"> {{s.name}} </li> 
+                  </span>
+                </ul>
+              </div>
+
+              <!-- <div class="studentList" *ngIf="(dropdown)">
+                <ul class="list-group">
+                  <span *ngFor="let s of studentsCOPY">
+                        <li class="list-group-item" (click)="dropdown=false;addForm=null;getStudentDetails(s.id)"> {{s.name}} </li> 
+                  </span>
+                </ul>
+              </div>  -->
+          </div> 
     </div>
+  </div>
+    <div class="row" *ngIf=" !showSearch && showTable">
+      <div>
+        <!-- <div class="col-sm-4 col-xs-4">
+          <label>Order </label>
+          <select>
+            <option>Ascending</option>
+            <option>Descending</option>            
+          </select>
+        </div> -->
 
-    <div class="studentList" *ngIf="(dropdown)">
-      <ul class="list-group">
-        <span *ngFor="let s of studentsCOPY">
-               <li class="list-group-item" (click)="dropdown=false;addForm=null;getStudentDetails(s.id)"> {{s.name}} </li> 
-               </span>
-      </ul>
+        <div class="  col-sm-offset-5 col-sm-3 col-xs-6">
+          <span class="badge" style="margin-top:32px;">Total Students : {{totalStudents}}</span>  
+        </div>  
+        <div class=" col-sm-4 col-xs-6">
+          <label>Filter</label>
+          <select (ngModelChange)="filterDetails($event)" [(ngModel)]="filter" class="form-control" >
+            <option [value]="1" *ngIf="!showParent || !showSibling">All Details</option>
+            <option [value]="2">Only Sibling Details</option>
+            <option [value]="3">Only Parent Details</option> 
+            <option [value]="4">Only Student List</option>                                   
+          </select>
+        </div>      
+      </div>
+      <div>
+        <div class="row text-center">
+          <loader [condition]="loader"></loader>
+        </div>
+          <table class="table detail-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Student's Name</th>
+                <th *ngIf="showParent && !showStudentOnly">Parent's Details</th>
+                <th *ngIf="showSibling && !showStudentOnly">Sibling's Details</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let s of studentsInfo">
+              <tr (click)="getStudentDetails(s.id)">
+                <td><a ><img class="student-image" [attr.src]="fileUrl+'/' + s.picTimestamp"></a></td>
+                <td>{{s.name}}</td>
+                <!-- <td *ngFor="let p of s.parents">{{p.name}}</td> -->
+                <td *ngIf="showParent && !showStudentOnly">
+                   <table class="inner-table">
+                     <thead>
+                      <tr>
+                        <td>Name</td>
+                        <td>Contact No</td>
+                        <td style="border-right:none !important">Email</td>  
+                      </tr>
+                     </thead>
+                     <tbody>
+                      <tr *ngFor="let p of s.parents">
+                        <td>{{p.name}}</td>
+                        <td>{{p.contactNo}}</td>
+                        <td *ngIf="p.email" style="border-right:none !important">{{p.email}}</td>
+                        <td *ngIf="!p.email" style="border-right:none !important">-</td>
+                      </tr>
+                     </tbody>
+                  </table> 
+                </td>
+                <td *ngIf="showSibling && !showStudentOnly">
+                  <table class=" inner-table" *ngIf="s.siblings.length>0">
+                    <thead>
+                      <tr>
+                        <td>Name</td>
+                        <td style="border-right:none !important">Standard</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let sibling of s.siblings">
+                        <td>{{sibling.name}}</td>
+                        <td style="border-right:none !important">{{sibling.standardName}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table *ngIf="s.siblings.length<=0"><tr>No Siblings added</tr></table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
     </div>
-
-
-    <div class="row" *ngIf="selectedStudent">
-
-
-
+    <div class="row" *ngIf="selectedStudent && showSearch">
       <div class="panel-group" id="accordion" *ngIf="selectedStudent" style="margin:5%;">
         <div class="panel panel-default">
           <div class="row text-center"><loader [condition]="loader"></loader></div>
@@ -49,6 +160,7 @@
                         data-toggle='modal' (click)="selectedImageUpload=selectedStudent;uploadPicForm.controls['file'].reset();">
                       <img *ngIf="!selectedStudent.picTimestamp" [attr.src]="fileUrl+'/parent%2f39945169084408330481.jpg?alt=media'" class="profilePic"
                         data-target='#uploadParentModal' data-toggle='modal' (click)="selectedImageUpload=selectedStudent;uploadPicForm.controls['file'].reset();">
+                      <a data-target='#uploadParentModal' data-toggle='modal'><i class="glyphicon glyphicon-pencil"></i></a> 
                     </td>
                   </tr>
 
@@ -74,7 +186,7 @@
         <div class="panel panel-default" *ngIf="selectedStudent.siblings">
           <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo">
             <h4 class="panel-title">
-              Add Siblings
+              Sibling Details
             </h4>
           </div>
           <div id="collapseTwo" class="panel-collapse collapse">
@@ -91,7 +203,8 @@
                         data-toggle='modal' (click)="selectedImageUpload=s;uploadPicForm.controls['file'].reset();">
                       <img *ngIf="!s.picTimestamp" [attr.src]="fileUrl+'/parent%2f39945169084408330481.jpg?alt=media'" class="profilePic1" data-target='#uploadStudentModal'
                         data-toggle='modal' (click)="selectedImageUpload=s;uploadPicForm.controls['file'].reset();">
-                    </td>
+                        <a data-target='#uploadStudentModal' data-toggle="modal"><i class="glyphicon glyphicon-pencil"></i></a>                     
+                      </td>
                     <td>
                       <label for="sname2">Name</label>
                       <p>{{s.name}}</p>
@@ -126,7 +239,8 @@
                       (click)="selectedImageUpload=p;uploadPicForm.controls['file'].reset();" data-toggle='modal'>
                     <img *ngIf="!p.picTimestamp" [attr.src]="fileUrl+'/parent%2f39945169084408330481.jpg?alt=media'" class="profilePic1" data-target='#uploadParentModal'
                       (click)="selectedImageUpload=p;uploadPicForm.controls['file'].reset();" data-toggle='modal'>
-                  </td>
+                      <a data-target='#uploadParentModal' data-toggle='modal'><i class="glyphicon glyphicon-pencil"></i></a>                      
+                    </td>
                   <td>
                     <label for="sname3">Name</label>
                     <span>
@@ -276,7 +390,7 @@
 
 
 
-<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade  " id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -292,7 +406,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="errModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade  " id="errModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -308,7 +422,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="editSiblingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade  " id="editSiblingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -335,7 +449,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="editParentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade  " id="editParentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -371,7 +485,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="uploadStudentModal" role="dialog">
+<div class="modal fade  " id="uploadStudentModal" role="dialog">
   <div class="modal-dialog">
     <!-- Update Modal content-->
     <div class="modal-content">
@@ -398,7 +512,7 @@
 </div>
 
 
-<div class="modal fade" id="uploadParentModal" role="dialog">
+<div class="modal fade  " id="uploadParentModal" role="dialog">
   <div class="modal-dialog">
     <!-- Update Modal content-->
     <div class="modal-content">
@@ -424,7 +538,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade  " id="errorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">

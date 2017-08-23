@@ -82,6 +82,7 @@ export class MessageComponent implements AfterViewInit, OnInit {
         this.loader1 = false;
         return;
       }
+      this.loader1=false;
       this.emptyOldRecipient = false;
       this.oldMessageRecipients = res;
       this.oldMessageRecipientsCOPY = this.oldMessageRecipients

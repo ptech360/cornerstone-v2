@@ -4,6 +4,7 @@ import { AdminService } from '../../../providers/admin.service';
 import { FormGroup, FormArray, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ValidationService } from '../../../providers/formValidation.service';
 import { Router } from '@angular/router';
+// import { Order } from '../../../providers/order.filter'; 
 
 
 
@@ -12,6 +13,7 @@ declare let $: any;
   selector: 'existing-student',
   templateUrl: './existingStudent.component.html',
   styleUrls: ['./existingStudent.component.css'],
+  // pipes:['Order'];
 })
 
 export class ExistingStudentComponent {
@@ -21,7 +23,7 @@ export class ExistingStudentComponent {
 
 
 
-  public students: any[];
+  public students: any[]=[];
   public standards: any[];
   public addSiblingForm: FormGroup;
   public selectedStudent: any;
@@ -40,9 +42,18 @@ export class ExistingStudentComponent {
   public selectedImageUpload: any;
   public fileUrl: any;
   public emptySearchResult: any;
-  public studentsCOPY: any=[];
-
-
+  // public studentsCOPY: any=[];
+  public selectedStandardId:any;
+  public showStudent:boolean=false;
+  public totalStudents:any;
+  public studentsInfo:any;
+  public showSearch:boolean=false;
+  public showTable:boolean=false;
+  public filter:any;
+  public showSibling:boolean=true;
+  public showParent:boolean=true;
+  public showStudentOnly:boolean=false;
+  // public showStudentDetails:boolean=false;
   constructor(public _location: Location,
     public as: AdminService,
     public fb: FormBuilder,
@@ -52,7 +63,7 @@ export class ExistingStudentComponent {
 
     this.getStandards();
     // this.initNewStudentForm();
-    this.getStudents();
+    // this.getStudents();
     // this.initEditParentForm();
     // this.initAddSiblingForm();
     this.uploadPicForm = new FormGroup({
@@ -65,6 +76,8 @@ export class ExistingStudentComponent {
     this.loader = true;
     this.as.getStandards().subscribe(res => {
       this.standards = res;
+    console.log("fetch standard success");
+      
       this.loader = false;
     },
       err => {
@@ -73,11 +86,20 @@ export class ExistingStudentComponent {
       })
   }
 
+  public onSelectStandard(e:any){
+    this.selectedStandardId=e;
+    this.showSearch=true;
+    this.getStudents();    
+    this.showStudent=true;
+  }
+
   public getStudents() {
     this.loader = true;
-    this.as.getStudents().subscribe(res => {
+    this.as.getStudents(this.selectedStandardId).subscribe(res => {
+      this.totalStudents=res.length;
       this.students = res;
-      this.studentsCOPY = this.students;
+      console.log(res);
+      // this.studentsCOPY = this.students;
       this.loader = false;
     },
       err => {
@@ -92,9 +114,9 @@ export class ExistingStudentComponent {
     let val = ev.target.value;
     if (val && val.trim() != '') {
       this.emptySearchResult = false;
-      this.students = this.studentsCOPY.filter((item: any) => {
-        return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      })
+      // this.students = this.studentsCOPY.filter((item: any) => {
+      //   return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      // })
       if (this.students.length == 0) {
         this.emptySearchResult = true;
       }
@@ -105,6 +127,8 @@ export class ExistingStudentComponent {
   }
 
   public getStudentDetails(ev: any) {
+    this.showTable=false;
+    this.showSearch=true;
     this.loader = true;
     this.selected = false;
     this.initAddParentForm();
@@ -119,6 +143,20 @@ export class ExistingStudentComponent {
     }, err => {
       this.errorPage();
 
+    })
+  }
+
+  public getStudentsByStd(){
+    // this.showStudentDetails=false;
+    this.loader=true;
+    this.as.getAllStudents(this.selectedStandardId).subscribe(res=>{
+      this.loader=false;
+      this.showSearch=false;
+      this.showTable=true;
+      this.studentsInfo=res;
+      console.log(this.studentsInfo);
+    },err=>{
+      this.errorPage();
     })
   }
 
@@ -309,5 +347,37 @@ export class ExistingStudentComponent {
     this.loader = false;
     this.router.navigate(['/error']);
   }
+
+  public filterDetails(e:any){
+    if(e==1){
+      this.showParent=true;
+      this.showSibling=true;
+      this.showStudentOnly=false;
+    }
+
+    else if(e==2){
+      this.showParent=false;
+      this.showSibling= true;
+      this.showStudentOnly=false;
+    }
+
+    else if(e==3){
+      this.showParent=true;
+      this.showSibling=false;
+      this.showStudentOnly=false;
+    }
+    else if(e==4){
+      this.showParent=false;
+      this.showSibling=false;
+      this.showStudentOnly=true;
+    }
+  }
+// public order:any;
+//   public orderDetails(e:any){    
+//     if(e==1){
+//       // console.log("kjnkjn");
+//       this.studentsInfo.reverse;
+//     }
+//   }
 
 }
