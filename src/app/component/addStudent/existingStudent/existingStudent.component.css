@@ -211,3 +211,11 @@ tr,td,table
   overflow-x: auto;
   overflow-y: auto;
 } */
+
+.searchStu{
+  margin-top:15px !important;
+}
+
+.row{
+  margin:0 !important;
+}

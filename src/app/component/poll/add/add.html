@@ -7,8 +7,7 @@
 
   <div class="panel-body">
     <div class="row text-center">
-      <loader [condition]="loader">
-      </loader>
+      <loader [condition]="submitProgress" class="centerLoader"></loader>
     </div>
 
     <form [formGroup]="addPollForm" (ngSubmit)="submitPoll(addPollForm.value)" *ngIf="pollInfo">
@@ -28,6 +27,7 @@
         <label for="pollFor">Audience</label>
         <select class="form-control" id="pollFor" formControlName="typeId" (ngModelChange)="onTypeId($event)">
       <option *ngFor="let a of pollInfo.pollType" [value]="a.id"> {{a.name}}</option>
+      <loader [condition]="infoLoader" class="dropdownLoader"></loader>
     </select>
       </div>
 
@@ -36,6 +36,8 @@
         <select class="form-control" id="standardIds" name="standardIds" [(ngModel)]="selectedStandard" [ngModelOptions]="{standalone: true}"
           (ngModelChange)="onStandards($event)" multiple required>
       <option *ngFor="let s of standards" [value]="s.id"> {{s.name}}</option>
+      <loader [condition]="standardLoader" class="dropdownLoader"></loader>
+      
     </select>
       </div>
 
@@ -50,6 +52,7 @@
         <label for="optionTypeId">Select Option Type</label>
         <select class="form-control" id="optionTypeId" formControlName="optionTypeId">
       <option *ngFor="let s of pollInfo.pollOptionType" [value]="s.id"> {{s.name}}</option>
+      <loader [condition]="infoLoader" class="dropdownLoader"></loader>
     </select>
       </div>
 

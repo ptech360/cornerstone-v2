@@ -19,6 +19,8 @@ declare let $: any;
 export class ExistingStudentComponent {
 
   public loader: boolean = false;
+  public standardLoader:boolean=false;
+  public studentLoader:boolean=false;  
   public addForm: number; //for add sibling/parent form
 
 
@@ -73,12 +75,12 @@ export class ExistingStudentComponent {
   }
 
   public getStandards() {
-    this.loader = true;
+    this.standardLoader = true;
     this.as.getStandards().subscribe(res => {
       this.standards = res;
     console.log("fetch standard success");
       
-      this.loader = false;
+    this.standardLoader = false;
     },
       err => {
         this.errorPage();
@@ -94,13 +96,13 @@ export class ExistingStudentComponent {
   }
 
   public getStudents() {
-    this.loader = true;
+    this.studentLoader = true;
     this.as.getStudents(this.selectedStandardId).subscribe(res => {
       this.totalStudents=res.length;
       this.students = res;
       console.log(res);
       // this.studentsCOPY = this.students;
-      this.loader = false;
+    this.studentLoader = false;
     },
       err => {
         // this.loader = false;

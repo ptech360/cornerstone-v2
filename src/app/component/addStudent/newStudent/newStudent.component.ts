@@ -15,6 +15,7 @@ declare let $: any;
 export class NewStudentComponent {
 
   public loader: boolean = false;
+  public standardLoader:boolean=false;
 
   //NewStudent
 
@@ -38,10 +39,10 @@ export class NewStudentComponent {
   //New Student Functions
 
   public getStandards() {
-    this.loader = true;
+    this.standardLoader = true;
     this.as.getStandards().subscribe(res => {
       this.standards = res;
-      this.loader = false;
+      this.standardLoader = false;
     },
       err => {
         this.errorPage();

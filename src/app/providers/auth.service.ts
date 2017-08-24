@@ -81,6 +81,7 @@ export class AuthService {
     localStorage.setItem("picTimestamp", data.picTimestamp);
     localStorage.setItem('picUrl', data.fileUrl + "/" + data.picTimestamp);
     this.con.setAccessToken();
+    console.log("data is stored,auth");
   }
 
   public uploadImage(data: any) {

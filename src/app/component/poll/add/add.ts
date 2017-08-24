@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@ang
 import { CommonService } from '../../../providers/common.service';
 import { PollService } from '../../../providers/poll.service';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 declare let $: any;
 
@@ -19,12 +20,15 @@ export class AddPollComponent implements OnInit {
   public selectedStandard: any;
   // public disable: boolean = false;
   public loader: boolean = false;
-
+  public submitProgress:boolean=false;
+  public standardLoader:boolean=false;
+  public infoLoader:boolean=false;
   public addPollForm: FormGroup;
 
   constructor(public fb: FormBuilder,
     public cs: CommonService,
     public ps: PollService,
+    public router:Router,
     private _location: Location) {
   }
 
@@ -48,24 +52,25 @@ export class AddPollComponent implements OnInit {
   }
 
   getStandards() {
+    this.standardLoader=true;
     this.ps.getStandards().subscribe(res => {
+      this.standardLoader=false;
       this.standards = res;
       // console.log(this.standards);
     },
       err => {
-        // console.log("standardError", err);
+        this.router.navigate(['/error']);
       })
   }
 
   getPollInfo() {
-    this.loader = true;
+    this.infoLoader = true;
     this.cs.getPollInfo().subscribe(res => {
       this.pollInfo = res;
-      this.loader = false;
+    this.infoLoader = false;      
     },
       err => {
-        // console.log("Err", err);
-        this.loader = false;
+      this.router.navigate(['/error']);
       })
 
   }
@@ -116,14 +121,14 @@ export class AddPollComponent implements OnInit {
   }
 
   public submitPoll(obj: any) {
+    this.submitProgress=true;
     this.ps.createPoll(obj).subscribe(res => {
-      this.loader = false;
+    this.submitProgress=false;      
       $('#submitModal').modal('show');
       this.initForm();
     },
       err => {
-        // console.log("err", err);
-        this.loader = false;
+        this.router.navigate(['/error']);
       })
   }
 

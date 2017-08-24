@@ -23,7 +23,7 @@
   </div>
   <div class="panel-body">
     <div class="row text-center">
-    <loader [condition]="loader"></loader>
+     <loader [condition]="loader" class="centerLoader"></loader> 
   </div>
   
       <div class="form-group row col-sm-12">
@@ -49,13 +49,13 @@
                </span>
           </ul>
         </div>
-      </div>
+        </div>
     <br><br>
   <div class="panel panel-default" *ngIf="selectedStudent">
     <div class="panel-heading custom-panel-heading">{{selectedStudent.name}}</div>
     <div>
       <div class="row text-center">
-        <loader [condition]="loader1"></loader>
+        <loader [condition]="loader1" class="centerLoader"></loader>
       </div>
         <form [formGroup]="ratingForm" *ngIf="respStu" >
     <div class="panel-body">

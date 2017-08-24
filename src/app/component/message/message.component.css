@@ -250,12 +250,6 @@
     margin-right:0px !important;    
 }
 
-loader{
-    font-size:30px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-}
 .recipient{
     font-size: 100%;
 }
@@ -326,6 +320,16 @@ outline: none;
     left: 200px;
     top: -77px;
     font-size: 28px;
+}
+.upload-btn{
+    background: none;
+    outline: none;
+    border: none;
+    display: inline-block;
+    position: relative;
+    font-size: 74px;
+    right: 45%;
+    top: 29px;
 }
 
 .input-msg{

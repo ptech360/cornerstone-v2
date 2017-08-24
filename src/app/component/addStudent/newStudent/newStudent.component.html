@@ -21,6 +21,7 @@
           <select id="stnd" class="form-control" formControlName="standardId">
             <option *ngFor="let s of standards" [value]="s.id">{{s.name}}</option>
           </select>
+          <loader [condition]="standardLoader" class="dropdownLoader"></loader>
           <div [hidden]="newStudentForm.controls.standardId.valid|| newStudentForm.controls.standardId.untouched" class="alert alert-warning">This field is required</div>
           
         </div>

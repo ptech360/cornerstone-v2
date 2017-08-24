@@ -468,3 +468,27 @@ list-style:none;
 .white-space{
     white-space: pre-line;
 }
+
+.dropdownLoader{
+    float: right;
+    margin-top: -30px;
+    background: white;
+    margin-right: 5px;
+}
+
+.dropdownLoader i{
+    font-size: 24px !important;
+}
+
+.centerLoader{
+    position:absolute;
+    top:50%;
+}
+
+.centerLoader i{
+    /* font-size:60px !important; */
+}
+
+loader{
+z-index: 1000 !important;
+}

@@ -5,7 +5,7 @@
   <div class="col-sm-8 col-xs-8 message-area">
 
     <div class="row text-center">
-      <loader [condition]="loader"></loader>
+      <loader [condition]="loader" class="centerLoader"></loader>
     </div>
 
     <div class="row msg-nav">
@@ -82,7 +82,7 @@
               <span >&times;</span>
             </button>
             <img src="#" id="img33" alt="efcsc" height="200px" width="200px">
-            <button type="submit" class="upload-img"><span class="glyphicon glyphicon-circle-arrow-up"></span></button>
+            <button type="submit" class="upload-btn"><span class="glyphicon glyphicon-circle-arrow-up"></span></button>
           </form>
 
         </div>
@@ -120,13 +120,16 @@
     <div class="new-chat-body" *ngIf="(!selectedOldRecipient)&&(!loader)">
       <div class="message-form">
       <form [formGroup]="newMessageForm" *ngIf="newMsg">
-
+        <div class="row text-center">
+          <loader [condition]="submitProgress" class="centerLoader"></loader>
+        </div>
         <div class="form-group">
           <label for="sel1">Select Standard:</label>
           <select class="form-control" id="sel1" [(ngModel)]="standard" [ngModelOptions]="{standalone: true}" (ngModelChange)="onStandard($event)"> 
               <option *ngIf="standardsArray == null" disabled>No standards are added. Please try again later</option>
               <option *ngFor="let s of standardsArray" [value]="s.id">{{s.name}}</option>
             </select>
+            <loader [condition]="standardLoader" class="dropdownLoader"></loader>
         </div>
 
         <div class="form-group" *ngIf="students">
@@ -135,6 +138,7 @@
              <option *ngIf="students == null" disabled>No students are added. Please try again later</option>
               <option *ngFor="let s of students" [ngValue]="s">{{s.name}}</option>
             </select>
+            <loader [condition]="studentLoader" class="dropdownLoader"></loader>
         </div>
 
         <div class="form-group" *ngIf="categories">
@@ -143,6 +147,7 @@
              <option *ngIf="categories == null" disabled>No categories are added. Please try again later</option>
               <option *ngFor="let s of categories" [value]="s.id">{{s.name}}</option>
             </select>
+            <loader [condition]="categoryLoader" class="dropdownLoader"></loader>            
         </div>
 
         <div class="form-group">
@@ -202,7 +207,7 @@
     <!--List-->
 
     <ul class="list-group msg-list">
-      <li style="margin-top:-20px"><loader [condition]="loader1" ></loader></li>
+      <li style="margin-top:-20px"><loader [condition]="loader1" class="centerLoader" style="left:45%"></loader></li>
       <li class="list-group-item" *ngIf="emptyOldRecipient">No Message have been added yet.</li>
       <li class="list-group-item" *ngIf="emptySearchResult">No Data to display.</li>
       <li [ngClass]="{'list-group-item': true, 'selectednav': (selectedIndex === i) }" *ngFor="let r of oldMessageRecipients,let i = index;"

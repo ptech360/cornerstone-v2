@@ -49,7 +49,8 @@ export class LoginComponent{
     });
   }
 
-  public loggedInSuccesfully(res:any) {    
+  public loggedInSuccesfully(res:any) {
+    console.log("logged in ,now storing data");    
     this.appService.storeData(res);
     this.router.navigate(['/']);
   }    
