@@ -102,7 +102,23 @@ export class AddSurveyComponent implements OnInit {
       this.surveyForm.addControl("standards", new FormControl((''), [Validators.required]));
     }
   }
-
+  stdIds: any = [];
+  selectStandards(a:any,e: any) {
+    // console.log("f",e);
+    // console.log('s',a);
+    if(e==true){
+      this.stdIds.push(a.id);
+    }
+    else if(e==false){
+      this.stdIds.forEach((element:any, index:any)=>{
+         if (element==a.id){
+          this.stdIds.splice(index,1);
+        }
+      })
+    }
+    // console.log(this.stdIds);
+    this.surveyForm.controls['standardIds'].patchValue(this.stdIds);
+  }
   public onStandards(ev: any) {
     var stan = ev;
     this.surveyForm.controls['standards'].patchValue(stan);

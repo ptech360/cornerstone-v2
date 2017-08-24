@@ -82,6 +82,23 @@ export class AddPollComponent implements OnInit {
       this.addPollForm.addControl("standardIds", new FormControl('',Validators.required));
     }
   }
+  stdIds: any = [];
+  selectStandards(a:any,e: any) {
+    // console.log("f",e);
+    // console.log('s',a);
+    if(e==true){
+      this.stdIds.push(a.id);
+    }
+    else if(e==false){
+      this.stdIds.forEach((element:any, index:any)=>{
+         if (element==a.id){
+          this.stdIds.splice(index,1);
+        }
+      })
+    }
+    // console.log(this.stdIds);
+    this.addPollForm.controls['standardIds'].patchValue(this.stdIds);
+  }
 
   public onStandards(ev: any) {
     // this.disable = false;
