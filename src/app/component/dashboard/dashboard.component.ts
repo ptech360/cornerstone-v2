@@ -19,8 +19,8 @@ export class DashboardComponent {
   public loader1: boolean = false;
   public loader2: boolean = false;
   public responseByStatus: any;
-  public responseByCategoryAndStatus: any;
-  public responseSuggestionByStatus: any;
+  public responseByCategoryAndStatus: any='';
+  public responseSuggestionByStatus: any='';
 
   constructor(public cs: ChartService, private router: Router, private zone: NgZone) {
     this.loader = true;
@@ -120,7 +120,7 @@ export class DashboardComponent {
     
     this.chartByStatus();
     this.chartByCategoryAndStatus();
-     this.chartBySuggestionStatus();
+    this.chartBySuggestionStatus();
     
 }
 
