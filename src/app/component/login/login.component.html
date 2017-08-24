@@ -7,6 +7,7 @@
 			<input type="text" name='username' id='username' formControlName="username" class="user" placeholder="username"/>
 			<input type='password' name='password' id='password' formControlName="password" class="pass" placeholder="password"/>
 			<input type="submit" class="btn" value="Sign in" [disabled]="loginForm.invalid"/>
+			<a routerLink="/login/forgot-password">Forgot Password</a>
 			<div class="loader" *ngIf="loginStart"></div>
 			<div *ngIf="error">
 				<p style="color:red">Username or password invalid.</p>

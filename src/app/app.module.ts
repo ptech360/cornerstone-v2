@@ -15,7 +15,7 @@ import { AuthGuard } from './AuthGuard';
 		//},
 		{
 			path : 'login',
-			loadChildren : 'app/login.module#LoginModule'
+			loadChildren : 'app/component/login/login.module#LoginModule'
 		},
 		{
 			path : '',

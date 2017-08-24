@@ -4,18 +4,8 @@ import { MainRoutingModule } from "./main.routing.module";
 import { XHRBackend, RequestOptions, HttpModule } from '@angular/http';
 
 import { MainComponent } from "./main.component";
-import { ForgotPassword } from "../login/forgot.password";
-import { ComplaintComponent } from "../complaint/complaint.component";
-import { AppreciationComponent } from "../appreciation/appreciation.component";
-import { ForMeComponent } from "../appreciation/for-me/forme";
-import { ByMeComponent } from "../appreciation/by-me/byme";
-import { AddAppreciation } from "../appreciation/add/add";
 import { EventComponent } from "../event/event.component";
 import { ViewSurveyComponent } from "../survey/view/survey";
-import { SuggestionComponent } from "../suggestion/suggestion.component";
-import { SuggestionForMe } from "../suggestion/for-me/forme";
-import { SuggestionForStudent } from "../suggestion/for-student/forstudent";
-import { SuggestionAddComponent } from "../suggestion/add/add";
 
 import { CalendarComponent } from "../../angular2-fullcalendar/src/calendar/calendar";
 
@@ -45,12 +35,8 @@ const rootRouterConfig:Routes = [
 {path : '' , redirectTo:'dashboard' , pathMatch:'full'},
   { path: '', component: MainComponent,
   children:[
-    { path: 'forgot-password', component: ForgotPassword },
     { path: 'dashboard', loadChildren: 'app/component/dashboard/dashboard.module#DashboardModule', canActivate: [LoggedInGuard] },
-    { path: 'complaint', component: ComplaintComponent, canActivate: [LoggedInGuard] },
-    { path: 'complaint/status/:statusId', component: ComplaintComponent, canActivate: [LoggedInGuard] },
-    { path: 'complaint/category-status/category/:categoryId', component: ComplaintComponent, canActivate: [LoggedInGuard] },
-    { path: 'complaint/category-status/:categoryId/:statusId', component: ComplaintComponent, canActivate: [LoggedInGuard] },
+    { path: 'complaint', loadChildren : 'app/component/complaint/complaint.module#ComplaintModule', canActivate: [LoggedInGuard] },
     { path: 'circular', loadChildren: 'app/component/circular/circular.module#CircularModule', canActivate: [LoggedInGuard] },
     { path: 'add-circular', loadChildren: 'app/component/circular/add/add.module#AddModule', canActivate: [LoggedInGuard] },
     
@@ -59,14 +45,7 @@ const rootRouterConfig:Routes = [
     { path: 'account', loadChildren : 'app/component/account/account.module#AccountModule', canActivate: [LoggedInGuard] },
     { path: 'add-employee', loadChildren : 'app/component/addEmployee/addEmployee.module#AddEmployeeModule', canActivate: [LoggedInGuard] },
     { path: 'add-student', loadChildren: 'app/component/addStudent/addStudent.module#AddStudentModule', canActivate: [LoggedInGuard] },
-    {
-      path: 'appreciation', component: AppreciationComponent, canActivate: [LoggedInGuard],
-      children: [
-        { path: 'for-me', component: ForMeComponent, canActivate: [LoggedInGuard] },
-        { path: 'for-student', component: ByMeComponent, canActivate: [LoggedInGuard] }
-      ]
-    },
-    { path: 'add-appreciation', component: AddAppreciation, canActivate: [LoggedInGuard] },
+    { path: 'appreciation', loadChildren: 'app/component/appreciation/appreciation.module#AppreciationModule', canActivate: [LoggedInGuard]},
     { path: 'poll', loadChildren: 'app/component/poll/poll.module#PollModule', canActivate: [LoggedInGuard] },
     { path: 'conversation', loadChildren: 'app/component/message/message.module#MessageModule', canActivate: [LoggedInGuard], },
     { path: 'event', component: EventComponent, canActivate: [LoggedInGuard] },
@@ -75,13 +54,7 @@ const rootRouterConfig:Routes = [
     { path: 'student-profile', loadChildren: 'app/component/studentRating/studentRating.module#StudentRatingModule', canActivate: [LoggedInGuard] },
     { path: 'view-survey/:id', component: ViewSurveyComponent, canActivate: [LoggedInGuard] },
     {
-      path: 'suggestion', component: SuggestionComponent,
-      children: [
-        { path: 'for-me', component: SuggestionForMe, canActivate: [LoggedInGuard] },
-        { path: 'for-student', component: SuggestionForStudent, canActivate: [LoggedInGuard] }
-      ]
-    },
-    { path: 'suggestion-add', component: SuggestionAddComponent, canActivate: [LoggedInGuard] },
+      path: 'suggestion', loadChildren: 'app/component/suggestion/suggestion.module#SuggestionModule' },
   ]
     
   },
@@ -99,20 +72,9 @@ imports: [
   ],
   declarations: [
     MainComponent,
-    ForgotPassword,
-    ComplaintComponent,
-
-    AppreciationComponent,
-    ForMeComponent,
-    ByMeComponent,
-    AddAppreciation,
     CalendarComponent,
     EventComponent,
     ViewSurveyComponent,
-    SuggestionComponent,
-    SuggestionForMe,
-    SuggestionForStudent,
-    SuggestionAddComponent,
     ErrorComponent,
     Error404Component,
     ],

@@ -30,7 +30,7 @@ export class HomeworkAddComponent implements OnInit {
     private commonService: CommonService,
     private _location: Location,
     public router: Router) {        
-      $.noConflict(); 
+      
  }
 
 
