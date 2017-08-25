@@ -56,7 +56,6 @@ export class AddPollComponent implements OnInit {
     this.ps.getStandards().subscribe(res => {
       this.standardLoader=false;
       this.standards = res;
-      // console.log(this.standards);
     },
       err => {
         this.router.navigate(['/error']);
@@ -89,8 +88,6 @@ export class AddPollComponent implements OnInit {
   }
   stdIds: any = [];
   selectStandards(a:any,e: any) {
-    // console.log("f",e);
-    // console.log('s',a);
     if(e==true){
       this.stdIds.push(a.id);
     }
@@ -101,14 +98,12 @@ export class AddPollComponent implements OnInit {
         }
       })
     }
-    // console.log(this.stdIds);
     this.addPollForm.controls['standardIds'].patchValue(this.stdIds);
   }
 
   public onStandards(ev: any) {
     // this.disable = false;
     var stan = ev;
-    // console.log('ss',ev)
     this.addPollForm.controls['standardIds'].patchValue(stan);
   }
 

@@ -115,7 +115,6 @@ export class AddCircular implements OnInit, AfterViewInit {
 
   public buildCircularData(circular: any) {
     this.circularType = circular;
-    // console.log("cir",this.circularType);
   }
 
   public onCircularType(event: any) {
@@ -149,8 +148,6 @@ export class AddCircular implements OnInit, AfterViewInit {
   standard: any;
 
   selectStandards(a:any,e: any) {
-    // console.log("f",e);
-    // console.log('s',a);
     if(e==true){
       this.stdIds.push(a.id);
     }
@@ -161,7 +158,6 @@ export class AddCircular implements OnInit, AfterViewInit {
         }
       })
     }
-    // console.log(this.stdIds);
     this.circular.controls['standardIds'].patchValue(this.stdIds);
   }
 

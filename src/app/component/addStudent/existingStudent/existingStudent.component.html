@@ -140,7 +140,7 @@
     <div class="row" *ngIf="selectedStudent && showSearch">
       <div class="panel-group" id="accordion" *ngIf="selectedStudent" style="margin:5%;">
         <div class="panel panel-default">
-          <div class="row text-center"><loader [condition]="loader"></loader></div>
+          <!-- <div class="row text-center"><loader [condition]="loader"></loader></div> -->
           <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne">
             <h4 class="panel-title">
               Student Details
@@ -240,16 +240,16 @@
                   <td>
                     <label for="sname3">Name</label>
                     <span>
-            <p *ngIf="(p.name==null)||(p.name=='')">-</p>
-            <p *ngIf="p.name!=null">{{p.name}}</p>
-            </span>
+                      <p *ngIf="(p.name==null)||(p.name=='')">-</p>
+                      <p *ngIf="p.name!=null">{{p.name}}</p>
+                    </span>
                   </td>
                   <td>
                     <label for="stnd3">Nickname</label>
                     <span>
-            <p *ngIf="(p.nickName==null)||(p.nickName=='')">-</p>
-            <p *ngIf="p.nickName!=null">{{p.nickName}}</p>
-            </span>
+                      <p *ngIf="(p.nickName==null)||(p.nickName=='')">-</p>
+                      <p *ngIf="p.nickName!=null">{{p.nickName}}</p>
+                    </span>
                   </td>
                   <td rowspan="2">
                     <button class="btn btn-primary pull-right " data-toggle="modal" data-target="#editParentModal" (click)="selectedParent = p;initEditParentForm()">Edit</button>
@@ -468,8 +468,16 @@
           <div class="form-group">
             <label for="mail">Email</label>
             <input type="text" id="mail" class="form-control" formControlName="email">
-            <div [hidden]="editParentForm.controls.email.valid||editParentForm.controls.email.untouched" class="alert alert-warning">Please enter a valid contact No</div>
+            <div [hidden]="editParentForm.controls.email.valid||editParentForm.controls.email.untouched" class="alert alert-warning">Please enter a valid Email Id</div>
             
+          </div>
+
+          <div class="form-group">
+            <label for="contactNo">Contact No</label>{{selectedParent.contactNo}}
+              <input type="text" id="contactNo" class="form-control" name="contactNo" value="selectedParent.contactNo" [(ngModel)]="contactNo" (ngModelChange)="onContact($event)" [ngModelOptions]="{standalone:true}">  
+              <!-- <div [hidden]="editParentForm.controls.contactNo.valid||editParentForm.controls.contactNo.untouched" class="alert alert-warning">Please enter a valid Contact Number -->
+                <!-- <div>The contact no should be between 9 to 12 digits</div> -->
+              <!-- </div> -->
           </div>
         </div>
         <div class="modal-footer">

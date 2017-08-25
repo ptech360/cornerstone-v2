@@ -1,6 +1,15 @@
 <div class="profile">
+  <div class="row text-center">
+    <loader class="centerLoader" [condition]="loader"></loader>
+  </div>
   <div class="row">
     <a data-toggle="modal" data-target="#myModal" style="display:inline-block;"> <span><img src="{{lg.getData('picUrl')}}" class= "profile-picture"></span></a>
+  </div>
+  <div class="row">
+    <div class="text-center">
+      <button class="btn btn-primary">Change password</button>
+      <a type="button" class="btn btn-primary" data-target="#myModal" data-toggle="modal">Edit Profile Picture</a>
+    </div>
   </div>
   <div class="row">
     <div class="name" name="name">{{name}}({{nickName}})</div>
@@ -66,6 +75,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" (click)="submitAccountDetails(d)" class="btn btn-default" data-dismiss= 'modal'>Submit</button>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#confirmModal" data-dismiss="modal">Reset image</button>
         </div>
       </form>
 
@@ -86,6 +96,26 @@
         Kindly upload an image file.
       </div>
       <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">Confirmation</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure ?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" (click)="resetImage()">Yes</button>
+        <button class="btn btn-primary" data-dismiss="modal">No</button>        
       </div>
     </div>
   </div>

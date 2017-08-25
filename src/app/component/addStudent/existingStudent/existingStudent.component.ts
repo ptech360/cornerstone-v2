@@ -212,7 +212,7 @@ export class ExistingStudentComponent {
     this.addParentForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
       nickName: new FormControl(''),
-      contactNo: new FormControl('', [Validators.required, Validators.pattern('[2-9]{2}[0-9]{8}$')]),
+      contactNo: new FormControl('', [Validators.required, Validators.maxLength(12),Validators.minLength(9)]),
       email: new FormControl('', [ValidationService.emailValidator]),
     })
   }
@@ -272,15 +272,7 @@ export class ExistingStudentComponent {
       })
   }
 
-  public initEditParentForm() {
-    // console.log(this.selectedParent);
-    if (this.selectedParent)
-      this.editParentForm = new FormGroup({
-        name: new FormControl(this.selectedParent.name),
-        nickName: new FormControl(this.selectedParent.nickName),
-        email: new FormControl(this.selectedParent.email, [ValidationService.emailValidator]),
-      });
-  }
+
 
   public submitEditParentForm() {
     this.loader = true;
@@ -381,5 +373,30 @@ export class ExistingStudentComponent {
 //       this.studentsInfo.reverse;
 //     }
 //   }
+
+  public initEditParentForm() {
+    // console.log(this.selectedParent);
+    if (this.selectedParent)
+      this.editParentForm = new FormGroup({
+        name: new FormControl(this.selectedParent.name),
+        nickName: new FormControl(this.selectedParent.nickName),
+        email: new FormControl(this.selectedParent.email, [ValidationService.emailValidator]),
+        // contactNo: new FormControl(this.selectedParent.contactNo,[Validators.maxLength(12),Validators.minLength(9)])
+      });
+  }
+    
+public contactNo:any;
+public onContact(e:any){
+  if(this.selectedParent.contactNo!=e){
+    console.log(e);
+    this.editParentForm.addControl("contactNo", new FormControl('', [Validators.maxLength(12),Validators.minLength(9)]));
+    this.editParentForm.controls['contactNo'].patchValue(e);
+
+  }
+  else{
+    this.editParentForm.removeControl('contactNo');
+    
+  }
+}
 
 }

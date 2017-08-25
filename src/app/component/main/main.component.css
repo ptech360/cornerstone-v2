@@ -51,24 +51,37 @@ main{
     float: right;
 }
 /*profile card style*/
-.profile-card:after {
+.profile-card:after,.profile-card:before  {
 	bottom: 100%;
-	left: 84%;
+	left: 87%;
 	border: solid transparent;
 	content: " ";
 	height: 0;
 	width: 0;
 	position: absolute;
 	pointer-events: none;
-	border-color: rgba(136, 183, 213, 0);
-	border-bottom-color: white;
+	/* border-color: rgba(136, 183, 213, 0);
+	border-bottom-color: #fbfbfb;
 	border-width: 10px;
-    margin-left: -1px;
+    margin-left: -1px; */
+}
+
+.profile-card:after{
+    	border-color: rgba(136, 183, 213, 0);
+	border-bottom-color: white;
+	border-width: 13px;
+	margin-left: -13px;
+}
+.profile-card:before{
+	border-color: rgba(194, 225, 245, 0);
+	border-bottom-color: grey;
+	border-width: 14px;
+	margin-left: -14px;
 }
 .profile-card{
     z-index:10000;
     outline: transparent;
-    position: absolute;
+    position: fixed;
     top: 58px;
     right: 7px;
     width:300px;
@@ -76,7 +89,7 @@ main{
     background: white;
     /*border-style: solid;*/
     border-radius: 5px;
-    border:#b1b1b1 solid 0.5px;
+	border: 1px solid grey;
 
 }
 .profile-card-pic{

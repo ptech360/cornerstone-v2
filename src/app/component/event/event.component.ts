@@ -51,7 +51,6 @@ export class EventComponent implements OnInit, AfterViewInit {
     private cs:CommonService,
     private router:Router,
   ) {
-    jQuery.noConflict();
     this.getPlanner();
     this.getStandardId();
      

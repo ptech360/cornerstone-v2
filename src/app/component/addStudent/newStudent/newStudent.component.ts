@@ -46,13 +46,11 @@ export class NewStudentComponent {
     },
       err => {
         this.errorPage();
-        // console.log("err", err);
       })
   }
 
   // public onParent(p:any,i:any){
   //   this.selectedParent.push(p);
-  //   console.log(this.selectedParent);
 
   // }
 
@@ -68,11 +66,10 @@ export class NewStudentComponent {
 
 
   public inItParent() {
-    // console.log(this.newStudentForm.parent.value);
     return this.fb.group({
       "name": ['', [Validators.required]],
       "nickName": [''],
-      "contactNo": ['', [Validators.required, Validators.pattern('[2-9]{2}[0-9]{8}$')]],
+      "contactNo": ['', [Validators.required, Validators.maxLength(12),Validators.minLength(9)]],
       "email": ['', [ValidationService.emailValidator]],
     });
   }
@@ -89,7 +86,6 @@ export class NewStudentComponent {
 
   public submitNewStudent() {
     this.as.addStudent(this.newStudentForm.value).subscribe(res => {
-      // console.log(res);
       this.loader=true;
       $('#addModal').modal('show');
       // this.selectedStudent = null;
@@ -97,7 +93,6 @@ export class NewStudentComponent {
       this.loader= false;
     },
       err => {
-        // console.log(err);
         if (err === "400 - Bad Request") {
           this.initNewStudentForm();
           $('#errModal').modal('show');
