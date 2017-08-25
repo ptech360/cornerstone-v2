@@ -81,7 +81,6 @@ export class CircularComponent implements OnInit {
 
  public seletToExpand(circular:any){
     this.selectedCircular = circular;
-    // console.log(this.selectedCircular);
   }
 
   // public doRefresh(refresher) {

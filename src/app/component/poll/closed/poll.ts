@@ -35,7 +35,6 @@ export class ClosedPollComponent implements OnInit {
         this.polls = [];
         this.emptyPolls = true;
         this.loader = false;
-        // console.log('empty');
         return;
       }
         this.loader = false;
@@ -46,7 +45,6 @@ export class ClosedPollComponent implements OnInit {
         this.polls = this.polls.concat(res);
       if (res.length < 6) this.noMore = true;
       else this.noMore = false;
-      // console.log('polls',this.polls);
     },
       err => {
         this.loader = false;

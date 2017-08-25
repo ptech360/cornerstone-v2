@@ -18,9 +18,9 @@ export class DashboardComponent {
   public loader: boolean = false;
   public loader1: boolean = false;
   public loader2: boolean = false;
-  public responseByStatus: any;
-  public responseByCategoryAndStatus: any='';
-  public responseSuggestionByStatus: any='';
+  public responseByStatus: any=[];
+  public responseByCategoryAndStatus: any=[];
+  public responseSuggestionByStatus: any=[];
 
   constructor(public cs: ChartService, private router: Router, private zone: NgZone) {
     this.loader = true;

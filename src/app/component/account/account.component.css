@@ -12,6 +12,7 @@
     opacity: 0.5;
 }
 .profile{
+    
     background-color: white;
     margin-top:10%;
     padding: 2%;
@@ -23,7 +24,7 @@
     width: 150px;
     height:150px;
     border-radius: 100%;
-    margin-top: -50%;
+    /* margin-top: -50%; */
     border: 3px solid white;
     box-shadow: 0px 9px 16px grey;
     display: block;

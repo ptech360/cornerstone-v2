@@ -66,7 +66,6 @@ export class ComplaintService {
   }
 
   showToast(msg:any) {
-    // console.log(msg);
   }
 
   getUserId() {

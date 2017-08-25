@@ -127,7 +127,6 @@ export class HomeworkAddComponent implements OnInit {
   //       text: 'CANCEL',
   //       role: 'cancel',
   //       handler: () => {
-  //         console.log('Cancel clicked');
   //       }
   //     }]
   //   });
@@ -135,8 +134,6 @@ export class HomeworkAddComponent implements OnInit {
   // }
 
   public saveHomework(formData: any) {
-    // console.log(formData);
-    // console.log("file", this.file);
     this.submitProgress=true;
     this.homeworkService.PostHomework(formData).subscribe((data) => {
       this.initForm();
