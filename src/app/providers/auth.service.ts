@@ -17,7 +17,7 @@ export class AuthService {
     private con: Configuration) {
     this.serverUrl = con.url;
   }
-
+  userId : any = localStorage.getItem("id");
   serverUrl: string;
   public login: any = false;
   headers: any;
@@ -63,7 +63,7 @@ export class AuthService {
   }
 
   resetPassword(data: any) {
-    return this.http.put(this.serverUrl + "/management/" + this.con.userId + "/password", data)
+    return this.http.put(this.serverUrl + "/management/" + this.userId + "/password", data)
       .map(this.extractData)
       .catch(this.handleError);
   }
