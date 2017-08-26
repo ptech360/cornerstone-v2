@@ -6,13 +6,12 @@ import { AuthService } from '../../providers/auth.service';
 import { LoginComponent } from './login.component';
 import { ForgotPassword } from './forgot.password';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { CommonModule } from  '@angular/common';
 import { HttpModule } from '@angular/http';
 
-
 @NgModule({
- imports : [ CommonModule , ReactiveFormsModule, HttpModule ,RouterModule.forChild([
+ imports : [ CommonModule , FormsModule ,ReactiveFormsModule, HttpModule ,RouterModule.forChild([
  		{
  			path : '',
 			component : LoginComponent
@@ -22,7 +21,7 @@ import { HttpModule } from '@angular/http';
  			component : ForgotPassword
  		}
  	])],
- declarations : [ LoginComponent, ForgotPassword ],
+ declarations : [ LoginComponent, ForgotPassword],
  providers : [CommonService, Configuration , CustomHttpService, AuthService ]
 
 })

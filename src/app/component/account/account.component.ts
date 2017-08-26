@@ -86,4 +86,14 @@ export class AccountComponent implements OnInit {
             })
 
     }
+
+    public resetImage(){
+        this.loader=true;
+        this.au.resetImage().subscribe(res=>{
+        this.loader=false;
+        },err=>{
+            this.loader=false;            
+            this.router.navigate(['/error']);
+        })
+    }
 }

@@ -6,6 +6,7 @@ import * as moment_ from 'moment';
 import { Http } from '@angular/http';
 import 'fullcalendar';
 import * as _ from 'jquery';
+import { Router } from '@angular/router';
 declare let $: any;
 
 @Component({
@@ -36,8 +37,10 @@ export class EventComponent implements OnInit, AfterViewInit {
   public empId:any;
   public id:any;
   public disable:boolean=false;
-public standardId:any[]=[];
-  
+  public standardId:any[]=[];
+  public standardLoader:boolean=false;
+  public plannerLoader:boolean=false;
+  // public submitProgress:boolean=false;
   // public startT:any;
   // public endT:any;
   constructor(
@@ -46,8 +49,8 @@ public standardId:any[]=[];
     private http: Http,
     private element:ElementRef,
     private cs:CommonService,
+    private router:Router,
   ) {
-    $.noConflict();
     this.getPlanner();
     this.getStandardId();
      
@@ -238,42 +241,57 @@ public endT(e:any){
   }
 
   public getPlanner(){
+    this.plannerLoader=true;
     this.eventService.GetPlanner().subscribe((res)=>{
+    this.plannerLoader=false;      
       this.planner=res;
       this.loader=false;
     },(err)=>{
+       this.router.navigate(['/error']);
+
     })
   }
   
   public getStandardId() {
+    this.standardLoader=true;
     this.eventService.getStandards().subscribe((res) => {
+    this.standardLoader=false;      
       this.standard = res;
     }, (err) => {
+       this.router.navigate(['/error']);      
     });
   }
 
   public postEvent(){
+    this.loader=true;
     this.eventService.postEvent(this.event.value).subscribe((res)=>{
+      this.loader=false;
       this.message="You have successfully added an event";
       $('#modal-success').modal();  
       // $('#message').html(this.eventsInfo.eventTitle);       
       this.getEvents();
     },(err)=>{
+       this.router.navigate(['/error']);      
     })
   }
 
   public deleteEvent(){
+    this.loader=true;
     this.eventService.deleteEvent(this.eventsInfo.id).subscribe((res)=>{
+      this.loader=false;
       this.message="You have successfully deleted the event";
       $('#modal-success').modal('show');             
       this.getEvents();
     },(err)=>{
+       this.router.navigate(['/error']);            
     })
     
   }
 
   public updateEvent(){
+    this.loader=true;
     this.eventService.updateEvent(this.eventsInfo.id,this.editEvent.value).subscribe((res)=>{
+      this.loader=false;
       this.newEvents=res;
       this.message="You have successfully updated the event";
       $('#modal-success').modal('show');         

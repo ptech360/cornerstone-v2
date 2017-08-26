@@ -121,18 +121,14 @@ export class AddEmployeeComponent implements OnInit {
   //     this.standards = res;
   //   },
   //     err => {
-  //       console.log("error", err);
   //     })
   // }
 
   // getSubjects(id: any, index: any) {
-  //   console.log("stan", id);
   //   this.hs.getSubjects(id).subscribe(res => {
   //     this.subjects[index] = res;
-  //     console.log(this.subjects[index]);
   //   },
   //     err => {
-  //       console.log("error", err);
   //     })
   // }
 

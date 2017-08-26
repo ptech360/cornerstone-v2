@@ -217,8 +217,8 @@ font-weight: bold;
      margin: 0px; 
  }
  #myModal-card{
-     width: 60%;
-     margin: auto;
+     /* width: 60%; */
+     /* margin: auto; */
  }
 }  
 
@@ -228,8 +228,8 @@ font-weight: bold;
      padding: 20px;
  }
       #myModal-card{
-     width: 80%;
-     margin: auto;
+     /* width: 80%; */
+     /* margin: auto; */
      
  } 
 
@@ -257,7 +257,7 @@ font-weight: bold;
      margin-right: 10px;
  }
  #myModal-card{
-     width: 100%;
+     /* width: 100%; */
  }
 }
 
@@ -467,4 +467,28 @@ list-style:none;
 
 .white-space{
     white-space: pre-line;
+}
+
+.dropdownLoader{
+    float: right;
+    margin-top: -30px;
+    background: white;
+    margin-right: 5px;
+}
+
+.dropdownLoader i{
+    font-size: 24px !important;
+}
+
+.centerLoader{
+    position:absolute;
+    top:50%;
+}
+
+.centerLoader i{
+    /* font-size:60px !important; */
+}
+
+loader{
+z-index: 1000 !important;
 }

@@ -39,26 +39,24 @@ export class StudentRatingComponent implements OnInit{
   public ratingForm = this.fb.group({});
 
   public getStudents() {
-    this.loader = true;
+    this.loader=true;
     this.srs.getStudents().subscribe(res => {
       if (res.status === 204) {
+        this.loader=false;
         this.students = [];
         this.emptyStudents = true;
         // $('#noDataModal').modal('show');
-        this.loader = false;
       }
+      this.loader=false;
       this.students = res;
       this.studentsCOPY = this.students;
-      this.loader = false;
     },
       err => {
-        this.loader = false;
          this.router.navigate(['/error']);
       })
   }
 
   public selectStudent(stu: any) {
-    this.loader1 = true;
     this.selected = false;
     this.selectedStudent = stu;
     this.selectedStudentCopy =  stu;
@@ -67,7 +65,7 @@ export class StudentRatingComponent implements OnInit{
   }
 
   public getStudentRating(id: any) {
-
+    this.loader1=true
     this.srs.getStudentRating(id).subscribe(res => {
       this.respStu = res;
       this.respStuCopy = this.respStu;

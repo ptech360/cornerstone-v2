@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class LoginComponent{
   loginForm: FormGroup;
   error:boolean = false;
+  public loader:boolean=false;
   constructor(public formBuilder: FormBuilder,
               public appService: AuthService,
               public router: Router){
@@ -24,9 +25,12 @@ export class LoginComponent{
     });
   }
   onSubmit(){
+    this.loader=true;
     this.appService.verifyUser(this.loginForm.value).subscribe((res) => {
+      this.loader=false;
       this.verifySuccessfully(res);
     }, (err) => {
+      this.loader=false;      
       this.verifyFailed(err);
     });
   }
@@ -49,7 +53,7 @@ export class LoginComponent{
     });
   }
 
-  public loggedInSuccesfully(res:any) {    
+  public loggedInSuccesfully(res:any) {
     this.appService.storeData(res);
     this.router.navigate(['/']);
   }    

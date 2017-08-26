@@ -139,7 +139,7 @@ tr,td,table
 
 .studentList 
 {
-  width:95%;  
+  width:100%;  
   max-height: 200px;
   overflow:hidden;
   overflow-y:scroll;
@@ -211,3 +211,11 @@ tr,td,table
   overflow-x: auto;
   overflow-y: auto;
 } */
+
+.searchStu{
+  margin-top:15px !important;
+}
+
+.row{
+  margin:0 !important;
+}

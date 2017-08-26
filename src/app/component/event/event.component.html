@@ -1,6 +1,8 @@
 <div class="calendar-custom">
-<loader [condition]="loader" style="position:absolute;top:50%;left:50%"></loader>    
     <angular2-fullcalendar [options]="calendarOptions" id="calendar"></angular2-fullcalendar>
+    <div class="row text-center">
+        <loader [condition]="loader" class="centerLoader"></loader>    
+    </div>
 </div> 
 <div id="fullCalModal" class="modal fade" >
     <div class="modal-dialog">
@@ -125,6 +127,7 @@
                         <select class="form-control" id="planner" name="planner" formControlName="plannerTypeId" (ngModelChange)="selectPlannerType($event)">
                             <option *ngFor="let p of planner" [value]="p.id">{{p.name}}</option>
                         </select>
+                        <loader [condition]="plannerLoader" class="dropdownLoader"></loader>
                         <div [hidden]="event.controls.plannerTypeId.untouched || event.controls.plannerTypeId.prestine || event.controls.plannerTypeId.valid" class="alert alert-warning">
                             This field is required
                         </div>  
@@ -145,6 +148,7 @@
                             </label>
                         </li>
                         </ul>
+                        <loader [condition]="standardLoader" class="dropdownLoader"></loader>
                     </div>
                      <div class="form-group">
                         <label for="startDate">Start Date</label>

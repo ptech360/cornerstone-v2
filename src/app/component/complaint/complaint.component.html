@@ -10,6 +10,9 @@
         <input class="form-control" type="search" placeholder="Search by complaint title .,. " id="example-search-input" (keyup)="searchComplaints($event)">
       </div>
     </div>-->
+    <div class="row text-center">
+      <loader [condition]="loader"></loader>
+    </div>
     <!--cards -->
     <div style="margin-top: 2%;padding-top: 1%;">
       <div class="container card" *ngFor="let c of complaints; let i = index;">
@@ -49,7 +52,15 @@
       </div>
     </div>
     <!--end cards-->
-    <div class="modal fade" id="myModal-card" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="row col-lg-12" style="text-align: center" *ngIf="(EmptyComplaints)&&(!loader)&&(currentPage==1)"><b>No Complaints are added to the view.</b></div>
+    <div class="row col-lg-12" style="text-align: center" *ngIf="(EmptyComplaints)&&(!loader)&&(currentPage!=1)"><b>No more Complaints are added to the view.</b></div>
+  </div>
+  <div class="panel-footer">
+    <!--<button (click)="previousComplaint()" [disabled]="currentPage === 1" type="button" class="btn btn-primary">Previous</button>-->
+    <div class="text-center"><button (click)="nextComplaint()" type="button" [disabled]="EmptyComplaints || noMore" class="btn btn-primary">Load More</button></div>
+  </div>
+</div>
+<div class="modal fade" id="myModal-card" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content" *ngIf="selectedComplaint">
           <div class="modal-header">
@@ -144,18 +155,6 @@
       <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
-
-    <div class="row text-center">
-      <loader [condition]="loader"></loader>
-    </div>
-    <div class="row col-lg-12" style="text-align: center" *ngIf="(EmptyComplaints)&&(!loader)&&(currentPage==1)"><b>No Complaints are added to the view.</b></div>
-    <div class="row col-lg-12" style="text-align: center" *ngIf="(EmptyComplaints)&&(!loader)&&(currentPage!=1)"><b>No more Complaints are added to the view.</b></div>
-  </div>
-  <div class="panel-footer">
-    <!--<button (click)="previousComplaint()" [disabled]="currentPage === 1" type="button" class="btn btn-primary">Previous</button>-->
-    <button (click)="nextComplaint()" type="button" [disabled]="EmptyComplaints || noMore" class="btn btn-primary">Load More</button>
-  </div>
-</div>
 
 <!-- Edit Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
