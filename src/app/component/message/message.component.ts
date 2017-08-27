@@ -56,7 +56,7 @@ export class MessageComponent implements AfterViewInit, OnInit {
   public categoryLoder:boolean=false;
   public submitProgress:boolean=false;
   constructor(public ms: MessageService, public cs: CommonService,public router:Router) {
-
+     
   }
 
   ngOnInit() {
@@ -230,6 +230,8 @@ export class MessageComponent implements AfterViewInit, OnInit {
       // this.newMessageForm.controls['file'].reset();      
     }
     reader.onload = function (e: any) {
+             $('#getFileModal').modal('show');   //file upload modal   
+
       $('#img33')
         .attr('src', e.target.result)
     };

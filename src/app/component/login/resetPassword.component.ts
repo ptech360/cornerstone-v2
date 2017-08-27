@@ -17,7 +17,7 @@ export class ResetPassword {
     });
 
     constructor(private authService : AuthService){
-
+       
     // this.forgotform=this.initForm()
   }
   onclick(){

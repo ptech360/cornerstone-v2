@@ -61,7 +61,7 @@ export class MainComponent implements OnInit, AfterViewInit {
     this.selectedIndex = i;
   }
   ngOnInit() {
-    //  $.noConflict(); 
+     jQuery.noConflict(); 
     if (this.log.isLoggedIn()) this.isLoggedIn = true;
     else this.isLoggedIn = false;
     // this.checkStudentRating();
@@ -101,12 +101,24 @@ this.role=this.log.getData('role');
   $("#menu-toggle").click(function (e: any) {
      $("#wrapper").toggleClass("toggled");
      shiftLeft();
-  }); 
+  });
+    
+//   $("body").mouseup(function(e:any) 
+// {
+//     var container = $("#profile-card");
+
+//     // if the target of the click isn't the container nor a descendant of the container
+//     if (!container.is(e.target) && container.has(e.target).length === 0) 
+//     {
+//         container.hide();
+//     }
+// });
 
   }
    logout() {
     localStorage.clear();
   }
+
 
 
 }

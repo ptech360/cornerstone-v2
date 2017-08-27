@@ -9,6 +9,7 @@ styleUrls:['./poll.component.css'],
 
 export class PollComponent {
     constructor(private router:Router){
+         
          this.router.navigate(["/poll/current-poll"]);
     }
 

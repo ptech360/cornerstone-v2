@@ -2,11 +2,14 @@ import {Component} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../providers/auth.service';
 import { Router } from '@angular/router';
+declare let $: any;
+
 @Component({
   selector:'login',
   templateUrl:'./login.component.html',
   styleUrls:['./login.component.css']
 })
+
 export class LoginComponent{
   loginForm: FormGroup;
   error:boolean = false;
@@ -14,7 +17,8 @@ export class LoginComponent{
   constructor(public formBuilder: FormBuilder,
               public appService: AuthService,
               public router: Router){
-              if(appService.isLoggedIn()){                
+              if(appService.isLoggedIn()){ 
+                $.noConflict();               
                 router.navigate(['/']);
               }
   }

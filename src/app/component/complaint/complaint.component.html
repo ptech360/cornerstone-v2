@@ -30,7 +30,7 @@
         <div class="col-sm-6" class="badge">{{c.priorityName}}</div>
       </div> -->
         <div class="row">
-          <img class="image" [attr.src]="fileUrl + c.studentPicUrl">
+          <img class="image" [attr.src]="fileUrl + c.studentPicUrl" style="border-radius:50% !important">
         </div>
         <div class="row name">{{c.studentName}}</div>
         <div class="row class">{{c.studentStandardName}}</div>
@@ -97,7 +97,7 @@
               <label class="heading">Priority</label>-->
                 </div>
               </div>
-              <div class="col-sm-4"><img class="modal-image" [attr.src]="fileUrl + selectedComplaint.studentPicUrl"></div>
+              <div class="col-sm-4"><img class="modal-image" [attr.src]="fileUrl + selectedComplaint.studentPicUrl" style="border-radius:50% !important"></div>
             </div>
             <div class="row modal-name">{{selectedComplaint.studentName}}
               <div class="modal-class">{{selectedComplaint.studentStandardName}}</div>
@@ -251,7 +251,7 @@
     <div class="clearFix"></div>
   </div>
   <div class="panel-body">
-    <div *ngIf="EmptyComments" style="text-align:center;">No Comments to display</div>
+    <div *ngIf="EmptyComments && !loaderComment" style="text-align:center;">No Comments to display</div>
     <div class="row text-center">
       <loader [condition]="loaderComment"></loader>
     </div>

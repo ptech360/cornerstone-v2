@@ -40,9 +40,8 @@ export class EventComponent implements OnInit, AfterViewInit {
   public standardId:any[]=[];
   public standardLoader:boolean=false;
   public plannerLoader:boolean=false;
-  // public submitProgress:boolean=false;
-  // public startT:any;
-  // public endT:any;
+  public startTime:any;
+  public endTime:any;
   constructor(
      
     private eventService: EventService,
@@ -51,6 +50,7 @@ export class EventComponent implements OnInit, AfterViewInit {
     private cs:CommonService,
     private router:Router,
   ) {
+    //  
     this.getPlanner();
     this.getStandardId();
      
@@ -114,12 +114,34 @@ export class EventComponent implements OnInit, AfterViewInit {
         },
         
         dayRender:function(date:any,cell:any){
-          if(date.isBefore(moment_().subtract(1, "days")))
-          cell.css("background-color","#fbfdff");
-          cell.css("color","grey");
+          if(date.isBefore(moment_().subtract(1, "days"))){
+          cell.css("background-color","#fbfbfb");
+          // cell.css("color","grey");
+          }
+        else{
+          cell.css("cursor","pointer");
           
+        }
         },
-      
+
+        eventMouseover: function(calEvent:any, jsEvent:any) {
+            var tooltip = '<div class="tooltipevent" style="width:100px;height:100px;background:#ccc;position:absolute;z-index:10001;padding:7px;color:black;font-weight:500;font-size:15px">Click to view, edit or delete the event</div>';
+            $("body").append(tooltip);
+            $(this).mouseover(function(e:any) {
+                $(this).css('z-index', 100);
+                $('.tooltipevent').fadeIn('500');
+                $('.tooltipevent').fadeTo('10', 1.9);
+            }).mousemove(function(e:any) {
+                $('.tooltipevent').css('top', e.pageY + 10);
+                $('.tooltipevent').css('left', e.pageX + 20);
+            });
+        },
+
+        eventMouseout: function(calEvent:any, jsEvent:any) {
+            $(this).css('z-index', 8);
+            $('.tooltipevent').remove();
+        },
+
        viewRender: (view:any, element:any)=> {
           var b = _('#calendar').fullCalendar('getDate');
           var check = moment_(b, 'YYYY/MM/DD');
@@ -173,8 +195,7 @@ export class EventComponent implements OnInit, AfterViewInit {
     }
 
   }
-  public startTime:any;
-  public endTime:any;
+
 
 public startT(e:any){
   this.startTime=e;

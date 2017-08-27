@@ -21,6 +21,7 @@ export class CircularComponent implements OnInit {
 
   constructor(private circularService: CircularService,
                 public router: Router) {
+                   
     
   }
 

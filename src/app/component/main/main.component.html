@@ -31,7 +31,7 @@
       </div>
     </nav>
 <!-- header end-->
-  <div class="profile-card" [hidden]="displayProfile" tabindex= '1' (blur)="displayProfile=true">
+  <div class="profile-card" id="profile-card" [hidden]="displayProfile" tabindex= '1' (blur)="displayProfile=true">
     <div class="row">
       <div class="col-sm-4 col-xs-4">
         <img class="profile-card-pic" src="{{log.getData('picUrl')}}" *ngIf="log.getData('picUrl')">

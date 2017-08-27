@@ -23,6 +23,7 @@ export class DashboardComponent {
   public responseSuggestionByStatus: any=[];
 
   constructor(public cs: ChartService, private router: Router, private zone: NgZone) {
+     
     this.loader = true;
     this.loader1 = true;
     this.loader2 = true;
