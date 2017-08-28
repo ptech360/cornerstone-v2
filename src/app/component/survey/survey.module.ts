@@ -13,17 +13,17 @@ import { AddSurveyComponent } from './add/add';
 				component : SurveyComponent,
 				children : [
 					{
-						path : 'current-poll',
+						path : 'current-survey',
 						component : CurrentSurveyComponent
 					},
 					{
-						path : 'closed-poll',
+						path : 'closed-survey',
 						component : ClosedSurveyComponent
 					}
 				]
 			},
 			{
-				path : 'add-poll',
+				path : 'add-survey',
 				component : AddSurveyComponent
 			}
 			
