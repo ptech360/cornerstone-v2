@@ -30,12 +30,10 @@ import { SurveyService } from "../../providers/survey.service";
 import { MessageService } from "../../providers/message.service";
 import { ErrorComponent } from "../error/error.component";
 import { Error404Component } from "../error/error404";
-import { ResetPassword } from "../../component/login/resetPassword.component"
 const rootRouterConfig:Routes = [
 {path : '' , redirectTo:'dashboard' , pathMatch:'full'},
   { path: '', component: MainComponent,
   children:[
-    { path: 'reset-password' , component:ResetPassword ,canActivate: [LoggedInGuard] },
     { path: 'dashboard', loadChildren: 'app/component/dashboard/dashboard.module#DashboardModule', canActivate: [LoggedInGuard] },
     { path: 'complaint', loadChildren : 'app/component/complaint/complaint.module#ComplaintModule', canActivate: [LoggedInGuard] },
     { path: 'circular', loadChildren: 'app/component/circular/circular.module#CircularModule', canActivate: [LoggedInGuard] },
@@ -78,7 +76,6 @@ imports: [
     ViewSurveyComponent,
     ErrorComponent,
     Error404Component,
-    ResetPassword
     ],
   providers: [
     LoggedInGuard,
