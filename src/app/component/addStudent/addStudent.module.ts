@@ -7,6 +7,7 @@ import { NewStudentComponent } from './newStudent/newStudent.component';
 
 @NgModule({
 	imports : [ SharedModule, RouterModule.forChild([
+			{ path:'', redirectTo:'new-student', pathMatch:'full'},
 			{
 				path : '',
 				component : AddStudentComponent,
