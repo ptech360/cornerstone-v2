@@ -62,7 +62,7 @@
       </div>
       <div class="col-sm-4">
         <div class="row">
-        <button type="button" class="btn btn-success btn-circle" [routerLink]="['/add-appreciation']">
+        <button type="button" class="btn btn-success btn-circle" [routerLink]="['appreciation/add-appreciation']">
           <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
         </button>
         </div>
@@ -166,6 +166,24 @@
       <div class="modal-footer">
         <button class="btn btn-primary" data-dismiss="modal" (click)="resetImage()">Yes</button>
         <button class="btn btn-primary" data-dismiss="modal">No</button>        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="mismatch" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">wrong Password</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       You have entered the old password
+      </div>
+      <div class="modal-footer">
       </div>
     </div>
   </div>

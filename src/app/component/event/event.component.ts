@@ -158,20 +158,23 @@ export class EventComponent implements OnInit, AfterViewInit {
       plannerTypeId:new FormControl([], [Validators.required]),
       startDate:new FormControl(this.start,[Validators.required]),
       endDate:new FormControl(this.end,[Validators.required]),
-      location:new FormControl(''),
-      description:new FormControl(''),
+      location:new FormControl('',[Validators.maxLength(50)]),
+      description:new FormControl('',[Validators.maxLength(2500)]),
      })
 
   }
     public editForm(){
+      this.selectedEvent.startTime=(moment_(this.selectedEvent.startTime,'hh-mm a').format('HH:mm'));
+      this.selectedEvent.endTime=(moment_(this.selectedEvent.endTime,'hh-mm a').format('HH:mm'));
+      console.log(this.selectedEvent.startTime);
       return new FormGroup({
       title:new FormControl(this.selectedEvent.title),        
       startDate:new FormControl(this.selectedEvent.startDate),
       endDate:new FormControl(this.selectedEvent.endDate),
       startTime:new FormControl(this.selectedEvent.startTime),
       endTime:new FormControl(this.selectedEvent.endTime),
-      location:new FormControl(this.selectedEvent.location),
-      description:new FormControl(this.selectedEvent.description),
+      location:new FormControl(this.selectedEvent.location,[Validators.maxLength(50)]),
+      description:new FormControl(this.selectedEvent.description,[Validators.maxLength(2500)]),
     })
     }
 
@@ -191,7 +194,7 @@ export class EventComponent implements OnInit, AfterViewInit {
     }
     else if((type!=3) ||(type!=4)){
       this.event.addControl("startTime", new FormControl('', [Validators.required]));
-      this.event.addControl("endTime", new FormControl('', [Validators.required])); 
+      this.event.addControl("endTime", new FormControl('', [Validators.required]));
     }
 
   }
@@ -254,9 +257,15 @@ public endT(e:any){
   public getEventById(id:any){
     this.eventService.GetEventById(id).subscribe((res)=>{
       this.eventsInfo=res;
+      console.log(this.eventsInfo);
       $('#fullCalModal').modal('show');         
-    this.startTime = moment_(this.eventsInfo.start).format('HH-MM-SS-A');
-     this.endTime = moment_(this.eventsInfo.end).format('HH-MM-SS-A');
+    // this.startTime = moment_(this.eventsInfo.start).format('HH-MM-SS-A');
+    //  this.endTime = moment_(this.eventsInfo.end).format('HH-MM-SS-A');
+
+    this.startTime = this.eventsInfo.startTime;
+     this.endTime = this.eventsInfo.endTime;
+    // this.startTime=this.eventsInfo.startTime;
+    // this.endTime=this.eventsInfo.endTime;
     })
 
   }
@@ -399,7 +408,7 @@ public onStartDate(e:any){
   public checkStart(e:any){
     
     this.startTime=e;
-
+    console.log(e);
   if((this.editEvent.controls['startDate'].value)==(this.editEvent.controls['endDate'].value)){
   if(this.endTime<this.startTime){
       this.message="Please choose start time less than end time";
@@ -436,10 +445,11 @@ public resetForm(){
       this.editEvent.patchValue({ "title": this.selectedEvent.title });
       this.editEvent.patchValue({ "startdate": this.selectedEvent.startDate });
       this.editEvent.patchValue({ "endDate": this.selectedEvent.endDate });
-      this.editEvent.patchValue({ "startTime": this.selectedEvent.startTime });
-      this.editEvent.patchValue({ "endTime": this.selectedEvent.endTime });
+      this.editEvent.patchValue({ "startTime": this.selectedEvent.startTime});
+      this.editEvent.patchValue({ "endTime": this.selectedEvent.endTime});
       this.editEvent.patchValue({ "description": this.selectedEvent.description });
       this.editEvent.patchValue({ "location": this.selectedEvent.location });
+      // console.log( moment_(this.selectedEvent.startTime).format('H-mm'));
 }
 }
 

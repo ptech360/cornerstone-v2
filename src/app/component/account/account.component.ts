@@ -123,7 +123,7 @@ export class AccountComponent implements OnInit {
   	this.au.resetPassword(this.resetform.value)
     .subscribe(response => {
     },err => {
-        alert("You have entered the wrong old password");
+        $('#mismatch').modal('show');
     });
     
 

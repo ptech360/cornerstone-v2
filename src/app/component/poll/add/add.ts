@@ -24,6 +24,8 @@ export class AddPollComponent implements OnInit {
   public standardLoader:boolean=false;
   public infoLoader:boolean=false;
   public addPollForm: FormGroup;
+  public pollType:any=[];  
+  public pollOptionType:any=[];
 
   constructor(public fb: FormBuilder,
     public cs: CommonService,
@@ -61,11 +63,12 @@ export class AddPollComponent implements OnInit {
         this.router.navigate(['/error']);
       })
   }
-
   getPollInfo() {
     this.infoLoader = true;
     this.cs.getPollInfo().subscribe(res => {
       this.pollInfo = res;
+      this.pollType=this.pollInfo.pollType;
+      this.pollOptionType=this.pollInfo.pollOptionType;
     this.infoLoader = false;      
     },
       err => {
