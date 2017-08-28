@@ -19,7 +19,9 @@ export class StudentRatingComponent implements OnInit{
 
   constructor(public srs: StudentRatingService,
     public fb: FormBuilder, public router:Router,
-  ) { }
+  ) { 
+     
+  }
 
   ngOnInit(){
      this.getStudents();

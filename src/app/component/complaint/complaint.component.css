@@ -295,3 +295,8 @@ loader{
 .heading{
     color: #ea212e;
 }
+
+.panel-body{
+    min-height: 150px !important;
+}
+

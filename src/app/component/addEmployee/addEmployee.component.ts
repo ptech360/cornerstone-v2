@@ -36,6 +36,7 @@ export class AddEmployeeComponent implements OnInit {
     public fb: FormBuilder,
     public router: Router,
     public _location: Location, ) {
+        
       this.fileUrl = localStorage.getItem('fileUrl');
 
   }

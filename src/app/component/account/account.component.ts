@@ -31,6 +31,7 @@ export class AccountComponent implements OnInit {
         public au: AuthService,
         public router: Router,
         public route: ActivatedRoute, ) {
+          
         this.url = this.router.url;
 
     }

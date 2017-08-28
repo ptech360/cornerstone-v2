@@ -7,7 +7,6 @@ declare let $: any;
 })
 export class AppComponent  { name = 'Angular';
   constructor(){
-         $.noConflict(); 
 
   }
 }

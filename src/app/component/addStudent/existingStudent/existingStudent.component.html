@@ -32,26 +32,29 @@
               <input class="form-control" *ngIf="selectedStudent==null" type="text" placeholder="Search by Student Name ... " (keyup)="searchStudents($event)">
               <input *ngIf="selectedStudent" class="form-control" type="text" value="{{selectedStudent.name}}" onfocus="this.value= ''"
                 (keyup)="searchStudents($event)">
-              <!-- <button style="background:none;border:none;outline:none;margin-left: -28px;" (click)="dropdown ? dropdown = false : dropdown = true;selected=false"> <span class="glyphicon glyphicon-chevron-down custom-icon" ></span></button> -->
               <loader [condition]="studentLoader" class="dropdownLoader"></loader>
+               <button class="list-btn" (click)="dropdown ? dropdown = false : dropdown = true;selected=false"> <span class="glyphicon glyphicon-chevron-down custom-icon" ></span></button>               
               <div class="studentList" *ngIf="(selected)">
                 <ul class="list-group">
-                  <li class="list-group-item" *ngIf="emptySearchResult && !loader">No Data to Display</li> 
-                  <li class="">
-                  </li>
+                  <li class="list-group-item" *ngIf="(emptySearchResult && !loader) || noStudents">No Data to Display</li> 
                   <span *ngFor="let s of students">
                       <li class="list-group-item" (click)="addForm=null;getStudentDetails(s.id)"> {{s.name}} </li> 
                   </span>
                 </ul>
               </div>
 
-              <!-- <div class="studentList" *ngIf="(dropdown)">
+               <div class="studentList" *ngIf="(dropdown)">
                 <ul class="list-group">
                   <span *ngFor="let s of studentsCOPY">
+                        <li *ngIf="noStudents">No students are added in this class</li>
                         <li class="list-group-item" (click)="dropdown=false;addForm=null;getStudentDetails(s.id)"> {{s.name}} </li> 
                   </span>
                 </ul>
-              </div>  -->
+              </div> 
+              
+              <!-- <select class="form-control">
+                <option *ngFor="let s of students" ><a (click)="">{{s.name}}</a></option>
+              </select> -->
           </div> 
     </div>
   </div>
@@ -92,7 +95,7 @@
               </tr>
             </thead>
             <tbody *ngFor="let s of studentsInfo">
-              <tr (click)="getStudentDetails(s.id)">
+              <tr (click)="getStudentDetails(s.id)" class="pointer">
                 <td><a ><img class="student-image" [attr.src]="fileUrl+'/' + s.picTimestamp"></a></td>
                 <td>{{s.name}}</td>
                 <!-- <td *ngFor="let p of s.parents">{{p.name}}</td> -->
@@ -473,15 +476,18 @@
           </div>
 
           <div class="form-group">
-            <label for="contactNo">Contact No</label>{{selectedParent.contactNo}}
-              <input type="text" id="contactNo" class="form-control" name="contactNo" value="selectedParent.contactNo" [(ngModel)]="contactNo" (ngModelChange)="onContact($event)" [ngModelOptions]="{standalone:true}">  
-              <!-- <div [hidden]="editParentForm.controls.contactNo.valid||editParentForm.controls.contactNo.untouched" class="alert alert-warning">Please enter a valid Contact Number -->
-                <!-- <div>The contact no should be between 9 to 12 digits</div> -->
-              <!-- </div> -->
+            <label for="contactNo">Contact No</label>
+              <input type="text" maxlength="12" minlength="9" id="contactNo" class="form-control" name="contactNo" value="selectedParent.contactNo" [(ngModel)]="contactNo" (ngModelChange)="onContact($event)" [ngModelOptions]="{standalone:true}">  
+               
+           <div *ngIf="contactControl">
+            <div *ngIf="!editParentForm.controls.contactNo.valid||!editParentForm.controls.contactNo.untouched" class="alert alert-warning">Please enter a valid Contact Number 
+                 <div>The contact no should be between 9 to 12 digits</div> 
+               </div> 
+          </div> 
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-success pull-right" type="button" [disabled]="(!editParentForm.dirty)||(editParentForm.invalid)" (click)="submitEditParentForm()"
+          <button id="submitBtn" class="btn btn-success pull-right" type="button" [disabled]="(editParentForm.invalid)" (click)="submitEditParentForm()"
             data-dismiss="modal">Submit</button>
         </div>
       </form>
