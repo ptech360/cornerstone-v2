@@ -8,6 +8,7 @@ import { AddPollComponent } from './add/add';
 
 @NgModule({
 	imports : [ SharedModule, RouterModule.forChild([
+			{path:'', redirectTo:'current-poll', pathMatch:'full'},
 			{
 				path : '',
 				component : PollComponent,
