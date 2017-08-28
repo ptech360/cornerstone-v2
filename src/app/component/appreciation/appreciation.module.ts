@@ -8,6 +8,7 @@ import { AddAppreciation } from './add/add';
 
 @NgModule({
 	imports : [ SharedModule, RouterModule.forChild([
+		{path : '' , redirectTo:'for-me' , pathMatch:'full'},
 			{
 				path : '',
 				component : AppreciationComponent,

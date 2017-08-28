@@ -43,7 +43,7 @@ export class MainComponent implements OnInit, AfterViewInit {
     { title: 'Poll', component: PollComponent, icon: 'icons/poll.png', url: '/poll' },
     // { title: 'Survey', component: SurveyComponent, icon: 'icons/survey.png', url: '/survey' },
     { title: 'Circular', component: CircularComponent, icon: 'icons/circular.png', url: '/circular' },
-    { title: 'Homework', component: HomeworkComponent, icon: 'icons/homework.png', url: '/homework/current-homework' },
+    { title: 'Homework', component: HomeworkComponent, icon: 'icons/homework.png', url: '/homework' },
     { title: 'Student Rating', component: StudentRatingComponent, icon: 'icons/rating.png', url: '/student-profile' },
 
     //  { title: 'Add Employee', component: AddEmployeeComponent, icon: '', url:'/add-employee'},
