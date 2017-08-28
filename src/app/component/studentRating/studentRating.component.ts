@@ -79,7 +79,16 @@ export class StudentRatingComponent implements OnInit{
         this.router.navigate(['/error']);
       });
   }
+  public updaterating(e:any,x:number,x1:number){
+      for(let i =0 ;i<5; i++){
+      (<HTMLInputElement>document.getElementById("star"+x1+"a"+i+"1")).checked=false;
 
+      }
+      for(let i =0 ;i<=x; i++){
+      (<HTMLInputElement>document.getElementById("star"+x1+"a"+i+"1")).checked=true;      
+      }
+
+  }
   public initForm() {
     this.ratingForm = this.fb.group({
       'studentId': [this.selectedStudent.id],

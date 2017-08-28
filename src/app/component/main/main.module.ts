@@ -30,19 +30,16 @@ import { SurveyService } from "../../providers/survey.service";
 import { MessageService } from "../../providers/message.service";
 import { ErrorComponent } from "../error/error.component";
 import { Error404Component } from "../error/error404";
-import { ResetPassword } from "../../component/login/resetPassword.component"
 const rootRouterConfig:Routes = [
 {path : '' , redirectTo:'dashboard' , pathMatch:'full'},
   { path: '', component: MainComponent,
   children:[
-    { path: 'reset-password' , component:ResetPassword ,canActivate: [LoggedInGuard] },
     { path: 'dashboard', loadChildren: 'app/component/dashboard/dashboard.module#DashboardModule', canActivate: [LoggedInGuard] },
     { path: 'complaint', loadChildren : 'app/component/complaint/complaint.module#ComplaintModule', canActivate: [LoggedInGuard] },
     { path: 'circular', loadChildren: 'app/component/circular/circular.module#CircularModule', canActivate: [LoggedInGuard] },
     { path: 'add-circular', loadChildren: 'app/component/circular/add/add.module#AddModule', canActivate: [LoggedInGuard] },
     
     { path: 'homework', loadChildren: 'app/component/homework/homework.module#HomeworkModule', canActivate: [LoggedInGuard],},
-    { path: 'homework-add', loadChildren: 'app/component/homework/add/add.module#HomeworkAddModule', canActivate: [LoggedInGuard] },
     { path: 'account', loadChildren : 'app/component/account/account.module#AccountModule', canActivate: [LoggedInGuard] },
     { path: 'add-employee', loadChildren : 'app/component/addEmployee/addEmployee.module#AddEmployeeModule', canActivate: [LoggedInGuard] },
     { path: 'add-student', loadChildren: 'app/component/addStudent/addStudent.module#AddStudentModule', canActivate: [LoggedInGuard] },
@@ -78,7 +75,6 @@ imports: [
     ViewSurveyComponent,
     ErrorComponent,
     Error404Component,
-    ResetPassword
     ],
   providers: [
     LoggedInGuard,
