@@ -38,7 +38,7 @@ const rootRouterConfig:Routes = [
     { path: 'complaint', loadChildren : 'app/component/complaint/complaint.module#ComplaintModule', canActivate: [LoggedInGuard] },
     { path: 'circular', loadChildren: 'app/component/circular/circular.module#CircularModule', canActivate: [LoggedInGuard] },
     { path: 'add-circular', loadChildren: 'app/component/circular/add/add.module#AddModule', canActivate: [LoggedInGuard] },
-    
+    { path: 'time-table', loadChildren: 'app/component/timetable/timetable.module#TimeTable', canActivate: [LoggedInGuard] },
     { path: 'homework', loadChildren: 'app/component/homework/homework.module#HomeworkModule', canActivate: [LoggedInGuard],},
     { path: 'account', loadChildren : 'app/component/account/account.module#AccountModule', canActivate: [LoggedInGuard] },
     { path: 'add-employee', loadChildren : 'app/component/addEmployee/addEmployee.module#AddEmployeeModule', canActivate: [LoggedInGuard] },

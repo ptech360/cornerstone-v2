@@ -1,0 +1,10 @@
+Select Standard
+<div class="panel panel-default">
+
+	<select class="form-control" id="standardIds" name="standardIds" [(ngModel)]="selectedStandard" [ngModelOptions]="{standalone: true}"
+          (ngModelChange)="onStandards($event)" required>
+      <option *ngFor=" let s of standards" [value]="s.id"> {{s.name}}</option>
+    </select>
+	
+</div>
+<p>{{selectedStandard}}</p>
