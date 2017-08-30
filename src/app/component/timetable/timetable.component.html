@@ -5,6 +5,21 @@ Select Standard
           (ngModelChange)="onStandards($event)" required>
       <option *ngFor=" let s of standards" [value]="s.id"> {{s.name}}</option>
     </select>
-	
+	<br>
+    <div>
+    	<table width="100%">
+    		<thead>
+    			<tr>
+    				<th class="tt-head" *ngFor=" let day of days">{{ day }}</th>
+    			</tr>
+    		</thead>
+    		<tbody>
+    			<tr>
+    				<td></td>
+    			</tr>
+    		</tbody>
+    	</table>
+    </div>
+    <p>{{ selectedStandard }}</p>
+
 </div>
-<p>{{selectedStandard}}</p>

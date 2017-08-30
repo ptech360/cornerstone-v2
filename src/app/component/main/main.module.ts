@@ -1,15 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MainRoutingModule } from "./main.routing.module";
 import { XHRBackend, RequestOptions, HttpModule } from '@angular/http';
 
 import { MainComponent } from "./main.component";
 import { EventComponent } from "../event/event.component";
 import { ViewSurveyComponent } from "../survey/view/survey";
-
 import { CalendarComponent } from "../../angular2-fullcalendar/src/calendar/calendar";
-
 import { SharedModule } from '../../shared.module';
+
 import { LoggedInGuard } from "../login/login.gaurd";
 import { Configuration } from "../../providers/app.constant";
 import { CommonService } from "../../providers/common.service";
@@ -37,7 +35,6 @@ const rootRouterConfig:Routes = [
     { path: 'dashboard', loadChildren: 'app/component/dashboard/dashboard.module#DashboardModule', canActivate: [LoggedInGuard] },
     { path: 'complaint', loadChildren : 'app/component/complaint/complaint.module#ComplaintModule', canActivate: [LoggedInGuard] },
     { path: 'circular', loadChildren: 'app/component/circular/circular.module#CircularModule', canActivate: [LoggedInGuard] },
-    { path: 'add-circular', loadChildren: 'app/component/circular/add/add.module#AddModule', canActivate: [LoggedInGuard] },
     { path: 'time-table', loadChildren: 'app/component/timetable/timetable.module#TimeTable', canActivate: [LoggedInGuard] },
     { path: 'homework', loadChildren: 'app/component/homework/homework.module#HomeworkModule', canActivate: [LoggedInGuard],},
     { path: 'account', loadChildren : 'app/component/account/account.module#AccountModule', canActivate: [LoggedInGuard] },
