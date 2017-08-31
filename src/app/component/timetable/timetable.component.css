@@ -6,3 +6,13 @@
 	padding-top: 8px;
 	padding-bottom: 8px;
 }
+
+.tt-blocks{
+	text-align: center;
+}
+
+.tt-block{
+	display: block;
+	border : 1px solid black;
+	
+}

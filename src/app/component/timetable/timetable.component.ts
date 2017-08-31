@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PollService } from '../../providers/poll.service';
+import { TimeTableService } from '../../providers/timetable.service';
+import { FormsModule,FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
  selector : "time-table",
@@ -10,19 +11,40 @@ import { PollService } from '../../providers/poll.service';
 export class TimetableComponent implements OnInit{
  private standards:any; 
  private standardLoader : any;
- private selectedStandards : any;
- private days : any[] = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+ private selectedStandards : any = 1;
+ private timetable : any;
+ private days : any[] = [] ;
+ private daysdata : any[] = [];
+ 
  constructor(
- 	public ps: PollService,
+ 	public ps: TimeTableService,
     public router:Router,
  ){}
 
  ngOnInit(){
  	this.getStandards();
+   this.getTimeTable(this.selectedStandards);
  }
 
  onStandards(en : any){
  	console.log(en);
+ }
+
+ getTimeTable(selectedstandard:any){
+   this.days = [];
+   this.daysdata = [];
+   this.ps.gettimeTable( selectedstandard ).subscribe(res => {
+      this.timetable = res;
+      Object.keys(res).forEach( key => {
+     this.daysdata.push(res[key]); 
+     console.log(res[key]);//value    
+     this.days.push(key); //key
+      });
+      console.log(this.timetable);
+    },
+      err => {
+        this.router.navigate(['/error']);
+      })
  }
 
  getStandards() {

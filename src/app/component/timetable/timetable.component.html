@@ -2,24 +2,72 @@ Select Standard
 <div class="panel panel-default">
 
 	<select class="form-control" id="standardIds" name="standardIds" [(ngModel)]="selectedStandard" [ngModelOptions]="{standalone: true}"
-          (ngModelChange)="onStandards($event)" required>
+          (ngModelChange)="getTimeTable(selectedStandard)" required>
       <option *ngFor=" let s of standards" [value]="s.id"> {{s.name}}</option>
+        
     </select>
 	<br>
     <div>
     	<table width="100%">
     		<thead>
-    			<tr>
+    			<tr *ngIf= " days ">
     				<th class="tt-head" *ngFor=" let day of days">{{ day }}</th>
     			</tr>
     		</thead>
     		<tbody>
     			<tr>
-    				<td></td>
+    				<td  class="tt-blocks" *ngFor=" let x of daysdata">
+                            
+                            <span class="tt-block" *ngFor=" let x1 of x">{{x1.startTime}} - {{x1.endTime}} <br> {{x1.subjectName}}</span>
+                
+                    </td>
     			</tr>
     		</tbody>
     	</table>
     </div>
     <p>{{ selectedStandard }}</p>
+    
+
+
 
 </div>
+<div *ngIf= " timetable " >
+<span  *ngFor=" let x of daysdata">{{x.id}}</span>
+</div>
+
+
+<!-- <div class="modal fade" id="editSubject" role="dialog">
+  <div class="modal-dialog">
+ -->    <!-- Update Modal content-->
+<!--    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Subject </h4>
+      </div>
+      <form class="form" [formGroup]='resetform'class="editpassForm">
+            <div class="form-group">
+                <label for="oldPassword">Old Password</label>
+                <input type="password" (click)="onclick()" name='oldPassword' id='oldPassword' formControlName='oldPassword' class=" form-control" placeholder="Enter your old password here"/>
+        <div [hidden]="resetform.controls.oldPassword.valid || resetform.controls.oldPassword.untouched || resetform.controls.oldPassword.pristine" class="alert alert-warning">This field is required</div>      
+      </div>
+            <div class="form-group">
+                <label for="newPassword">New Password</label>
+        <input type="password" name='newPassword' (click)="onclick()"  id='newPassword' formControlName='newPassword' class=" form-control" placeholder="Enter your new password here"/>
+        <div [hidden]="resetform.controls.newPassword.valid || resetform.controls.newPassword.untouched || resetform.controls.newPassword.pristine" class="alert alert-warning">This field is required
+          <div style="color:red"> minimum length of password is 4</div></div>      
+      </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm password</label>
+        <input type="password" name='confirmPassword' (click)="onclick()" id='confirmPassword' formControlName='confirmPassword' class="form-control " placeholder="Confirm your password"/>
+        <div [hidden]="resetform.controls.confirmPassword.valid || resetform.controls.confirmPassword.untouched" class="alert alert-warning">This field is required</div>          
+      </div>
+    </form>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onSubmit()" [disabled]="resetform.invalid">Submit</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+    </div>
+
+    </div>
+  </div>
+</div>
+ -->
