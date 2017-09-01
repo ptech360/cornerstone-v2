@@ -50,8 +50,8 @@
       <div class="form-group" *ngIf="surveyForm.value.surveyTypeId == 2">
         <label for="standards">Standards</label>
         <div class="row text-center">
-                  <loader [condition]="submitProgress" class="standardLoad"></loader>
-                </div>
+                  <loader [condition]="submitProgress" class="centerLoader"></loader>
+        </div>
             <button type="button" class="form-control" *ngIf="standards != null" (click)="dropdown ? dropdown = false : dropdown = true;"></button>
             <button type="button" class="form-control" *ngIf="standards == null">No Standards are added to the View. Try again later.</button>
             <!-- <span *ngIf="standards != null" class="glyphicon glyphicon-triangle-bottom" style="margin-left: -4%;
@@ -67,6 +67,7 @@
                 </label>
               </li>
             </ul>
+            <loader [condition]="standardLoader" class="dropdownLoader"></loader>            
 <!--         <select class="form-control" id="standardIds" [(ngModel)]="selectedStandard" [ngModelOptions]="{standalone: true}" (ngModelChange)="onStandards($event)"
           multiple required>
           <option *ngIf="!standards" [value]="null" selected>No standards are added </option>

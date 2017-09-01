@@ -36,6 +36,7 @@ import { SuggestionComponent } from "../suggestion/suggestion.component";
 import { SuggestionForMe } from "../suggestion/for-me/forme";
 import { SuggestionForStudent } from "../suggestion/for-student/forstudent";
 import { SuggestionAddComponent } from "../suggestion/add/add";
+import { FoodmenuComponent } from "../foodmenu/foodmenu.component";
 
 @NgModule({
   imports: [RouterModule.forChild([
@@ -120,6 +121,7 @@ import { SuggestionAddComponent } from "../suggestion/add/add";
         ]
       },
       { path: 'suggestion-add', component: SuggestionAddComponent, canActivate: [LoggedInGuard] },
+      { path: 'foodmenu', component: FoodmenuComponent, canActivate: [LoggedInGuard] },      
     ]
       
     }

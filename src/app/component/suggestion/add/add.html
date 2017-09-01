@@ -6,6 +6,9 @@
   </button>
   </div>
     <div class="panel-body">
+      <div class="row text-center">
+        <loader class="centerLoader" [condition]="submitProgress"></loader>
+      </div>
       <form name="suggestion" [formGroup]="suggestion" (ngSubmit)="submitSuggestion()" novalidate>
         
         <div class="form-group">
@@ -16,6 +19,7 @@
            <option *ngIf="emptyStandards" disabled>Standards are not added. Try again later. </option>
           <option *ngFor="let a of standards" [ngValue]="a.id"> {{a.name}}</option>
         </select>
+        <loader class="dropdownLoader" [condition]="standardLoader"></loader>        
            <!-- <div [hidden]="suggestion.controls.standardId.valid || suggestion.controls.standardId.untouched" class="alert alert-warning">This field is required</div>   -->
         </div>
 
@@ -27,6 +31,7 @@
              <option *ngIf="emptyStudents" disabled>Students are not added. Try again later. </option>
             <option *ngFor="let s of students" [ngValue]="s.id">{{s.name}}</option>
           </select>
+        <loader class="dropdownLoader" [condition]="studentLoader"></loader>                  
          <div [hidden]="suggestion.controls.studentId.valid || suggestion.controls.studentId.untouched" class="alert alert-warning">This field is required</div>   
         
         </div>
