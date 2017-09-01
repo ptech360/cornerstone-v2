@@ -13,6 +13,7 @@ declare let $: any;
 export class LoginComponent{
   loginForm: FormGroup;
   error:boolean = false;
+
   public loader:boolean=false;
   constructor(public formBuilder: FormBuilder,
               public appService: AuthService,
@@ -28,10 +29,17 @@ export class LoginComponent{
       password: ['', [Validators.required]]
     });
   }
+  loaderOn(){
+    let url = document.URL;
+    if(url.indexOf('dashboard')){
+      return true;
+    }
+    else false;
+  }
   onSubmit(){
     this.loader=true;
     this.appService.verifyUser(this.loginForm.value).subscribe((res) => {
-      this.loader=false;
+      
       this.verifySuccessfully(res);
     }, (err) => {
       this.loader=false;      
@@ -42,6 +50,7 @@ export class LoginComponent{
   public verifySuccessfully(res:any) {
     localStorage.setItem("access_token", res.access_token);
     this.getUserInfo();
+
   }
 
   public verifyFailed(err:any) {
@@ -59,6 +68,7 @@ export class LoginComponent{
 
   public loggedInSuccesfully(res:any) {
     this.appService.storeData(res);
+    this.loader=false;
     this.router.navigate(['/']);
   }    
 }

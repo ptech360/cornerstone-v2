@@ -80,7 +80,7 @@
           </div> </a>
         </li>-->
       <li class="sidebar-items" *ngIf="role=='admin'">
-        <a class="section">Main</a>
+       
       </li>
       <li *ngFor="let page of pages; let i=index" class="sidebar-items">
         <a [routerLink]="[page.url]" routerLinkActive="active" (click)="getSelectedLink(i)">
