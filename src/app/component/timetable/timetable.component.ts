@@ -68,8 +68,8 @@ export class TimetableComponent implements OnInit{
     this.subjectName = x.subjectName;
     this.starttime = x.startTime;
     this.endtime = x.endTime;
-    this.day = this.days[i];
     this.timetableid = x.id;
+    this.day = this.days[i];
     console.log("id is : "+this.timetableid);
      $('#editSubject').modal('show');
      this.getSubject(selectedstandard); 

@@ -7,19 +7,23 @@ Select Standard
         
     </select>
 	<br>
-    <div>
+    <div style="overflow:auto">
     	<table width="100%">
     		<thead>
     			<tr *ngIf= " days && selectedStandard ">
-    				<th class="tt-head" *ngFor=" let day of days">{{ day }}</th>
+            <th class="tt-head"></th>
+    				<th class="tt-head" *ngFor=" let x1 of daysdata[0]">{{x1.startTime}} - {{x1.endTime}}</th>
     			</tr>
     		</thead>
-    		<tbody>
-    			<tr *ngIf="selectedStandard">
-    				<td  class="tt-blocks" *ngFor=" let x of daysdata; let i = index ">
-                            <span class="tt-block" *ngFor=" let x1 of x" (click)="getModal(selectedStandard,x1,i)">{{x1.startTime}} - {{x1.endTime}} <br> {{x1.subjectName}}</span>
-                
-                    </td>
+    		<tbody *ngIf= " days && selectedStandard ">
+    			<tr *ngFor=" let day of days; let i = index ">
+            <td class="tt-head1">{{day}}</td>
+    				<td  class="tt-blocks" *ngFor=" let x of daysdata[i]; let i1 = index " (click)="getModal(selectedStandard,x,i)">
+              <!-- <span *ngIf="!x.subjectName">{{x.id}}</span> -->
+              <span *ngIf="x.subjectName">{{x.subjectName}}</span>
+              
+                         <!--    <span class="tt-block" *ngFor=" let x1 of x" (click)="getModal(selectedStandard,x1,i)">{{x1.startTime}} - {{x1.endTime}} <br> {{x1.subjectName}}</span> -->    
+            </td>
     			</tr>
     		</tbody>
     	</table>

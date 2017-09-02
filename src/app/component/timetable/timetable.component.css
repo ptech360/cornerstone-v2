@@ -2,11 +2,27 @@
 	background-color: #303342;
 	text-align: center;
 	color : white;
-	width : 16.67%;
+	width:7.69%;
 	padding-top: 8px;
 	padding-bottom: 8px;
+	padding-left: 2px;
+	padding-right: 2px;
+	border-right : 1px solid white;
+	font-size: 9px;
 }
 
+.tt-head1{
+	background-color: #303342;
+	text-align: center;
+	color : white;
+	width:7.69%;
+	padding-top: 12px;
+	padding-bottom: 12px;
+	padding-left: 2px;
+	padding-right: 2px;
+	border-right : 1px solid white;
+	font-size: 15px;
+}
 .tt-blocks{
 	text-align: center;
 }
