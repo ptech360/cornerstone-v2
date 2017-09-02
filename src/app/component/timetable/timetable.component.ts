@@ -16,10 +16,12 @@ export class TimetableComponent implements OnInit{
  private timetable : any;
  private days : any[] = [] ;
  private daysdata : any[] = [];
-  private endtime : string;
-  private starttime : string;  
-  private day : string ;
-  private subjects : any[];
+ private endtime : string;
+ private starttime : string;  
+ private day : string ;
+ private subjects : any[];
+ private selectedSubject : any = 1 ;
+ private timetableid : any;
  constructor(
  	public ps: TimeTableService,
     public router:Router,
@@ -55,13 +57,14 @@ export class TimetableComponent implements OnInit{
     this.starttime = x.startTime;
     this.endtime = x.endTime;
     this.day = this.days[i];
+    this.timetableid = x.id;
+    console.log("id is : "+this.timetableid);
      $('#editSubject').modal('show');
      this.getSubject(selectedstandard); 
   }
 
  getSubject(selectedstandard:any){
    this.ps.getSubject(selectedstandard).subscribe(res => {
-     console.log(res);
      this.subjects = res;
    },
      err => {
@@ -69,15 +72,16 @@ export class TimetableComponent implements OnInit{
      })
  }
 
- onSubmit(timetableid : any , subId: any){
-   // this.ps.onSubmit(timetableid,subId).subscribe(res => {
-   //   console.log(res);
-   // },
-   //   err => {
-   //     this.router.navigate(['/error']);
-   //   })
+ onSubmit(){
+   this.ps.onSubmit(this.timetableid,this.selectedSubject).subscribe(res => {
+     console.log(res);
+   },
+     err => {
+       this.router.navigate(['/error']);
+     })
 
  }
+
 
  getStandards() {
     this.standardLoader=true;
