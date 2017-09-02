@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { TimeTableService } from '../../providers/timetable.service';
 import { FormsModule,FormGroup, FormControl, Validators } from '@angular/forms';
 
+declare let $: any;
 @Component({
  selector : "time-table",
  templateUrl : "./timetable.component.html",
@@ -11,15 +12,18 @@ import { FormsModule,FormGroup, FormControl, Validators } from '@angular/forms';
 export class TimetableComponent implements OnInit{
  private standards:any; 
  private standardLoader : any;
- private selectedStandards : any = 1;
+ private selectedStandards : any = 1 ;
  private timetable : any;
  private days : any[] = [] ;
  private daysdata : any[] = [];
- 
+  private endtime : string;
+  private starttime : string;  
+  private day : string ;
+  private subjects : any[];
  constructor(
  	public ps: TimeTableService,
     public router:Router,
- ){}
+ ){ }
 
  ngOnInit(){
  	this.getStandards();
@@ -45,6 +49,34 @@ export class TimetableComponent implements OnInit{
       err => {
         this.router.navigate(['/error']);
       })
+ }
+
+  getModal(selectedstandard : any , x : any, i : any){
+    this.starttime = x.startTime;
+    this.endtime = x.endTime;
+    this.day = this.days[i];
+     $('#editSubject').modal('show');
+     this.getSubject(selectedstandard); 
+  }
+
+ getSubject(selectedstandard:any){
+   this.ps.getSubject(selectedstandard).subscribe(res => {
+     console.log(res);
+     this.subjects = res;
+   },
+     err => {
+       this.router.navigate(['/error']);
+     })
+ }
+
+ onSubmit(timetableid : any , subId: any){
+   // this.ps.onSubmit(timetableid,subId).subscribe(res => {
+   //   console.log(res);
+   // },
+   //   err => {
+   //     this.router.navigate(['/error']);
+   //   })
+
  }
 
  getStandards() {

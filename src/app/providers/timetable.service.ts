@@ -26,6 +26,12 @@ export class TimeTableService{
     // this.baseUrl = this.con.baseUrl;
   }
 
+
+  public getSubject(selectedstandard : any){
+    return this.http.get(this.serverUrl + '/time-table/standard/'+ selectedstandard +'/save-info')
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
 	public getStandards() {
     return this.http.get(this.serverUrl + '/time-table/standard')
                     .map(this.extractData)
@@ -36,6 +42,12 @@ export class TimeTableService{
     if (res.status === 204) { return res; }
     let body = res.json();
     return body || {};
+  }
+
+  public onSubmit(timetableid : any , subId: any){
+    return this.http.put(this.serverUrl + '/time-table/'+timetableid,{ subjectId : subId })
+                    .map(this.extractData)
+                    .catch(this.handleError);
   }
 
 	public gettimeTable(selectedstandard : any){
