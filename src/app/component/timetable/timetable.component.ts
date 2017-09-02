@@ -22,6 +22,9 @@ export class TimetableComponent implements OnInit{
  private subjects : any[];
  private selectedSubject : any = 1 ;
  private timetableid : any;
+ private showsubjectlist : boolean = true;
+ private showsubjectname : boolean = false;
+ private subjectName : string;
  constructor(
  	public ps: TimeTableService,
     public router:Router,
@@ -54,6 +57,15 @@ export class TimetableComponent implements OnInit{
  }
 
   getModal(selectedstandard : any , x : any, i : any){
+    if(x.subjectName!=null){
+      this.showsubjectlist = false;
+      this.showsubjectname = true;
+    }
+    else{
+     this.showsubjectname = false;
+     this.showsubjectlist = true; 
+    }
+    this.subjectName = x.subjectName;
     this.starttime = x.startTime;
     this.endtime = x.endTime;
     this.day = this.days[i];
@@ -63,6 +75,9 @@ export class TimetableComponent implements OnInit{
      this.getSubject(selectedstandard); 
   }
 
+  showlist(){
+    this.showsubjectlist = true;
+  }
  getSubject(selectedstandard:any){
    this.ps.getSubject(selectedstandard).subscribe(res => {
      this.subjects = res;
