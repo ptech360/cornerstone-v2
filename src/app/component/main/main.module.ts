@@ -4,6 +4,7 @@ import { XHRBackend, RequestOptions, HttpModule } from '@angular/http';
 
 import { MainComponent } from "./main.component";
 import { EventComponent } from "../event/event.component";
+import { FoodmenuComponent } from "../foodmenu/foodmenu.component"; 
 import { ViewSurveyComponent } from "../survey/view/survey";
 import { CalendarComponent } from "../../angular2-fullcalendar/src/calendar/calendar";
 import { SharedModule } from '../../shared.module';
@@ -26,6 +27,8 @@ import { SuggestionService } from "../../providers/suggestion.service";
 import { StudentRatingService } from "../../providers/studentRating.service";
 import { SurveyService } from "../../providers/survey.service";
 import { MessageService } from "../../providers/message.service";
+import { FoodmenuService } from "../../providers/foodmenu.service";
+
 import { ErrorComponent } from "../error/error.component";
 import { Error404Component } from "../error/error404";
 const rootRouterConfig:Routes = [
@@ -44,12 +47,14 @@ const rootRouterConfig:Routes = [
     { path: 'poll', loadChildren: 'app/component/poll/poll.module#PollModule', canActivate: [LoggedInGuard] },
     { path: 'conversation', loadChildren: 'app/component/message/message.module#MessageModule', canActivate: [LoggedInGuard], },
     { path: 'event', component: EventComponent, canActivate: [LoggedInGuard] },
+    { path: 'foodmenu', component: FoodmenuComponent, canActivate: [LoggedInGuard] },
+    
     { path: 'survey', loadChildren: 'app/component/survey/survey.module#SurveyModule', canActivate: [LoggedInGuard] },
     
     { path: 'student-profile', loadChildren: 'app/component/studentRating/studentRating.module#StudentRatingModule', canActivate: [LoggedInGuard] },
     { path: 'view-survey/:id', component: ViewSurveyComponent, canActivate: [LoggedInGuard] },
-    {
-      path: 'suggestion', loadChildren: 'app/component/suggestion/suggestion.module#SuggestionModule' },
+    { path: 'suggestion', loadChildren: 'app/component/suggestion/suggestion.module#SuggestionModule' },
+    { path: 'foodmenu', loadChildren: 'app/component/foodmenu/foodmenu.module#FoodmenuModule', canActivate: [LoggedInGuard] },    
   ]
     
   },
@@ -69,6 +74,7 @@ imports: [
     MainComponent,
     CalendarComponent,
     EventComponent,
+    FoodmenuComponent,
     ViewSurveyComponent,
     ErrorComponent,
     Error404Component,
@@ -93,6 +99,7 @@ imports: [
     SurveyService,
     SuggestionService,
     MessageService,
+    FoodmenuService,
     {
       provide: CustomHttpService,
       useFactory: (backend: XHRBackend, defaultOptions: RequestOptions) => {

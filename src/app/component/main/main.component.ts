@@ -1,5 +1,17 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { LoggedInGuard } from '../login/login.gaurd';
+import { AppreciationComponent } from '../appreciation/appreciation.component';
+import { AddSurveyComponent } from '../survey/add/add';
+import { SurveyComponent } from '../survey/survey.component';
+import { PollComponent } from '../poll/poll.component'
+import { StudentRatingComponent } from '../studentRating/studentRating.component'
+import { MessageComponent } from '../message/message.component';
+import { AddEmployeeComponent } from '../addEmployee/addEmployee.component';
+import { AddStudentComponent } from '../addStudent/addStudent.component';
+import { FoodmenuComponent } from '../foodmenu/foodmenu.component';
+import {EventComponent} from '../event/event.component';
+import { SuggestionComponent } from '../suggestion/suggestion.component';
+import { AccountComponent } from '../account/account.component';
 
 
 declare let $: any;
@@ -25,6 +37,7 @@ export class MainComponent implements OnInit, AfterViewInit {
     { title: 'Events', icon: 'icons/event.png', url: '/event'},
     { title: 'Poll', icon: 'icons/poll.png', url: '/poll' },
     // { title: 'Survey', component: SurveyComponent, icon: 'icons/survey.png', url: '/survey' },
+    { title: 'Food Menu', component: FoodmenuComponent, icon: 'icons/rating.png', url: '/foodmenu' },    
     { title: 'Circular', icon: 'icons/circular.png', url: '/circular' },
     { title: 'Homework', icon: 'icons/homework.png', url: '/homework' },
     { title: 'Student Rating', icon: 'icons/rating.png', url: '/student-profile' },
