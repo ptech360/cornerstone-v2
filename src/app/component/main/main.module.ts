@@ -14,19 +14,10 @@ import { Configuration } from "../../providers/app.constant";
 import { CommonService } from "../../providers/common.service";
 import { CustomHttpService } from "../../providers/default.header.service";
 import { AuthService } from "../../providers/auth.service";
-import { ComplaintService } from "../../providers/complaint.service";
 import { ChartService } from "../../providers/chart.service";
-import { HomeworkService } from "../../providers/homework.service";
-import { CircularService } from "../../providers/circular.service";
 import { ValidationService } from "../../providers/formValidation.service";
 import { AdminService } from "../../providers/admin.service";
-import { AppreciationService } from "../../providers/appreciation.service";
-import { PollService } from "../../providers/poll.service";
 import { EventService } from "../../providers/event.service";
-import { SuggestionService } from "../../providers/suggestion.service";
-import { StudentRatingService } from "../../providers/studentRating.service";
-import { SurveyService } from "../../providers/survey.service";
-import { MessageService } from "../../providers/message.service";
 import { FoodmenuService } from "../../providers/foodmenu.service";
 
 import { ErrorComponent } from "../error/error.component";
@@ -85,20 +76,10 @@ imports: [
     CommonService,
     CustomHttpService,
     AuthService,
-    ComplaintService,
     ChartService,
-    HomeworkService,
-    CircularService,
     ValidationService,
     AdminService,
-    AppreciationService,
-    PollService,
     EventService,
-    PollService,
-    StudentRatingService,
-    SurveyService,
-    SuggestionService,
-    MessageService,
     FoodmenuService,
     {
       provide: CustomHttpService,

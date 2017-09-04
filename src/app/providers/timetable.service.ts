@@ -62,6 +62,4 @@ export class TimeTableService{
     }
     return Observable.throw(errMsg);
   }
-
-
 }

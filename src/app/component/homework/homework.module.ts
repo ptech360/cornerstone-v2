@@ -5,6 +5,7 @@ import { SharedModule } from '../../shared.module';
 import { CurrentHomework } from './current/homework';
 import { PassedHomework } from './passed/homework';
 import { HomeworkAddComponent } from './add/add';
+import { HomeworkService } from "../../providers/homework.service";
 
 @NgModule({
 	imports: [SharedModule, RouterModule.forChild([
@@ -29,7 +30,8 @@ import { HomeworkAddComponent } from './add/add';
 		}
 		
 	])],
-	declarations : [ HomeworkAddComponent , HomeworkComponent,CurrentHomework,PassedHomework ]
+	declarations : [ HomeworkAddComponent , HomeworkComponent,CurrentHomework,PassedHomework ],
+	providers : [ HomeworkService ]
 })
 export class HomeworkModule {
 
