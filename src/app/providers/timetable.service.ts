@@ -17,17 +17,17 @@ export class TimeTableService{
    constructor(private http: CustomHttpService,
     private htttp: Http,
     private con: Configuration) {
-    this.getUrl();
   }
 
-  getUrl() {
-    this.serverUrl = this.con.Server;
-    console.log(this.serverUrl);
-    // this.baseUrl = this.con.baseUrl;
-  }
 
+
+  public getSubject(selectedstandard : any){
+    return this.http.get(this.con.Server + '/time-table/standard/'+ selectedstandard +'/save-info')
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
 	public getStandards() {
-    return this.http.get(this.serverUrl + '/time-table/standard')
+    return this.http.get(this.con.Server + '/time-table/standard')
                     .map(this.extractData)
                     .catch(this.handleError);
   }
@@ -38,8 +38,14 @@ export class TimeTableService{
     return body || {};
   }
 
+  public onSubmit(timetableid : any , subId: any){
+    return this.http.put(this.con.Server + '/time-table/'+timetableid,{ subjectId : subId })
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
+
 	public gettimeTable(selectedstandard : any){
-	return this.http.get(this.serverUrl + '/time-table/standard/'+selectedstandard)
+	return this.http.get(this.con.Server + '/time-table/standard/'+selectedstandard)
                     .map(this.extractData)
                     .catch(this.handleError);	
 	}  

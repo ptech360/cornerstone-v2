@@ -7,26 +7,27 @@ Select Standard
         
     </select>
 	<br>
-    <div>
+    <div style="overflow:auto">
     	<table width="100%">
     		<thead>
-    			<tr *ngIf= " days ">
-    				<th class="tt-head" *ngFor=" let day of days">{{ day }}</th>
+    			<tr *ngIf= " days && selectedStandard ">
+            <th class="tt-head"></th>
+    				<th class="tt-head" *ngFor=" let x1 of daysdata[0]">{{x1.startTime}} - {{x1.endTime}}</th>
     			</tr>
     		</thead>
-    		<tbody>
-    			<tr>
-    				<td  class="tt-blocks" *ngFor=" let x of daysdata">
-                            
-                            <span class="tt-block" *ngFor=" let x1 of x">{{x1.startTime}} - {{x1.endTime}} <br> {{x1.subjectName}}</span>
-                
-                    </td>
+    		<tbody *ngIf= " days && selectedStandard ">
+    			<tr *ngFor=" let day of days; let i = index ">
+            <td class="tt-head1">{{day}}</td>
+    				<td  class="tt-blocks" *ngFor=" let x of daysdata[i]; let i1 = index " (click)="getModal(selectedStandard,x,i)">
+              <!-- <span *ngIf="!x.subjectName">{{x.id}}</span> -->
+              <span *ngIf="x.subjectName">{{x.subjectName}}</span>
+              
+                         <!--    <span class="tt-block" *ngFor=" let x1 of x" (click)="getModal(selectedStandard,x1,i)">{{x1.startTime}} - {{x1.endTime}} <br> {{x1.subjectName}}</span> -->    
+            </td>
     			</tr>
     		</tbody>
     	</table>
     </div>
-    <p>{{ selectedStandard }}</p>
-    
 
 
 
@@ -36,38 +37,29 @@ Select Standard
 </div>
 
 
-<!-- <div class="modal fade" id="editSubject" role="dialog">
+<div class="modal fade" id="editSubject" role="dialog">
   <div class="modal-dialog">
- -->    <!-- Update Modal content-->
-<!--    <div class="modal-content">
+    <!-- Update Modal content-->
+   <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Subject </h4>
+        <h4 class="modal-title">Add or View subject</h4>
       </div>
-      <form class="form" [formGroup]='resetform'class="editpassForm">
-            <div class="form-group">
-                <label for="oldPassword">Old Password</label>
-                <input type="password" (click)="onclick()" name='oldPassword' id='oldPassword' formControlName='oldPassword' class=" form-control" placeholder="Enter your old password here"/>
-        <div [hidden]="resetform.controls.oldPassword.valid || resetform.controls.oldPassword.untouched || resetform.controls.oldPassword.pristine" class="alert alert-warning">This field is required</div>      
-      </div>
-            <div class="form-group">
-                <label for="newPassword">New Password</label>
-        <input type="password" name='newPassword' (click)="onclick()"  id='newPassword' formControlName='newPassword' class=" form-control" placeholder="Enter your new password here"/>
-        <div [hidden]="resetform.controls.newPassword.valid || resetform.controls.newPassword.untouched || resetform.controls.newPassword.pristine" class="alert alert-warning">This field is required
-          <div style="color:red"> minimum length of password is 4</div></div>      
-      </div>
-            <div class="form-group">
-                <label for="confirmPassword">Confirm password</label>
-        <input type="password" name='confirmPassword' (click)="onclick()" id='confirmPassword' formControlName='confirmPassword' class="form-control " placeholder="Confirm your password"/>
-        <div [hidden]="resetform.controls.confirmPassword.valid || resetform.controls.confirmPassword.untouched" class="alert alert-warning">This field is required</div>          
-      </div>
-    </form>
+        <div style="width:94%;margin:auto">
+          <h4>{{day}}   ( {{starttime}} - {{endtime}} )</h4>
+          <!-- <br *ngIf="showsubjectlist"> -->
+          <h3 *ngIf="showsubjectname">{{subjectName}}  <i style="font-size: 15px" (click)="showlist()" class="glyphicon glyphicon-pencil"></i></h3>
+          <span *ngIf="showsubjectlist">Select subject :</span>
+          <br *ngIf="showsubjectlist">
+          <select *ngIf="showsubjectlist" class="form-control" [(ngModel)]="selectedSubject" [ngModelOptions]="{standalone: true}" required>
+            <option *ngFor=" let s of subjects" [value]="s.subjectId"> {{s.subject}}</option>
+          </select>
+        </div>  
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onSubmit()" [disabled]="resetform.invalid">Submit</button>
+        <button type="button" class="btn btn-primary" (click)="onSubmit()" data-dismiss="modal">Submit</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
     </div>
 
     </div>
   </div>
 </div>
- -->
