@@ -26,6 +26,7 @@ export class TimetableComponent implements OnInit{
  private showsubjectlist : boolean = true;
  private showsubjectname : boolean = false;
  private subjectName : string;
+ private serialNo : any [] = [ 'Assembly','First','Second','Third','Snack','Fourth','Fifth','Sixth','Lunch','Seventh','Eighth','Ninth'];
  constructor(
  	public ls : LoaderStop,
    public ps: TimeTableService,
@@ -85,6 +86,7 @@ export class TimetableComponent implements OnInit{
  getSubject(selectedstandard:any){
    this.ps.getSubject(selectedstandard).subscribe(res => {
      this.subjects = res;
+     console.log(res);
    },
      err => {
        this.router.navigate(['/error']);

@@ -17,7 +17,7 @@ Select Standard
         </thead>
         <tbody *ngIf="daysdata">
           <tr *ngFor=" let x1 of daysdata[0]; let i = index ">
-            <td class="tt-head1" > {{x1.startTime}} - {{x1.endTime}} </td>
+            <td class="tt-head1" > {{ serialNo[i] }} <br> ( {{x1.startTime}} - {{x1.endTime}} ) </td>
 
             <td class="tt-blocks" *ngFor=" let x1 of daysdata; let i1 = index" (click) = "getModal( selectedStandard, x1[i],i1 )" >
               {{ x1[i].subjectName }} 
@@ -54,7 +54,7 @@ Select Standard
           <span *ngIf="showsubjectlist">Select subject :</span>
           <br *ngIf="showsubjectlist">
           <select *ngIf="showsubjectlist" class="form-control" [(ngModel)]="selectedSubject" [ngModelOptions]="{standalone: true}" required>
-            <option *ngFor=" let s of subjects" [value]="s.subjectId"> {{s.name}}</option>
+            <option *ngFor=" let s of subjects" [value]="s.id"> {{s.name}}</option>
           </select>
         </div>  
     <div class="modal-footer">
