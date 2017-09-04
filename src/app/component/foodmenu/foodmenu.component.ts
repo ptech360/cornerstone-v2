@@ -26,7 +26,7 @@ export class FoodmenuComponent implements AfterViewInit{
     public loader:boolean=false;
     public itemLoader:boolean=false;
     public start:any;
-    public selectedMenu:any;
+    public selectedMenu:any={};
     // public submitProgress:any;
 
     constructor(
