@@ -22,7 +22,7 @@ export class TimeTableService{
 
 
   public getSubject(selectedstandard : any){
-    return this.http.get(this.con.Server + '/time-table/standard/'+ selectedstandard +'/save-info')
+    return this.http.get(this.con.Server + '/time-table/subject')
                     .map(this.extractData)
                     .catch(this.handleError);
   }

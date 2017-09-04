@@ -8,24 +8,26 @@ Select Standard
     </select>
 	<br>
     <div style="overflow:auto">
-    	<table width="100%">
+    	<table width="100%" *ngIf="selectedStandard">
     		<thead>
-    			<tr *ngIf= " days && selectedStandard ">
-            <th class="tt-head"></th>
-    				<th class="tt-head" *ngFor=" let x1 of daysdata[0]">{{x1.startTime}} - {{x1.endTime}}</th>
-    			</tr>
-    		</thead>
-    		<tbody *ngIf= " days && selectedStandard ">
-    			<tr *ngFor=" let day of days; let i = index ">
-            <td class="tt-head1">{{day}}</td>
-    				<td  class="tt-blocks" *ngFor=" let x of daysdata[i]; let i1 = index " (click)="getModal(selectedStandard,x,i)">
-              <!-- <span *ngIf="!x.subjectName">{{x.id}}</span> -->
-              <span *ngIf="x.subjectName">{{x.subjectName}}</span>
-              
-                         <!--    <span class="tt-block" *ngFor=" let x1 of x" (click)="getModal(selectedStandard,x1,i)">{{x1.startTime}} - {{x1.endTime}} <br> {{x1.subjectName}}</span> -->    
+          <tr *ngIf= " days ">
+          <th class="tt-head"></th>
+            <th class="tt-head" *ngFor=" let day of days">{{ day }}</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="daysdata">
+          <tr *ngFor=" let x1 of daysdata[0]; let i = index ">
+            <td class="tt-head1" > {{x1.startTime}} - {{x1.endTime}} </td>
+
+            <td class="tt-blocks" *ngFor=" let x1 of daysdata; let i1 = index" (click) = "getModal( selectedStandard, x1[i],i1 )" >
+              {{ x1[i].subjectName }} 
             </td>
-    			</tr>
-    		</tbody>
+            <!-- <td  class="tt-blocks" *ngFor=" let x of daysdata">                            
+                <span class="tt-block" *ngFor=" let x1 of x">{{x1.startTime}} - {{x1.endTime}} <br> </span>
+            </td> -->
+          </tr>
+        </tbody>
+
     	</table>
     </div>
 
@@ -52,7 +54,7 @@ Select Standard
           <span *ngIf="showsubjectlist">Select subject :</span>
           <br *ngIf="showsubjectlist">
           <select *ngIf="showsubjectlist" class="form-control" [(ngModel)]="selectedSubject" [ngModelOptions]="{standalone: true}" required>
-            <option *ngFor=" let s of subjects" [value]="s.subjectId"> {{s.subject}}</option>
+            <option *ngFor=" let s of subjects" [value]="s.subjectId"> {{s.name}}</option>
           </select>
         </div>  
     <div class="modal-footer">
