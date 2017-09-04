@@ -27,6 +27,7 @@ export class FoodmenuComponent implements AfterViewInit{
     public itemLoader:boolean=false;
     public start:any;
     public selectedMenu:any;
+    // public submitProgress:any;
 
     constructor(
         private fs:FoodmenuService,
@@ -40,7 +41,7 @@ export class FoodmenuComponent implements AfterViewInit{
 
 
       ngAfterViewInit(){
-      _('#menu').fullCalendar('renderEvents', this.menuOptions.events, true); 
+    //   _('#menu').fullCalendar('renderEvents', this.menuOptions.events, true); 
   }
 
         public menuOptions:any={
@@ -56,7 +57,7 @@ export class FoodmenuComponent implements AfterViewInit{
         },
             customButtons: {
         addItem: {
-            text: '+',
+            text: 'Food Item +',
             click: function() {
                 $('#addItemModal').modal();
             }
@@ -100,21 +101,28 @@ export class FoodmenuComponent implements AfterViewInit{
         },
     eventClick:(event:any, jsEvent:any, view:any)=> {
           this.selectedMenu=event; 
-          console.log(this.selectedMenu);  
-        //   this.empId=event.employeeId; 
-        //   if(this.empId==this.id){
-        //     this.disable=false;
-        //   }
-        //   else{
-        //     this.disable=true;
-        //   }
-        //   this.editEvent=this.editForm();
-        //   this.event=this.initForm(); 
-        //   this.getEventById(event.id);
-          $('#clickModal').modal();         
+          $('#clickModal').modal();
+                
+
         },
 
+        eventMouseover: function(calEvent:any, jsEvent:any) {
+            var tooltip = '<div class="tooltipevent" style="width:100px;height:60px;background:#ccc;position:absolute;z-index:10001;padding:7px;color:black;font-weight:500;font-size:15px">Click to view menu</div>';
+            $("body").append(tooltip);
+            $(this).mouseover(function(e:any) {
+                $(this).css('z-index', 100);
+                $('.tooltipevent').fadeIn('500');
+                $('.tooltipevent').fadeTo('10', 1.9);
+            }).mousemove(function(e:any) {
+                $('.tooltipevent').css('top', e.pageY + 10);
+                $('.tooltipevent').css('left', e.pageX + 20);
+            });
+        },
 
+        eventMouseout: function(calEvent:any, jsEvent:any) {
+            $(this).css('z-index', 8);
+            $('.tooltipevent').remove();
+        },
         }
         
 
@@ -134,29 +142,28 @@ export class FoodmenuComponent implements AfterViewInit{
     }
     public menu:any=[];
      public getMenu(){
-
+         this.loader=true;
         this.fs.getMenu(this.menuMonth).subscribe(res=>{
             if(res.status==204){
-                console.log("no menu added in this month");
+                this.loader=false;
             }
             else{
-            var menuObj:any={};         
-            res.forEach((i:any) => { 
-                console   
-                // console.log(,"kjnkmkmkmlkmlkmlkm");
-                menuObj=new Object({
-                title:i.foodName,
-                start:i.day,
-                foodPicUrl:i.foodPicUrl,
-                foodType:i.foodType,
-                id:i.id
-
-            });
-            this.menuOptions.events.push(menuObj);
-            
-            })    
-      _('#menu').fullCalendar('renderEvents', this.menuOptions.events, true); 
-      
+                this.loader=false;
+                var menuObj:any={};         
+                res.forEach((element:any,index:any) => { 
+                    menuObj=new Object({
+                        title:res[index].foodName,
+                        start:res[index].day,
+                        foodPicUrl:res[index].foodPicUrl,
+                        foodType:res[index].foodType,
+                        id:res[index].id
+                    });
+                    this.menuOptions.events.push(menuObj);
+                })    
+                _('#menu').fullCalendar('removeEvents');                 
+                _('#menu').fullCalendar('renderEvents', this.menuOptions.events, true); 
+                this.menuOptions.events=[];
+                
             }            
         },err=>{
 
@@ -168,8 +175,8 @@ export class FoodmenuComponent implements AfterViewInit{
         this.itemLoader=true;
         this.fs.getItem().subscribe(res=>{
         this.itemLoader=false;            
-        this.foodItems=JSON.parse(res);
-        // this.foodItems=res;
+        // this.foodItems=JSON.parse(res);
+        this.foodItems=res;
         },err=>{
         })
     }
