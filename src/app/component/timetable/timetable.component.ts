@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TimeTableService } from '../../providers/timetable.service';
 import { FormsModule,FormGroup, FormControl, Validators } from '@angular/forms';
+import { LoaderStop } from '../../providers/loaderstop.service';
 
 declare let $: any;
 @Component({
@@ -26,9 +27,12 @@ export class TimetableComponent implements OnInit{
  private showsubjectname : boolean = false;
  private subjectName : string;
  constructor(
- 	public ps: TimeTableService,
+ 	public ls : LoaderStop,
+   public ps: TimeTableService,
     public router:Router,
- ){ }
+ ){ 
+ this.ls.setLoader(false);
+ }
 
  ngOnInit(){
  	this.getStandards();

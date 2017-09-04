@@ -1,7 +1,7 @@
 import { Component, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChartService } from "../../providers/chart.service";
-
+import { LoaderStop } from "../../providers/loaderstop.service";
 
 @Component({
   selector: 'dashboard',
@@ -22,8 +22,8 @@ export class DashboardComponent {
   public responseByCategoryAndStatus: any=[];
   public responseSuggestionByStatus: any=[];
 
-  constructor(public cs: ChartService, private router: Router, private zone: NgZone) {
-     
+  constructor(public cs: ChartService, private router: Router, private ls : LoaderStop, private zone: NgZone) {
+     this.ls.setLoader(false);
     this.loader = true;
     this.loader1 = true;
     this.loader2 = true;
