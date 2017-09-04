@@ -13,7 +13,8 @@
     <div class="form-group">
       <label for="standardId">Select Standard</label>
       <select class="form-control" id="standardId" name="standardId" formControlName="standardId" (ngModelChange)="getSubjects($event); ">
-      <option *ngFor="let a of standards" [value]="a.id"> {{a.name}}</option>
+        <option disabled="disabled" selected="selected">Select standard</option>             
+        <option *ngFor="let a of standards" [value]="a.id"> {{a.name}}</option>
     </select>
     <loader [condition]="standardLoader" class="dropdownLoader"></loader>
     <div>
@@ -23,9 +24,10 @@
     <div class="form-group" *ngIf="homework.value.standardId" >
       <label for="subjectId">Select Subject</label>
       <select class="form-control" id="subjectId" name="subjectId" formControlName="subjectId">
-      <option *ngIf="emptySubjects" disabled>No Subjects are added. Try again later.</option>
-      <option *ngFor="let bx of subjects" [value]="bx.subjectId">{{bx.subjectName}}</option>
-    </select>
+        <option disabled="disabled" selected="selected">Select Subject</option>             
+        <option *ngIf="emptySubjects" disabled>No Subjects are added. Try again later.</option>
+        <option *ngFor="let bx of subjects" [value]="bx.subjectId">{{bx.subjectName}}</option>
+      </select>
     <loader [condition]="subjectLoader" class="dropdownLoader"></loader>    
     <div>
       <div [hidden]="homework.controls.subjectId.valid || homework.controls.subjectId.untouched" class="alert alert-warning">This field is required</div>

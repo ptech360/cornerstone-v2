@@ -199,6 +199,7 @@ export class MessageComponent implements AfterViewInit, OnInit {
     if (val && val.trim() != '') {
       this.emptySearchResult = false;
       this.oldMessageRecipients = this.oldMessageRecipientsCOPY.filter((item: any) => {
+        console.log(item);
         return (item.title.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
       if (this.oldMessageRecipients.length === 0)

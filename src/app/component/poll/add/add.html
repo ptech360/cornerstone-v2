@@ -26,7 +26,8 @@
       <div class="form-group" >
         <label for="pollFor">Audience</label>
         <select class="form-control" id="pollFor" formControlName="typeId" (ngModelChange)="onTypeId($event)">
-      <option *ngFor="let a of pollType" [value]="a.id"> {{a.name}}</option>
+          <option disabled="disabled" selected="selected">Select Audience</option>
+          <option *ngFor="let a of pollType" [value]="a.id"> {{a.name}}</option>
       <loader [condition]="infoLoader" class="dropdownLoader"></loader>
     </select>
       </div>
@@ -68,8 +69,9 @@
       <div class="form-group" >
         <label for="optionTypeId">Select Option Type</label>
         <select class="form-control" id="optionTypeId" formControlName="optionTypeId">
-      <option *ngFor="let s of pollOptionType" [value]="s.id"> {{s.name}}</option>
-      <loader [condition]="infoLoader" class="dropdownLoader"></loader>
+          <option disabled="disabled" selected="selected">Select Option Type</option>          
+          <option *ngFor="let s of pollOptionType" [value]="s.id"> {{s.name}}</option>
+          <loader [condition]="infoLoader" class="dropdownLoader"></loader>
     </select>
       </div>
 

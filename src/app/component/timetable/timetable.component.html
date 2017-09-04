@@ -3,6 +3,7 @@ Select Standard
 
 	<select class="form-control" id="standardIds" name="standardIds" [(ngModel)]="selectedStandard" [ngModelOptions]="{standalone: true}"
           (ngModelChange)="getTimeTable(selectedStandard)" required>
+      <option disabled="disabled" selected="selected">Select standard</option>             
       <option *ngFor=" let s of standards" [value]="s.id"> {{s.name}}</option>
         
     </select>
@@ -52,6 +53,7 @@ Select Standard
           <span *ngIf="showsubjectlist">Select subject :</span>
           <br *ngIf="showsubjectlist">
           <select *ngIf="showsubjectlist" class="form-control" [(ngModel)]="selectedSubject" [ngModelOptions]="{standalone: true}" required>
+            <option disabled="disabled" selected="selected">Select Subject</option>             
             <option *ngFor=" let s of subjects" [value]="s.subjectId"> {{s.subject}}</option>
           </select>
         </div>  

@@ -49,6 +49,7 @@
           <div class="form-group">
             <label for="circularTypeId">Audience</label>
             <select class="form-control" id="circularTypeId" name="circularTypeId" formControlName="circularTypeId" (ngModelChange)="onCircularType($event)">
+              <option disabled="disabled" selected="selected">Select Audience</option>
               <option *ngFor="let bx of circularType" [value]="bx.id">{{bx.name}}</option>
             </select>
             <!-- <loader [condition]="audienceLoader" class="dropdownLoader"></loader> -->
