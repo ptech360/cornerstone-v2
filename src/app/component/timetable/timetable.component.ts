@@ -27,6 +27,7 @@ export class TimetableComponent implements OnInit{
  private showsubjectname : boolean = false;
  private subjectName : string;
  private serialNo : any [] = [ 'Assembly','First','Second','Third','Snack','Fourth','Fifth','Sixth','Lunch','Seventh','Eighth','Ninth'];
+ 
  constructor(
  	public ls : LoaderStop,
    public ps: TimeTableService,
@@ -88,9 +89,10 @@ export class TimetableComponent implements OnInit{
      })
  }
 
- onSubmit(){
+ onSubmit( ){
    this.ps.onSubmit(this.timetableid,this.selectedSubject).subscribe(res => {
      console.log(res);
+     this.getTimeTable(this.selectedStandard);
    },
      err => {
        this.router.navigate(['/error']);

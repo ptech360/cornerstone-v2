@@ -8,7 +8,7 @@
 </div>
 
 <div class="panel panel-default"  *ngIf="selectedStandard">
-    <div class="panel-heading text-center">Time Table</div>
+    <div class="panel-heading text-center" *ngIf="selectedStandard && standards ">Time Table For {{ standards[selectedStandard -1 ].name }} </div>
     <div style="overflow:auto">
     	<table width="100%">
     		<thead>
@@ -22,7 +22,7 @@
 
             <td class="tt-head1" > ( {{x1.startTime}} - {{x1.endTime}} ) </td>
             <ng-container *ngIf="i%4!=0" >
-              <td class="tt-blocks" *ngFor=" let x1 of daysdata; let i1 = index" (click) = "getModal( selectedStandard, x1[i],i1 )">
+              <td class="tt-blocks"  *ngFor=" let x1 of daysdata; let i1 = index" (click) = "getModal( selectedStandard, x1[i],i1 )">
                   {{ x1[i].subjectName }} 
               </td>
             </ng-container>            
