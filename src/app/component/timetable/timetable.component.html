@@ -1,14 +1,16 @@
-Select Standard
-<div class="panel panel-default">
-
-	<select class="form-control" id="standardIds" name="standardIds" [(ngModel)]="selectedStandard" [ngModelOptions]="{standalone: true}"
-          (ngModelChange)="getTimeTable(selectedStandard)" required>
-      <option *ngFor=" let s of standards" [value]="s.id"> {{s.name}}</option>
-        
+<div class="row">
+  <div class="col-sm-4 col-sm-offset-8">
+    Select Standard
+    <select class="form-control" id="standardIds" name="standardIds" [(ngModel)]="selectedStandard" (ngModelChange)="getTimeTable($event)">
+    <option *ngFor=" let s of standards" [value]="s.id"> {{s.name}}</option>
     </select>
-	<br>
+  </div>
+</div>
+
+<div class="panel panel-default"  *ngIf="selectedStandard">
+    <div class="panel-heading text-center">Time Table</div>
     <div style="overflow:auto">
-    	<table width="100%" *ngIf="selectedStandard">
+    	<table width="100%">
     		<thead>
           <tr *ngIf= " days ">
           <th class="tt-head"></th>
@@ -17,26 +19,24 @@ Select Standard
         </thead>
         <tbody *ngIf="daysdata">
           <tr *ngFor=" let x1 of daysdata[0]; let i = index ">
-            <td class="tt-head1" > {{ serialNo[i] }} <br> ( {{x1.startTime}} - {{x1.endTime}} ) </td>
 
-            <td class="tt-blocks" *ngFor=" let x1 of daysdata; let i1 = index" (click) = "getModal( selectedStandard, x1[i],i1 )" >
-              {{ x1[i].subjectName }} 
-            </td>
-            <!-- <td  class="tt-blocks" *ngFor=" let x of daysdata">                            
-                <span class="tt-block" *ngFor=" let x1 of x">{{x1.startTime}} - {{x1.endTime}} <br> </span>
-            </td> -->
+            <td class="tt-head1" > ( {{x1.startTime}} - {{x1.endTime}} ) </td>
+            <ng-container *ngIf="i%4!=0" >
+              <td class="tt-blocks" *ngFor=" let x1 of daysdata; let i1 = index" (click) = "getModal( selectedStandard, x1[i],i1 )">
+                  {{ x1[i].subjectName }} 
+              </td>
+            </ng-container>            
+            <td class="tt-blocks" style="cursor:default;" colspan="5" *ngIf="i%4==0"></td>
+
           </tr>
         </tbody>
 
     	</table>
     </div>
-
-
-
 </div>
-<div *ngIf= " timetable " >
+<!-- <div *ngIf= " timetable " >
 <span  *ngFor=" let x of daysdata">{{x.id}}</span>
-</div>
+</div> -->
 
 
 <div class="modal fade" id="editSubject" role="dialog">

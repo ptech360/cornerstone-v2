@@ -13,7 +13,7 @@ declare let $: any;
 export class TimetableComponent implements OnInit{
  private standards:any; 
  private standardLoader : any;
- private selectedStandards : any = 1 ;
+ private selectedStandard : any = 4 ;
  private timetable : any;
  private days : any[] = [] ;
  private daysdata : any[] = [];
@@ -37,24 +37,19 @@ export class TimetableComponent implements OnInit{
 
  ngOnInit(){
  	this.getStandards();
-   this.getTimeTable(this.selectedStandards);
- }
-
- onStandards(en : any){
- 	console.log(en);
+  this.getTimeTable(this.selectedStandard);
  }
 
  getTimeTable(selectedstandard:any){
+   console.log(selectedstandard);
    this.days = [];
    this.daysdata = [];
    this.ps.gettimeTable( selectedstandard ).subscribe(res => {
       this.timetable = res;
       Object.keys(res).forEach( key => {
      this.daysdata.push(res[key]); 
-     console.log(res[key]);//value    
      this.days.push(key); //key
       });
-      console.log(this.timetable);
     },
       err => {
         this.router.navigate(['/error']);
