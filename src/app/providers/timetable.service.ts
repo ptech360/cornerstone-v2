@@ -32,12 +32,6 @@ export class TimeTableService{
                     .catch(this.handleError);
   }
 
-  private extractData(res: Response) {
-    if (res.status === 204) { return res; }
-    let body = res.json();
-    return body || {};
-  }
-
   public onSubmit(timetableid : any , subId: any){
     return this.http.put(this.con.Server + '/time-table/'+timetableid,{ subjectId : subId })
                     .map(this.extractData)
@@ -48,7 +42,13 @@ export class TimeTableService{
 	return this.http.get(this.con.Server + '/time-table/standard/'+selectedstandard)
                     .map(this.extractData)
                     .catch(this.handleError);	
-	}  
+  }  
+  
+  private extractData(res: Response) {
+    if (res.status === 204) { return res; }
+    let body = res.json();
+    return body || {};
+  }
 
   private handleError(error: Response | any) {
     let errMsg: string;
