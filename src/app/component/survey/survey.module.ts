@@ -5,6 +5,8 @@ import { SharedModule } from '../../shared.module';
 import { CurrentSurveyComponent } from './current/survey';
 import { ClosedSurveyComponent } from './closed/survey';
 import { AddSurveyComponent } from './add/add';
+import { SurveyService } from "../../providers/survey.service";
+
 
 @NgModule({
 	imports : [ SharedModule, RouterModule.forChild([
@@ -28,7 +30,8 @@ import { AddSurveyComponent } from './add/add';
 			}
 			
 		])],
-	declarations : [ AddSurveyComponent, SurveyComponent, CurrentSurveyComponent, ClosedSurveyComponent ]
+	declarations : [ AddSurveyComponent, SurveyComponent, CurrentSurveyComponent, ClosedSurveyComponent ],
+	providers : [ SurveyService ]
 }) 
 export class SurveyModule {
 	

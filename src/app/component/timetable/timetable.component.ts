@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TimeTableService } from '../../providers/timetable.service';
 import { FormsModule,FormGroup, FormControl, Validators } from '@angular/forms';
+import { LoaderStop } from '../../providers/loaderstop.service';
 
 declare let $: any;
 @Component({
@@ -9,10 +10,11 @@ declare let $: any;
  templateUrl : "./timetable.component.html",
  styleUrls : ["./timetable.component.css"]
 })
+
 export class TimetableComponent implements OnInit{
  private standards:any; 
  private standardLoader : any;
- private selectedStandards : any = 1 ;
+ private selectedStandard : any = 4 ;
  private timetable : any;
  private days : any[] = [] ;
  private daysdata : any[] = [];
@@ -25,31 +27,39 @@ export class TimetableComponent implements OnInit{
  private showsubjectlist : boolean = true;
  private showsubjectname : boolean = false;
  private subjectName : string;
+ private serialNo : any [] = [ 'Assembly','First','Second','Third','Snack','Fourth','Fifth','Sixth','Lunch','Seventh','Eighth','Ninth'];
+ private loader:boolean = false;
  constructor(
- 	public ps: TimeTableService,
-    public router:Router,
- ){ }
+ 	public ls : LoaderStop,
+  public ps: TimeTableService,
+  public router:Router,
+ ){ 
+ this.ls.setLoader(false);
+ }
 
  ngOnInit(){
  	this.getStandards();
-   this.getTimeTable(this.selectedStandards);
- }
-
- onStandards(en : any){
- 	console.log(en);
+  this.getTimeTable(this.selectedStandard);
  }
 
  getTimeTable(selectedstandard:any){
    this.days = [];
    this.daysdata = [];
+   this.loader = true;
    this.ps.gettimeTable( selectedstandard ).subscribe(res => {
+     if(res.status == 204){
+      this.days = [];
+      this.daysdata = [];
+      this.timetable = [];
+     }else{
       this.timetable = res;
       Object.keys(res).forEach( key => {
-     this.daysdata.push(res[key]); 
-     console.log(res[key]);//value    
-     this.days.push(key); //key
+      this.daysdata.push(res[key]); 
+      this.days.push(key); //key
       });
-      console.log(this.timetable);
+     }
+     this.loader = false;
+    
     },
       err => {
         this.router.navigate(['/error']);
@@ -70,7 +80,7 @@ export class TimetableComponent implements OnInit{
     this.endtime = x.endTime;
     this.timetableid = x.id;
     this.day = this.days[i];
-    console.log("id is : "+this.timetableid);
+   
      $('#editSubject').modal('show');
      this.getSubject(selectedstandard); 
   }
@@ -81,15 +91,27 @@ export class TimetableComponent implements OnInit{
  getSubject(selectedstandard:any){
    this.ps.getSubject(selectedstandard).subscribe(res => {
      this.subjects = res;
+   
    },
      err => {
        this.router.navigate(['/error']);
      })
  }
 
- onSubmit(){
+ getValue( i : any ){
+   if(i==0){
+     return "Assembly";
+   }
+   else if(i==4){
+     return "Snack";
+   }
+   else
+     return "Lunch";
+ }
+
+ onSubmit( ){
    this.ps.onSubmit(this.timetableid,this.selectedSubject).subscribe(res => {
-     console.log(res);
+    this.refreshTimeTable();     
    },
      err => {
        this.router.navigate(['/error']);
@@ -97,6 +119,27 @@ export class TimetableComponent implements OnInit{
 
  }
 
+ refreshTimeTable(){
+   let s : any;
+    for(let x of this.subjects){
+       
+       if(x.id == this.selectedSubject){
+         s = x.name;
+         break;
+       }
+     }
+     
+   for(let x of this.daysdata){
+
+     for(let x1 of x){
+        
+       if(x1.id == this.timetableid){
+         x1.subjectName = s;
+         break;
+       }
+     }  
+   }
+ }
 
  getStandards() {
     this.standardLoader=true;

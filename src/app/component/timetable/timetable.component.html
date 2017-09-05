@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Select Standard
 <div class="panel panel-default">
 
@@ -6,36 +7,52 @@ Select Standard
       <option disabled="disabled" selected="selected">Select standard</option>             
       <option *ngFor=" let s of standards" [value]="s.id"> {{s.name}}</option>
         
+=======
+<div class="row">
+  <div class="col-sm-4 col-sm-offset-8">
+    Select Standard
+    <select class="form-control" id="standardIds" name="standardIds" [(ngModel)]="selectedStandard" (ngModelChange)="getTimeTable($event)">
+    <option *ngFor=" let s of standards" [value]="s.id"> {{s.name}}</option>
+>>>>>>> 80a7dacb2c1289f651fd4e82c3d44bf826cc7a7a
     </select>
-	<br>
+  </div>
+</div>
+
+<div class="panel panel-default"  *ngIf="selectedStandard">
+    <div class="panel-heading text-center" *ngIf="selectedStandard && standards ">Time Table For {{ standards[selectedStandard -1 ].name }} </div>
     <div style="overflow:auto">
     	<table width="100%">
     		<thead>
-    			<tr *ngIf= " days && selectedStandard ">
-            <th class="tt-head"></th>
-    				<th class="tt-head" *ngFor=" let x1 of daysdata[0]">{{x1.startTime}} - {{x1.endTime}}</th>
-    			</tr>
-    		</thead>
-    		<tbody *ngIf= " days && selectedStandard ">
-    			<tr *ngFor=" let day of days; let i = index ">
-            <td class="tt-head1">{{day}}</td>
-    				<td  class="tt-blocks" *ngFor=" let x of daysdata[i]; let i1 = index " (click)="getModal(selectedStandard,x,i)">
-              <!-- <span *ngIf="!x.subjectName">{{x.id}}</span> -->
-              <span *ngIf="x.subjectName">{{x.subjectName}}</span>
-              
-                         <!--    <span class="tt-block" *ngFor=" let x1 of x" (click)="getModal(selectedStandard,x1,i)">{{x1.startTime}} - {{x1.endTime}} <br> {{x1.subjectName}}</span> -->    
+          <tr *ngIf= " days ">
+          <th class="tt-head"></th>
+            <th class="tt-head" *ngFor=" let day of days">{{ day }}</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="daysdata">
+          <div class="row text-center">
+            <loader [condition]="loader"></loader>
+          </div>
+          <tr *ngFor=" let x1 of daysdata[0]; let i = index ">
+
+            <td class="tt-head1" >  {{x1.startTime}} - {{x1.endTime}}  </td>
+            <ng-container *ngIf="i%4!=0" >
+              <td class="tt-blocks"  *ngFor=" let x1 of daysdata; let i1 = index" (click) = "getModal( selectedStandard, x1[i],i1 )">
+                  {{ x1[i].subjectName }} 
+              </td>
+            </ng-container>            
+            <td class="tt-blocks" style="cursor:default;" colspan="5" *ngIf="i%4==0">
+              {{ getValue(i) }}
             </td>
-    			</tr>
-    		</tbody>
+
+          </tr>
+        </tbody>
+
     	</table>
     </div>
-
-
-
 </div>
-<div *ngIf= " timetable " >
+<!-- <div *ngIf= " timetable " >
 <span  *ngFor=" let x of daysdata">{{x.id}}</span>
-</div>
+</div> -->
 
 
 <div class="modal fade" id="editSubject" role="dialog">
@@ -52,9 +69,9 @@ Select Standard
           <h3 *ngIf="showsubjectname">{{subjectName}}  <i style="font-size: 15px" (click)="showlist()" class="glyphicon glyphicon-pencil"></i></h3>
           <span *ngIf="showsubjectlist">Select subject :</span>
           <br *ngIf="showsubjectlist">
-          <select *ngIf="showsubjectlist" class="form-control" [(ngModel)]="selectedSubject" [ngModelOptions]="{standalone: true}" required>
-            <option disabled="disabled" selected="selected">Select Subject</option>             
-            <option *ngFor=" let s of subjects" [value]="s.subjectId"> {{s.subject}}</option>
+          <select *ngIf="showsubjectlist" class="form-control" [(ngModel)]="selectedSubject"  required>
+            <option [disabled] selected="selected">Select Subject</option>
+            <option *ngFor=" let s of subjects" [value]="s.id"> {{s.name}}</option>
           </select>
         </div>  
     <div class="modal-footer">

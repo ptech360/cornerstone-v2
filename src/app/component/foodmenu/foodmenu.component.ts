@@ -7,7 +7,7 @@ import 'fullcalendar';
 import * as _ from 'jquery';
 import { Router } from '@angular/router';
 declare let $: any;
-
+import { LoaderStop } from '../../providers/loaderstop.service';
 
 @Component({
     selector:'foodmenu',
@@ -30,9 +30,11 @@ export class FoodmenuComponent implements AfterViewInit{
     // public submitProgress:any;
 
     constructor(
+        private ls : LoaderStop,
         private fs:FoodmenuService,
             private http: Http,
     ){
+        this.ls.setLoader(false);
         this.addItem=this.addItemForm();
         this.addMenu=this.addMenuForm();
         // this.getMenu();

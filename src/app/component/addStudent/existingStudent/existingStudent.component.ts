@@ -4,6 +4,7 @@ import { AdminService } from '../../../providers/admin.service';
 import { FormGroup, FormArray, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ValidationService } from '../../../providers/formValidation.service';
 import { Router } from '@angular/router';
+import { LoaderStop } from '../../../providers/loaderstop.service';
 // import { Order } from '../../../providers/order.filter'; 
 
 
@@ -60,10 +61,11 @@ export class ExistingStudentComponent {
   constructor(public _location: Location,
     public as: AdminService,
     public fb: FormBuilder,
-    public router: Router) {
+    public router: Router,
+    public ls : LoaderStop) {
 
     this.fileUrl = localStorage.getItem('fileUrl');
-
+    this.ls.setLoader(false);
     this.getStandards();
     // this.initNewStudentForm();
     // this.getStudents();
