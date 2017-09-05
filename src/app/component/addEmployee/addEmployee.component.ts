@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormControl, FormArray } from '@angular/forms';
 import { AdminService } from '../../providers/admin.service';
-import { HomeworkService } from '../../providers/homework.service'
+import { HomeworkService } from '../../providers/homework.service';
 import { ValidationService } from '../../providers/formValidation.service';
 import { AuthService } from '../../providers/auth.service';
 import { Router } from '@angular/router';
