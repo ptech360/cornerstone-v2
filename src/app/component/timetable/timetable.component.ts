@@ -10,6 +10,7 @@ declare let $: any;
  templateUrl : "./timetable.component.html",
  styleUrls : ["./timetable.component.css"]
 })
+
 export class TimetableComponent implements OnInit{
  private standards:any; 
  private standardLoader : any;
@@ -27,7 +28,7 @@ export class TimetableComponent implements OnInit{
  private showsubjectname : boolean = false;
  private subjectName : string;
  private serialNo : any [] = [ 'Assembly','First','Second','Third','Snack','Fourth','Fifth','Sixth','Lunch','Seventh','Eighth','Ninth'];
- 
+ private loader = true;
  constructor(
  	public ls : LoaderStop,
    public ps: TimeTableService,
@@ -42,7 +43,6 @@ export class TimetableComponent implements OnInit{
  }
 
  getTimeTable(selectedstandard:any){
-   console.log(selectedstandard);
    this.days = [];
    this.daysdata = [];
    this.ps.gettimeTable( selectedstandard ).subscribe(res => {
@@ -50,6 +50,7 @@ export class TimetableComponent implements OnInit{
       Object.keys(res).forEach( key => {
      this.daysdata.push(res[key]); 
      this.days.push(key); //key
+     this.loader = false;
       });
     },
       err => {
@@ -71,7 +72,7 @@ export class TimetableComponent implements OnInit{
     this.endtime = x.endTime;
     this.timetableid = x.id;
     this.day = this.days[i];
-    console.log("id is : "+this.timetableid);
+   
      $('#editSubject').modal('show');
      this.getSubject(selectedstandard); 
   }
@@ -82,17 +83,27 @@ export class TimetableComponent implements OnInit{
  getSubject(selectedstandard:any){
    this.ps.getSubject(selectedstandard).subscribe(res => {
      this.subjects = res;
-     console.log(res);
+   
    },
      err => {
        this.router.navigate(['/error']);
      })
+ }
+
+ getValue( i : any ){
+   if(i==0){
+     return "Assembly";
+   }
+   else if(i==4){
+     return "Snack";
+   }
+   else
+     return "Lunch";
  }
 
  onSubmit( ){
    this.ps.onSubmit(this.timetableid,this.selectedSubject).subscribe(res => {
-     console.log(res);
-     this.getTimeTable(this.selectedStandard);
+    this.refreshTimeTable();     
    },
      err => {
        this.router.navigate(['/error']);
@@ -100,6 +111,27 @@ export class TimetableComponent implements OnInit{
 
  }
 
+ refreshTimeTable(){
+   let s : any;
+    for(let x of this.subjects){
+       
+       if(x.id == this.selectedSubject){
+         s = x.name;
+         break;
+       }
+     }
+     
+   for(let x of this.daysdata){
+
+     for(let x1 of x){
+        
+       if(x1.id == this.timetableid){
+         x1.subjectName = s;
+         break;
+       }
+     }  
+   }
+ }
 
  getStandards() {
     this.standardLoader=true;

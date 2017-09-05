@@ -18,15 +18,20 @@
           </tr>
         </thead>
         <tbody *ngIf="daysdata">
+          <div class="row text-center">
+            <loader [condition]="loader"></loader>
+          </div>
           <tr *ngFor=" let x1 of daysdata[0]; let i = index ">
 
-            <td class="tt-head1" > ( {{x1.startTime}} - {{x1.endTime}} ) </td>
+            <td class="tt-head1" >  {{x1.startTime}} - {{x1.endTime}}  </td>
             <ng-container *ngIf="i%4!=0" >
               <td class="tt-blocks"  *ngFor=" let x1 of daysdata; let i1 = index" (click) = "getModal( selectedStandard, x1[i],i1 )">
                   {{ x1[i].subjectName }} 
               </td>
             </ng-container>            
-            <td class="tt-blocks" style="cursor:default;" colspan="5" *ngIf="i%4==0"></td>
+            <td class="tt-blocks" style="cursor:default;" colspan="5" *ngIf="i%4==0">
+              {{ getValue(i) }}
+            </td>
 
           </tr>
         </tbody>
@@ -53,7 +58,7 @@
           <h3 *ngIf="showsubjectname">{{subjectName}}  <i style="font-size: 15px" (click)="showlist()" class="glyphicon glyphicon-pencil"></i></h3>
           <span *ngIf="showsubjectlist">Select subject :</span>
           <br *ngIf="showsubjectlist">
-          <select *ngIf="showsubjectlist" class="form-control" [(ngModel)]="selectedSubject" [ngModelOptions]="{standalone: true}" required>
+          <select *ngIf="showsubjectlist" class="form-control" [(ngModel)]="selectedSubject"  required>
             <option *ngFor=" let s of subjects" [value]="s.id"> {{s.name}}</option>
           </select>
         </div>  
