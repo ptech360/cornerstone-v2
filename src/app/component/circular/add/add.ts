@@ -26,6 +26,7 @@ export class AddCircular implements OnInit, AfterViewInit {
   public submitProgress: boolean = false;
   public standardLoader:boolean=false;
   public audienceLoader:boolean=false;
+  public auditype : any  = -1;
   constructor(private circserv: CircularService,
     private commonService: CommonService,
     private _location: Location,
@@ -114,7 +115,9 @@ export class AddCircular implements OnInit, AfterViewInit {
   }
 
   public buildCircularData(circular: any) {
+
     this.circularType = circular;
+    this.circularType.splice(0,0,{id :-1 , name : 'Select Audience'});
   }
 
   public onCircularType(event: any) {

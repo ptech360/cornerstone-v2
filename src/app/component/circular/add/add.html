@@ -48,8 +48,8 @@
         <div class="col-lg-6 col-sm-12">
           <div class="form-group">
             <label for="circularTypeId">Audience</label>
-            <select class="form-control" id="circularTypeId" name="circularTypeId" formControlName="circularTypeId" (ngModelChange)="onCircularType($event)">
-              <option *ngFor="let bx of circularType" [value]="bx.id">{{bx.name}}</option>
+            <select class="form-control" [(ngModel)]="auditype" id="circularTypeId" name="circularTypeId" formControlName="circularTypeId" (ngModelChange)="onCircularType($event)">
+              <option *ngFor=" let bx of circularType" [value]="bx.id" [attr.disabled] = " bx.id == -1 ? true : null">{{bx.name}}</option>
             </select>
             <!-- <loader [condition]="audienceLoader" class="dropdownLoader"></loader> -->
             <div>
@@ -63,7 +63,7 @@
         <div class=" col-sm-12 col-lg-12">
           <div class=" form-group" *ngIf="circular.value.circularTypeId == 2 ">
             <label for="standardIds">Select Standard</label>
-            <button type="button" class="form-control" *ngIf="standards != null" (click)="dropdown ? dropdown = false : dropdown = true;"></button>
+            <button type="button" style="text-align: left" class="form-control" *ngIf="standards != null" (click)="dropdown ? dropdown = false : dropdown = true ">Select Standard</button>
             <button type="button" class="form-control" *ngIf="standards == null">No Standards are added to the View. Try again later.</button>
             <!-- <span *ngIf="standards != null" class="glyphicon glyphicon-triangle-bottom" style="margin-left: -4%;
               font-size: 11px;

@@ -18,10 +18,11 @@ export class AddAppreciation {
   public submitProgress: boolean = false;
   public stan: any;
   standards: any = [];
-  public standardId: any;
+  public standardId: any = -1 ;
   public standard:any;
   students: any = [];
   subjects: any = [];
+  public studId: any = -1;
   public emptyStudents: boolean = true;
   public emptyStandards: boolean = true;
   public loader:boolean = false;
@@ -40,7 +41,6 @@ export class AddAppreciation {
   }
 
   public initForm() {
-    this.standardId = null;
     this.appreciation = new FormGroup({
       description: new FormControl('', [Validators.required, Validators.maxLength(2500)]),
       studentId: new FormControl('', [Validators.required]),
@@ -69,6 +69,8 @@ export class AddAppreciation {
         return;
       }
       this.standards = res;
+      this.standards.splice(0,0,{name : 'Select Standard', id : -1}); 
+      console.log(this.standards);
       this.emptyStandards = false;
       this.loader = false;
     }, (err) => {
@@ -89,6 +91,7 @@ export class AddAppreciation {
       this.studentLoader=false;
       this.emptyStudents = false;
       this.students = res;
+      this.students.splice(0,0,{id : -1, name : 'Select Student'});
     }, (err) => {
       this.router.navigate(['/error']);
     });

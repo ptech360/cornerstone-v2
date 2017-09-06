@@ -43,6 +43,7 @@ export class TimetableComponent implements OnInit{
  }
 
  getTimeTable(selectedstandard:any){
+   console.log(this.selectedStandard)
    this.days = [];
    this.daysdata = [];
    this.ps.gettimeTable( selectedstandard ).subscribe(res => {

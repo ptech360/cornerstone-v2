@@ -28,7 +28,7 @@ export class EventComponent implements OnInit, AfterViewInit {
   public planner:any; 
   public standard:any;
   public editEvent:FormGroup;
-  public start:any;
+  public start: any;
   public end:any;
   public stdIds:any[]=[];
   public selectedEvent:any;
@@ -42,6 +42,7 @@ export class EventComponent implements OnInit, AfterViewInit {
   public plannerLoader:boolean=false;
   public startTime:any;
   public endTime:any;
+  public try : string = "00:00";
   constructor(
      
     private eventService: EventService,
@@ -181,6 +182,7 @@ export class EventComponent implements OnInit, AfterViewInit {
 
 
     public selectPlannerType(type:any){
+
     if(type==2){
       this.event.addControl("standardIds", new FormControl('', [Validators.required]));
     }
@@ -201,6 +203,7 @@ export class EventComponent implements OnInit, AfterViewInit {
 
 
 public startT(e:any){
+
   this.startTime=e;
   this.event.controls['startTime'].patchValue(e);
   if((this.event.controls['startDate'].value)==(this.event.controls['endDate'].value)){
@@ -330,17 +333,22 @@ public endT(e:any){
   }
 
 
-public selectStandards(a:any,e:any){
-    if(e==true){
-      this.stdIds.push(a.id);
+public selectStandards(e:any){
+    // if(e==true){
+    //   this.stdIds.push(a.id);
+    // }
+    // else if(e==false){
+    //   this.stdIds.forEach((element:any, index:any)=>{
+    //      if (element==a.id){
+    //       this.stdIds.splice(index,1);
+    //     }
+    //   })
+    // }
+    this.stdIds = [];
+    for(let x of e){
+      this.stdIds.push(x.id);  
     }
-    else if(e==false){
-      this.stdIds.forEach((element:any, index:any)=>{
-         if (element==a.id){
-          this.stdIds.splice(index,1);
-        }
-      })
-    }
+    console.log(this.stdIds);
     this.event.controls['standardIds'].patchValue(this.stdIds);
   }
 

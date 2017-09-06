@@ -17,16 +17,20 @@
         <label for="standardId">Select Standard</label>
           <select class="form-control" id="standardId" name="standardId"(ngModelChange)="getStudents($event)" [(ngModel)]="standardId"
           [ngModelOptions]="{standalone: true}" >
-          <option disabled *ngIf="emptyStandards">No standards are added. Try again later</option> 
-          <option *ngFor="let a of standards" [ngValue]="a.id"> {{a.name}}</option>
+
+          <option disabled *ngIf="emptyStandards">No standards are added. Try again later</option>
+          
+          <option  *ngFor="let a of standards" [attr.disabled] = " a.id == -1 ? true : null" 
+           [value]="a.id"> {{a.name}}</option>
         </select>
       <loader [condition]="loader" class="dropdownLoader"></loader>        
       </div>
-      <div class="form-group" *ngIf="standardId">
+      <div class="form-group" *ngIf="standardId && standardId >= 0 ">
         <label for="studentId">Student Name</label>
-        <select class="form-control" formControlName="studentId" name="studentId">
+        <select class="form-control" formControlName="studentId" [(ngModel)]="studId" name="studentId">
           <option *ngIf="emptyStudents" disabled>No students are added yet. Try again later.</option>
-            <option *ngFor="let s of students" [ngValue]="s.id">{{s.name}}</option>
+            <option *ngFor="let s of students" [ngValue]="s.id" [attr.disabled] = " s.id == -1 ? true : null">{{s.name}}</option>
+            
           </select>
       <loader [condition]="studentLoader" class="dropdownLoader"></loader>                  
       <div>
