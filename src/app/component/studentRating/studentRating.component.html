@@ -28,7 +28,7 @@
         <input *ngIf="selectedStudent" class="form-control" type="text" value="{{selectedStudent.name}}" onfocus="this.value= ''"
           (keyup)="dropdown=false;searchStudents($event)" >
           <loader [condition]="loader" class="dropdownLoader"></loader>
-          <button class="list-btn" (click)="dropdown ? dropdown = false : dropdown = true selected=false "> <span class="glyphicon glyphicon-chevron-down" ></span></button>
+          <button class="list-btn" (click)="dropdown ? dropdown = false : dropdown = true "> <span class="glyphicon glyphicon-chevron-down" ></span></button>
 
         <div class="studentList" *ngIf="(selected)">
           <ul class="list-group">
