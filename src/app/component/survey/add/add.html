@@ -42,7 +42,8 @@
       <div class="form-group">
         <label for="surveyFor">Audience</label>
         <select class="form-control" id="surveyFor" formControlName="surveyTypeId" (ngModelChange)="onTypeId($event)">
-      <option *ngFor="let a of surveyInfo.surveyType" [value]="a.id">{{a.name}}</option>
+          <option disabled="disabled" selected="selected">Select Audience</option>             
+          <option *ngFor="let a of surveyInfo.surveyType" [value]="a.id">{{a.name}}</option>
     </select>
       </div>
 
@@ -99,7 +100,8 @@
             <label for="surveyType" class="question">Question Type</label>
             <select class="form-control" id="surveyType" formControlName="type">
               <!--(ngModelChange)="onQuestionType($event,surveyForm.controls.surveyQuestions.controls[i])"-->
-                <option *ngFor="let a of surveyInfo.surveyQuestionType" [value]="a.id"> {{a.name}}</option>
+              <option disabled="disabled" selected="selected">Select Question Type</option>               
+              <option *ngFor="let a of surveyInfo.surveyQuestionType" [value]="a.id"> {{a.name}}</option>
             </select>
           </div>
 

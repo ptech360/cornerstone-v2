@@ -179,6 +179,7 @@
           <div class="form-group">
             <label for="sel1">Assigned To:</label>
             <select class="form-control" formControlName="assignedTo">
+              <option disabled="disabled" selected="selected">Select</option>             
               <option *ngFor="let emp of employees" [value]="emp.id">{{emp.name}}</option>
             </select>
           </div>

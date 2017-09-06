@@ -13,9 +13,9 @@ export class Configuration {
   // public baseUrl: string = " https://cornerstone.ind-cloud.everdata.com/";
   // public Server: string = " https://cornerstone.ind-cloud.everdata.com/";
     
-   public url: string = "http://nxtlife-testing.ind-cloud.everdata.com";
-   public baseUrl: string = "http://nxtlife-testing.ind-cloud.everdata.com/";
-   public Server: string = "http://nxtlife-testing.ind-cloud.everdata.com/";
+  public url: string = "http://nxtlife-testing.ind-cloud.everdata.com";
+  public baseUrl: string = "http://nxtlife-testing.ind-cloud.everdata.com/";
+  public Server: string = "http://nxtlife-testing.ind-cloud.everdata.com/";
 
   
   // public url: string = "http://yugma.ind-cloud.everdata.com";

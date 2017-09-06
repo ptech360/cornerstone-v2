@@ -28,11 +28,11 @@ export class TimetableComponent implements OnInit{
  private showsubjectname : boolean = false;
  private subjectName : string;
  private serialNo : any [] = [ 'Assembly','First','Second','Third','Snack','Fourth','Fifth','Sixth','Lunch','Seventh','Eighth','Ninth'];
- private loader = true;
+ private loader:boolean = false;
  constructor(
  	public ls : LoaderStop,
-   public ps: TimeTableService,
-    public router:Router,
+  public ps: TimeTableService,
+  public router:Router,
  ){ 
  this.ls.setLoader(false);
  }
@@ -46,13 +46,21 @@ export class TimetableComponent implements OnInit{
    console.log(this.selectedStandard)
    this.days = [];
    this.daysdata = [];
+   this.loader = true;
    this.ps.gettimeTable( selectedstandard ).subscribe(res => {
+     if(res.status == 204){
+      this.days = [];
+      this.daysdata = [];
+      this.timetable = [];
+     }else{
       this.timetable = res;
       Object.keys(res).forEach( key => {
-     this.daysdata.push(res[key]); 
-     this.days.push(key); //key
-     this.loader = false;
+      this.daysdata.push(res[key]); 
+      this.days.push(key); //key
       });
+     }
+     this.loader = false;
+    
     },
       err => {
         this.router.navigate(['/error']);
