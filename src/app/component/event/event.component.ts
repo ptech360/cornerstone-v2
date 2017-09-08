@@ -23,14 +23,13 @@ export class EventComponent implements OnInit, AfterViewInit {
   public eventsInfo:any;
   public buttonlabel : string = 'Select Standard';
   public eventId:any;
-  public selplannertype : number = -1;
   public pageNo:any=1;
   public eventMonth:any;
   public emptyEvent:boolean; 
   public planner:any; 
   public standard:any;
   public editEvent:FormGroup;
-  public start: any;
+  public start: any ;
   public end:any;
   public stdIds:any[]=[];
   public selectedEvent:any;
@@ -184,7 +183,6 @@ export class EventComponent implements OnInit, AfterViewInit {
 
 
     public selectPlannerType(type:any){
-      console.log(this.planner);
     if(type==2){
       this.event.addControl("standardIds", new FormControl('', [Validators.required]));
     }
@@ -200,6 +198,8 @@ export class EventComponent implements OnInit, AfterViewInit {
       this.event.addControl("startTime", new FormControl('', [Validators.required]));
       this.event.addControl("endTime", new FormControl('', [Validators.required]));
     }
+    this.start = "00:00";
+    this.end = "00:00";
 
   }
 
@@ -281,9 +281,7 @@ public endT(e:any){
     this.eventService.GetPlanner().subscribe((res)=>{
     this.plannerLoader=false;      
       this.planner=res;
-      this.planner.splice(0,0,{name : 'Select Planner', id : -1});
       this.loader=false;
-      console.log(this.selplannertype);
     },(err)=>{
        this.router.navigate(['/error']);
 

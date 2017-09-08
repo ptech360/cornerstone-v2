@@ -124,9 +124,18 @@
                     
                     <div class="form-group">
                         <label for="planner">Planner-type</label>
-                        <select class="form-control" [(ngModel)]= "selplannertype" id="planner" name="planner" formControlName="plannerTypeId" (ngModelChange)="selectPlannerType($event)">
+                        <select 
+                        class="form-control" 
+                        id="planner" 
+                        name="planner" 
+                        formControlName="plannerTypeId" 
+                        (ngModelChange)="selectPlannerType($event)">
                             
-                            <option *ngFor="let p of planner" [attr.disabled] = " p.id == -1 ? true : null" [value]="p.id" >{{p.name}}</option>
+                            <option [attr.disabled]="true" [value]='null'>Select Planner</option>    
+                            <option *ngFor="let p of planner" 
+                            [value]="p.id" >
+                                {{p.name}}
+                            </option>
 
                         </select>
                         <loader [condition]="plannerLoader" class="dropdownLoader"></loader>

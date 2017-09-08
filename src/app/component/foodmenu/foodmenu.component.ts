@@ -28,7 +28,7 @@ export class FoodmenuComponent implements AfterViewInit{
     public start:any;
     public selectedMenu:any={};
     // public submitProgress:any;
-    public tryfoodtype : any = -1;
+    public tryfoodtype : any = "0";
 
     constructor(
         private ls : LoaderStop,
@@ -182,6 +182,7 @@ export class FoodmenuComponent implements AfterViewInit{
         this.foodItems=res;
         this.foodItems.splice(0,0,{ id : -1, name : 'Select Item'});
         console.log(this.foodItems);
+        console.log(this.tryfoodtype);
         },err=>{
         })
     }
@@ -220,5 +221,9 @@ export class FoodmenuComponent implements AfterViewInit{
       this.addMenu.controls['day'].patchValue(this.start);
     }
 
+    }
+    func(){
+        
+        console.log(this.tryfoodtype);
     }
 }
