@@ -33,8 +33,8 @@
     </div>
     <div class="form-group">
       <label for="description">Description</label>
-      <span class="badge">{{2500 - homework.value.description.length}}</span>
-      <textarea class="form-control" id="exampleTextarea" name="description" maxlength="2500" formControlName="description" rows="3"></textarea>
+      <span class="badge">{{2000 - homework.value.description.length}}</span>
+      <textarea class="form-control" id="exampleTextarea" name="description" maxlength="2000" formControlName="description" rows="3"></textarea>
       <div [hidden]="homework.controls.description.untouched  ||homework.controls.description.valid ||homework.controls.description.prestine" class="alert alert-warning">This field is required</div>
 
     </div>

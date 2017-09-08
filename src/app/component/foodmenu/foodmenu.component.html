@@ -53,9 +53,8 @@
         <form [formGroup]="addMenu">
             <div class="form-group">
                 <label for="foodId">Food Item</label>
-                <select formControlName="foodId" name="foodId" id="foodId" class="form-control">
-                  <option disabled="disabled" selected="selected">Select Food item</option>             
-                  <option *ngFor="let item of foodItems" [value]="item.id">{{item.name}}</option>
+                <select formControlName="foodId" [(ngModel)]="tryfoodtype" name="foodId" id="foodId" class="form-control">
+                  <option *ngFor="let item of foodItems" [attr.disabled] = " item.id == -1 ? true : null" [value]="item.id">{{item.name}}</option>
                 </select>
                 <loader [condition]="itemLoader" class="dropdownLoader"></loader>
               </div>

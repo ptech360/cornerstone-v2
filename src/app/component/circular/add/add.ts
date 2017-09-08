@@ -19,6 +19,7 @@ export class AddCircular implements OnInit, AfterViewInit {
   public title: string = 'Add Circular';
   public newCircular: any;
   public standards: any;
+  public buttonlabel : string = 'Select Standard';
   public emptyStandards = false;
   public circularType: any;
   public file: any;
@@ -114,6 +115,18 @@ export class AddCircular implements OnInit, AfterViewInit {
     });
   }
 
+  check(a:any){
+      if(a.checked == true){
+        return true;
+      }
+      else{
+         if( this.buttonlabel.indexOf(a.name) >= 0  ){
+           return true;
+         }
+         return false;
+      }
+  }
+
   public buildCircularData(circular: any) {
 
     this.circularType = circular;
@@ -151,10 +164,24 @@ export class AddCircular implements OnInit, AfterViewInit {
   standard: any;
 
   selectStandards(a:any,e: any) {
+
     if(e==true){
       this.stdIds.push(a.id);
+      if(this.buttonlabel == 'Select Standard'){
+        this.buttonlabel = ' '+a.name;
+      }
+      else{
+        this.buttonlabel += ' ' + a.name;
+      }
     }
     else if(e==false){
+      
+      let s : string = a.name; 
+      this.buttonlabel = this.buttonlabel.replace( ' '+s , '');
+      console.log(this.buttonlabel);
+      if(this.buttonlabel == ''){
+        this.buttonlabel = 'Select Standard';
+      }
       this.stdIds.forEach((element:any, index:any)=>{
          if (element==a.id){
           this.stdIds.splice(index,1);
@@ -162,6 +189,7 @@ export class AddCircular implements OnInit, AfterViewInit {
       })
     }
     this.circular.controls['standardIds'].patchValue(this.stdIds);
+    console.log(this.stdIds);
   }
 
   public onSubmit(formData: any) {

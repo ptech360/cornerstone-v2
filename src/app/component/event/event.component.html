@@ -124,9 +124,10 @@
                     
                     <div class="form-group">
                         <label for="planner">Planner-type</label>
-                        <select class="form-control" id="planner" name="planner" formControlName="plannerTypeId" (ngModelChange)="selectPlannerType($event)">
-                            <option disabled="disabled" selected="selected">Select Planner type</option>             
-                            <option *ngFor="let p of planner" [value]="p.id">{{p.name}}</option>
+                        <select class="form-control" [(ngModel)]= "selplannertype" id="planner" name="planner" formControlName="plannerTypeId" (ngModelChange)="selectPlannerType($event)">
+                            
+                            <option *ngFor="let p of planner" [attr.disabled] = " p.id == -1 ? true : null" [value]="p.id" >{{p.name}}</option>
+
                         </select>
                         <loader [condition]="plannerLoader" class="dropdownLoader"></loader>
                         <div [hidden]="event.controls.plannerTypeId.untouched || event.controls.plannerTypeId.prestine || event.controls.plannerTypeId.valid" class="alert alert-warning">
@@ -135,21 +136,22 @@
                     </div>
                      <div class="form-group" *ngIf="event.value.plannerTypeId==2">
                      
-                        <label for="standard">Select Standard</label>
+<!--                         <label for="standard">Select Standard</label>
                          <select class="form-control" id="standard" name="standardId"[(ngModel)]="standards" (ngModelChange)="selectStandards($event)" [ngModelOptions]="{standalone: true}" multiple>
                             <option *ngFor="let s of standard" [ngValue]="s">{{s.name}}</option>
-                        </select> 
-<!--                         <label for="standardIds">Select Standard</label>
-                        <button type="button" class="form-control" *ngIf="standard != null" (click)="dropdown ? dropdown = false : dropdown = true;"></button>
+                        </select>  -->
+                        
+                        <label for="standardIds">Select Standard</label>
+                        <button style="text-align: left;" type="button" class="form-control" *ngIf="standard != null" (click)="dropdown ? dropdown = false : dropdown = true ">{{buttonlabel}}</button>
                         <button type="button" class="form-control" *ngIf="standard == null">No Standards are added to the View. Try again later.</button>
                         <ul class="list" id="standardIds" *ngIf="dropdown">
                             <li style="    margin-left: -34px;     /* text-indent: -18px; */ " *ngFor="let a of standard">
                             <label>
-                            <input type="checkbox" class="checkbox" [ngModel]="a.checked" (ngModelChange)="selectStandards(a,$event)" [ngModelOptions]="{standalone: true}" [value]="a.id">
+                            <input type="checkbox" class="checkbox" [ngModel]="checkcheckedbox(a)" (ngModelChange)="selectStandards(a,$event)" [ngModelOptions]="{standalone: true}" [value]="a.id">
                             {{a.name}}
                             </label>
                         </li>
-                        </ul> -->
+                        </ul>
                         <loader [condition]="standardLoader" class="dropdownLoader"></loader>
                     </div>
                      <div class="form-group">
@@ -181,8 +183,8 @@
                     <div class="form-group">
                         <label for="description">Description</label>
                         <span class="small">Optional</span>
-                        <span class="badge">{{2500-event.value.description.length}}</span>
-                        <input type="text" class="form-control" id="description" name="description" formControlName="description" maxlength="2500" placeholder="Description">                                                
+                        <span class="badge">{{2000-event.value.description.length}}</span>
+                        <input type="text" class="form-control" id="description" name="description" formControlName="description" maxlength="2000" placeholder="Description">                                                
                     </div>
 
 
@@ -259,8 +261,8 @@
                     <div class="form-group">
                         <label for="description">Description</label>
                         <span class="small">Optional</span>
-                        <span class="badge">{{2500-editEvent.value.description.length}}</span>
-                        <input type="text" class="form-control" id="description" name="description" formControlName="description" maxlength="2500" placeholder="Description">                                                
+                        <span class="badge">{{2000-editEvent.value.description.length}}</span>
+                        <input type="text" class="form-control" id="description" name="description" formControlName="description" maxlength="2000" placeholder="Description">                                                
                     </div>
 
 

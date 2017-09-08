@@ -1,19 +1,11 @@
-<<<<<<< HEAD
-Select Standard
-<div class="panel panel-default">
 
-	<select class="form-control" id="standardIds" name="standardIds" [(ngModel)]="selectedStandard" [ngModelOptions]="{standalone: true}"
-          (ngModelChange)="getTimeTable(selectedStandard)" required>
-      <option disabled="disabled" selected="selected">Select standard</option>             
-      <option *ngFor=" let s of standards" [value]="s.id"> {{s.name}}</option>
-        
-=======
+       
 <div class="row">
   <div class="col-sm-4 col-sm-offset-8">
     Select Standard
     <select class="form-control" id="standardIds" name="standardIds" [(ngModel)]="selectedStandard" (ngModelChange)="getTimeTable($event)">
     <option *ngFor=" let s of standards" [value]="s.id"> {{s.name}}</option>
->>>>>>> 80a7dacb2c1289f651fd4e82c3d44bf826cc7a7a
+
     </select>
   </div>
 </div>

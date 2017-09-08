@@ -21,7 +21,9 @@ export class EventComponent implements OnInit, AfterViewInit {
   public calInstance:any;
   public thisdate:any;
   public eventsInfo:any;
+  public buttonlabel : string = 'Select Standard';
   public eventId:any;
+  public selplannertype : number = -1;
   public pageNo:any=1;
   public eventMonth:any;
   public emptyEvent:boolean; 
@@ -42,7 +44,6 @@ export class EventComponent implements OnInit, AfterViewInit {
   public plannerLoader:boolean=false;
   public startTime:any;
   public endTime:any;
-  public try : string = "00:00";
   constructor(
      
     private eventService: EventService,
@@ -62,6 +63,7 @@ export class EventComponent implements OnInit, AfterViewInit {
     this.event=this.initForm(); 
   
   }
+
 
   ngAfterViewInit(){
       _('#calendar').fullCalendar('renderEvents', this.calendarOptions.events, true); 
@@ -182,7 +184,7 @@ export class EventComponent implements OnInit, AfterViewInit {
 
 
     public selectPlannerType(type:any){
-
+      console.log(this.planner);
     if(type==2){
       this.event.addControl("standardIds", new FormControl('', [Validators.required]));
     }
@@ -273,12 +275,15 @@ public endT(e:any){
 
   }
 
+ 
   public getPlanner(){
     this.plannerLoader=true;
     this.eventService.GetPlanner().subscribe((res)=>{
     this.plannerLoader=false;      
       this.planner=res;
+      this.planner.splice(0,0,{name : 'Select Planner', id : -1});
       this.loader=false;
+      console.log(this.selplannertype);
     },(err)=>{
        this.router.navigate(['/error']);
 
@@ -332,25 +337,53 @@ public endT(e:any){
     },(err)=>{});
   }
 
+ selectStandards(a:any,e: any) {
 
-public selectStandards(e:any){
-    // if(e==true){
-    //   this.stdIds.push(a.id);
-    // }
-    // else if(e==false){
-    //   this.stdIds.forEach((element:any, index:any)=>{
-    //      if (element==a.id){
-    //       this.stdIds.splice(index,1);
-    //     }
-    //   })
-    // }
-    this.stdIds = [];
-    for(let x of e){
-      this.stdIds.push(x.id);  
+    if(e==true){
+      this.stdIds.push(a.id);
+      if(this.buttonlabel == 'Select Standard'){
+        this.buttonlabel = ' '+a.name;
+      }
+      else{
+        this.buttonlabel += ' ' + a.name;
+      }
     }
-    console.log(this.stdIds);
+    else if(e==false){
+      
+      let s : string = a.name; 
+      this.buttonlabel = this.buttonlabel.replace( ' '+s , '');
+      console.log(this.buttonlabel);
+      if(this.buttonlabel == ''){
+        this.buttonlabel = 'Select Standard';
+      }
+      this.stdIds.forEach((element:any, index:any)=>{
+         if (element==a.id){
+          this.stdIds.splice(index,1);
+        }
+      })
+    }
     this.event.controls['standardIds'].patchValue(this.stdIds);
+    console.log(this.stdIds);
   }
+
+// public selectStandards(e:any,a:any){
+//     if(e==true){
+//       this.stdIds.push(a.id);
+//     }
+//     else if(e==false){
+//       this.stdIds.forEach((element:any, index:any)=>{
+//          if (element==a.id){
+//           this.stdIds.splice(index,1);
+//         }
+//       })
+//     }
+//     // this.stdIds = [];
+//     // for(let x of e){
+//     //   this.stdIds.push(x.id);  
+//     // }
+//     // console.log(this.stdIds);
+//     this.event.controls['standardIds'].patchValue(this.stdIds);
+//   }
 
   public currentDate:any;
 
@@ -382,6 +415,18 @@ public selectStandards(e:any){
       }
     this.startT(this.startTime);
     this.endT(this.endTime);
+  }
+
+  checkcheckedbox(a:any){
+      if(a.checked == true){
+        return true;
+      }
+      else{
+         if( this.buttonlabel.indexOf(a.name) >= 0  ){
+           return true;
+         }
+         return false;
+      }
   }
 
 

@@ -47,8 +47,8 @@
 
       <div class="form-group">
         <label for="description">Description</label>
-        <span class="badge">{{2500 - appreciation.value.description.length}}</span>
-        <textarea class="form-control" name="description" formControlName="description" maxlength="2500"></textarea>
+        <span class="badge">{{2000 - appreciation.value.description.length}}</span>
+        <textarea class="form-control" name="description" formControlName="description" maxlength="2000"></textarea>
         <div [hidden]="appreciation.controls.description.untouched || appreciation.controls.description.prestine || appreciation.controls.description.valid" class="alert alert-warning">This field is required</div>
       </div>
       <button type="submit" class="btn btn-success" [disabled]="appreciation.invalid">Submit</button>

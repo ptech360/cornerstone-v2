@@ -18,7 +18,7 @@ export class NewStudentComponent {
   public standardLoader:boolean=false;
 
   //NewStudent
-
+  public seltype : any =-1;
   public standards: any[];
   // public parents: any[] = [{ id: 1, name: 'Father' },
   // { id: 2, name: 'Mother' },
@@ -42,6 +42,7 @@ export class NewStudentComponent {
     this.standardLoader = true;
     this.as.getStandards().subscribe(res => {
       this.standards = res;
+      this.standards.splice(0,0,{ id: -1, name : 'Select Standard'});
       this.standardLoader = false;
     },
       err => {
