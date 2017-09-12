@@ -152,7 +152,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" [routerLink]="['/poll/current-poll']">Close</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Add More</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click) = "setDefault()">Add More</button>
       </div>
     </div>
   </div>

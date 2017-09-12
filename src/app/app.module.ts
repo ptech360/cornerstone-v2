@@ -22,7 +22,7 @@ import { LocationStrategy, HashLocationStrategy } from "@angular/common";
 		},
 		{
 			path : '',
-			loadChildren : 'app/component/main/main.module#MainModule' , canActivate : [AuthGuard]
+			loadChildren : 'app/component/main/main.module#MainModule' , canLoad : [AuthGuard]
 		}
 	], { useHash: true }) ],
 	exports: [],

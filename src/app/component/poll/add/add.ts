@@ -67,6 +67,11 @@ export class AddPollComponent implements OnInit {
       }
   }
 
+  setDefault(){
+    this.buttonlabel = "Select Standard";
+    this.getStandards();
+  }
+
   getStandards() {
     this.standardLoader=true;
     this.ps.getStandards().subscribe(res => {
