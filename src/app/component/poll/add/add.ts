@@ -87,9 +87,8 @@ export class AddPollComponent implements OnInit {
     this.cs.getPollInfo().subscribe(res => {
       this.pollInfo = res;
       this.pollType=this.pollInfo.pollType;
-      this.pollType.splice(0,0,{id : -1 , name : 'Select Audience'});
       this.pollOptionType=this.pollInfo.pollOptionType;
-      this.pollOptionType.splice(0,0,{id : -1 , name : 'Select Question Type'});
+      // this.pollOptionType.splice(0,0,{id : -1 , name : 'Select Question Type'});
       
     this.infoLoader = false;      
     },

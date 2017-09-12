@@ -18,11 +18,11 @@ export class AddAppreciation {
   public submitProgress: boolean = false;
   public stan: any;
   standards: any = [];
-  public standardId: any = -1 ;
+  public standardId: any ='';
   public standard:any;
   students: any = [];
   subjects: any = [];
-  public studId: any = -1;
+  public studId: any ;
   public emptyStudents: boolean = true;
   public emptyStandards: boolean = true;
   public loader:boolean = false;
@@ -69,7 +69,6 @@ export class AddAppreciation {
         return;
       }
       this.standards = res;
-      this.standards.splice(0,0,{name : 'Select Standard', id : -1}); 
       console.log(this.standards);
       this.emptyStandards = false;
       this.loader = false;
@@ -91,7 +90,7 @@ export class AddAppreciation {
       this.studentLoader=false;
       this.emptyStudents = false;
       this.students = res;
-      this.students.splice(0,0,{id : -1, name : 'Select Student'});
+      
     }, (err) => {
       this.router.navigate(['/error']);
     });

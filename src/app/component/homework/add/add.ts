@@ -21,8 +21,6 @@ export class HomeworkAddComponent implements OnInit {
   public submitProgress: boolean = false;
   standards: any = [];
   subjects: any = [];
-  public subtype = -1;
-  public stantype = -1;
   public emptySubjects: boolean = true;
   public loader: boolean = false;
   public standardLoader:boolean=false;
@@ -87,7 +85,6 @@ export class HomeworkAddComponent implements OnInit {
       }
       this.emptySubjects = false;
       this.subjects = res;
-      this.subjects.splice(0,0,{subjectId : -1 , subjectName : 'Select Subject'});
       this.subjectLoader = false;
     }, (err) => {
       this.router.navigate(['/error']);
@@ -98,7 +95,6 @@ export class HomeworkAddComponent implements OnInit {
     this.standardLoader = true;
     this.homeworkService.getStandards().subscribe((res) => {
       this.standards = res;
-      this.standards.splice(0,0,{id : -1 , name : 'Select Standards'});
       this.commonService.storeData("standards", res);
       this.standardLoader = false;
     }, (err) => {
