@@ -45,11 +45,10 @@ const rootRouterConfig:Routes = [
     { path: 'conversation', loadChildren: 'app/component/message/message.module#MessageModule', canActivate: [LoggedInGuard], },
     { path: 'event', component: EventComponent, canActivate: [LoggedInGuard] },
     { path: 'survey', loadChildren: 'app/component/survey/survey.module#SurveyModule', canActivate: [LoggedInGuard] },
-    
+  
     { path: 'student-profile', loadChildren: 'app/component/studentRating/studentRating.module#StudentRatingModule', canActivate: [LoggedInGuard] },
     { path: 'view-survey/:id', component: ViewSurveyComponent, canActivate: [LoggedInGuard] },
-    {
-      path: 'suggestion', loadChildren: 'app/component/suggestion/suggestion.module#SuggestionModule' },
+    { path: 'suggestion', loadChildren: 'app/component/suggestion/suggestion.module#SuggestionModule' },
   ]
     
   },

@@ -1,92 +1,65 @@
 <div class="tab-pane">
-  <div class="panel panel-default">
-    <div class="panel-body" id="accordion">
-      <div class="row text-center">
-        <loader [condition]="loader"></loader>
-      </div>
-      <div style="margin-top: 2%;padding-top: 1%;">
-      <div  *ngIf="!EmptyComplaints">
-        <div class="card" *ngFor="let c of complaints; let i = index;">
-          <div class="row">
-            <span class="glyphicon glyphicon-resize-full expand" data-toggle="modal" (click)="seletToExpand(c)" data-target="#myModal-card"
-              style="margin-bottom:10px;"></span>
+    <div class="row">
+       <div>
+          <div class="row text-center">
+             <loader [condition]="loader"></loader>
           </div>
-          <div class="row">
-            <img class="image" [attr.src]="fileUrl + c.studentPicUrl">
+          <div>
+             <div  *ngIf="!EmptyComplaints">
+                <div class="col-lg-3 col-md-4 col-xs-12" *ngFor="let c of complaints; let i = index;">
+                   <div class="nlCard pointerHand center-block" onclick="$('.panel.panel-chat').hide();" (click)="seletToExpand(c,i)" data-toggle="modal"
+                      data-target="#myModal-card">
+                      <img class="cardImage img-center" [attr.src]="fileUrl + c.studentPicUrl" style="border-radius:50% !important">
+                      <div class="text-center">
+                         <div class="name">
+                            {{c.studentName}}
+                         </div>
+                         <span class="class">( Class:  {{c.standardName}} )</span>
+                      </div>
+                      <hr>
+                      <div class="cardTitle">
+                         <b>{{c.title}}</b>
+                      </div>
+                      <div class="cardDescription">
+                         {{c.description}}
+                      </div>
+                   </div>
+                </div>
+             </div>
           </div>
-          <div class="row">
-            <div class="name">
-              {{c.studentName}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="class">{{c.standardName}}</div>
-          </div>
-          <hr class="style-line">
-          <div class="row" style="text-align:center">
-            <div class="title">
-              {{c.title}}
-            </div>
-          </div>
-          <div class="row description">{{c.description}}</div>
-        </div>
-      </div>
-    </div>
-    <div class="row col-lg-12" style="text-align: center" *ngIf="(EmptyComplaints)&&(!loader)&&(currentPage==1)"><b>No Appreciations are added to the view.</b></div>
+          <div class="row col-lg-12" style="text-align: center" *ngIf="(EmptyComplaints)&&(!loader)&&(currentPage==1)"><b>No Appreciations are added to the view.</b></div>
           <div class="row col-lg-12" style="text-align: center" *ngIf="(EmptyComplaints)&&(!loader)&&(currentPage!=1)"><b>No more Appreciations are added to the view.</b></div>
+       </div>
     </div>
-
-
-    <div class="panel-footer">
-      <!--<button (click)="previousComplaint()" [disabled]="currentPage === 1" type="button" class="btn btn-primary">Previous</button>-->
-      <div class="text-center"><button (click)="nextComplaint()" type="button" [disabled]="EmptyComplaints || noMore" class="btn btn-primary">Load More</button></div>
+ </div>
+ <div class="row">
+    <!--<button (click)="previousComplaint()" [disabled]="currentPage === 1" type="button" class="btn btn-primary">Previous</button>-->
+    <div class="text-center"><button (click)="nextComplaint()" type="button" [disabled]="EmptyComplaints || noMore" class="btn round button4 btn-lg">Load More</button></div>
+ </div>
+ <div class="modal fade" id="myModal-card" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="square" *ngIf="selectedComplaint">
+            <div class="close pull-right">
+               <span data-dismiss="modal" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </div>
+               <div class="col-lg-4 col-md-4 col-sm-12 head">
+                  <img class="center-block circle shadow-4" [attr.src]="fileUrl + selectedComplaint.studentPicUrl" style="border-radius:50% !important"
+                     width="100px" height="100px">
+                  <div class="text-center">
+                     <b>{{selectedComplaint.studentName}}</b>
+                     <br>
+                     <span class="badgel bg4">Class {{selectedComplaint.standardName}}</span>
+                     <br>
+                     {{selectedComplaint.createdAt | date}}
+                  </div>
+               </div>
+               <div class="col-lg-8 col-md-8 col-sm-12">
+                  <b>{{selectedComplaint.title}}</b>
+                  <br>{{selectedComplaint.description}}
+               </div>
+            <div class="row"></div>
+       <!-- /.modal-content -->
     </div>
-  </div>
-</div>
-
-<div class="modal fade" id="myModal-card" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content" *ngIf="selectedComplaint">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="gridSystemModalLabel">{{selectedComplaint.title}}</h4>
-      </div>
-      <div class="modal-body ">
-        <div class="card-modal">
-
-          <div class="row">
-            <div class="modal-heading" style="margin-top:-14px">
-              <img class="modal-image" [attr.src]="fileUrl + selectedComplaint.studentPicUrl">
-            </div>
-          </div>
-          <div class="row">
-            <div class="modal-name">{{selectedComplaint.studentName}}
-              <div class="modal-class">{{selectedComplaint.standardName}}</div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="modal-description">
-              <span class="white-space"> {{selectedComplaint.description}}</span>
-            </div>
-          </div>
-          <hr class="style-line">
-          <div class="row">
-            <div class="col-sm-3">
-              <i class="glyphicon glyphicon-calendar calendar-custom pull-right"></i>
-            </div>
-            <div class="col-sm-9">
-              <label class="heading">Created At</label>
-              <div class="result">{{selectedComplaint.createdAt | date}}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary modal-btn" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
+    <!-- /.modal-dialog -->
+ </div>
+ <!-- /.modal -->

@@ -18,3 +18,44 @@ h1{
     border-bottom-style: double;
     border-bottom-color: grey;
 }
+.card-panel{
+    margin: 0;
+    padding:2rem;
+    transition: box-shadow .25s;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.26)!important;
+}
+.lighten-1{
+    background-color: #7986cb!important;
+}
+.lighten-2{
+    background-color: #64B5F6!important;
+}
+.lighten-3{
+    background-color: #4db6ac!important;
+}
+.indigo-text{
+    color: #e8eaf6!important;
+}
+.stats-card {
+    display: block;
+    position: relative;
+    overflow: hidden;
+}
+.stats-card>i {
+    position: absolute;
+    font-size: 6rem;
+    right: 0;
+    bottom: -1rem;
+}
+.stats-card .count {
+    position: relative;
+    font-weight: 700;
+    font-size: 2rem;
+    line-height: 2rem;
+}
+.stats-card .name {
+    position: relative;
+    font-size: 1rem;
+    line-height: 1rem;
+}

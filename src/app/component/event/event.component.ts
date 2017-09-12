@@ -12,7 +12,11 @@ declare let $: any;
 @Component({
   selector: 'event',
   templateUrl: './event.component.html',
-  styleUrls: ['./event.component.css']
+  styleUrls: ['./event.component.css'],
+  styles:[`.fc-head{
+    background:var(--color4);
+    color: var(--color4s);
+}`]
 })
 export class EventComponent implements OnInit, AfterViewInit {
   public event:FormGroup;
