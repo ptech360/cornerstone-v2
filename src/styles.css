@@ -208,9 +208,6 @@ body{
 .inline-flex{
     display: inline-flex;
 }
-.fa{
-    color: var(--color3)  !important;
-  }
 /* /end of global classes */
 .loader {
     border: 16px solid #f3f3f3; /* Light grey */

@@ -27,3 +27,7 @@
 #inner {
   display: inline-block;
 }
+
+.fa{
+    color: var(--color3)  !important;
+  }
