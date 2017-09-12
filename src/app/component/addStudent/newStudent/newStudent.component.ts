@@ -18,7 +18,6 @@ export class NewStudentComponent {
   public standardLoader:boolean=false;
 
   //NewStudent
-
   public standards: any[];
   // public parents: any[] = [{ id: 1, name: 'Father' },
   // { id: 2, name: 'Mother' },

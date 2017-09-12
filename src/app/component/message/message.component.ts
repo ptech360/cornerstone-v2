@@ -41,13 +41,14 @@ export class MessageComponent implements AfterViewInit, OnInit {
   public imgUrl: any;
   public selectedId: any;
   public currentUser: any;
+  public selcate : any = -1;
 
   //New Message
   public standardsArray: any[];
   public newMessageForm: FormGroup;
   public students: any[];
   public categories: any[];
-  public standard: any;
+  public standard: any = -1;
   public selectedStudent: any;
   public newMsg:any;
 
@@ -66,6 +67,7 @@ export class MessageComponent implements AfterViewInit, OnInit {
     this.initForm();
     this.initnewMessageForm();
     this.getStandards();
+    
     this.pictureForm = new FormGroup({
       // message: new FormControl('', [Validators.required]),
     })
@@ -105,6 +107,10 @@ export class MessageComponent implements AfterViewInit, OnInit {
       })
 
     this.loader = false;
+  }
+
+  selectstudent(a:number){
+    this.selectedStudent = this.students.find(student => student.id === a);
   }
 
   initForm() {
@@ -199,7 +205,8 @@ export class MessageComponent implements AfterViewInit, OnInit {
     if (val && val.trim() != '') {
       this.emptySearchResult = false;
       this.oldMessageRecipients = this.oldMessageRecipientsCOPY.filter((item: any) => {
-        return (item.title.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        console.log(item);
+        return (item.title.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.firstMessage.message.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.firstMessage.parentName.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
       if (this.oldMessageRecipients.length === 0)
         this.emptySearchResult = true;
@@ -295,7 +302,7 @@ export class MessageComponent implements AfterViewInit, OnInit {
   }
 
   public initnewMessageForm() {
-    this.standard = null;
+    this.standard = -1;
     this.categories = null;
     this.students = null;
     this.newMessageForm = new FormGroup({
@@ -317,6 +324,7 @@ export class MessageComponent implements AfterViewInit, OnInit {
       }
     this.standardLoader = false;          
       this.standardsArray = res;
+      this.standardsArray.splice(0,0,{ name : 'Select Standards', id : -1});
     },
       err => {
         this.errPage();
@@ -335,7 +343,10 @@ export class MessageComponent implements AfterViewInit, OnInit {
         return;
       }
       this.students = res.students;
+      this.students.splice(0,0,{ id:-1, name : 'Select Student' });
+      this.selectstudent(-1);
       this.categories = res.categories;
+      this.categories.splice(0,0,{ id:-1, name : 'Select Category' });
       this.categoryLoder=false;
       this.studentLoader = false;
     },

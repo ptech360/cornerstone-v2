@@ -18,6 +18,7 @@ export class AddPollComponent implements OnInit {
   public pollInfo: any;
   public standards: any;
   public selectedStandard: any;
+  public buttonlabel : string = 'Select Standard';
   // public disable: boolean = false;
   public loader: boolean = false;
   public submitProgress:boolean=false;
@@ -26,7 +27,8 @@ export class AddPollComponent implements OnInit {
   public addPollForm: FormGroup;
   public pollType:any=[];  
   public pollOptionType:any=[];
-
+  public questype : any = -1;
+  public auditype : any = -1;
   constructor(public fb: FormBuilder,
     public cs: CommonService,
     public ps: PollService,
@@ -53,6 +55,23 @@ export class AddPollComponent implements OnInit {
     })
   }
 
+  check(a:any){
+      if(a.checked == true){
+        return true;
+      }
+      else{
+         if( this.buttonlabel.indexOf(a.name) >= 0  ){
+           return true;
+         }
+         return false;
+      }
+  }
+
+  setDefault(){
+    this.buttonlabel = "Select Standard";
+    this.getStandards();
+  }
+
   getStandards() {
     this.standardLoader=true;
     this.ps.getStandards().subscribe(res => {
@@ -69,6 +88,8 @@ export class AddPollComponent implements OnInit {
       this.pollInfo = res;
       this.pollType=this.pollInfo.pollType;
       this.pollOptionType=this.pollInfo.pollOptionType;
+      // this.pollOptionType.splice(0,0,{id : -1 , name : 'Select Question Type'});
+      
     this.infoLoader = false;      
     },
       err => {
@@ -91,10 +112,24 @@ export class AddPollComponent implements OnInit {
   }
   stdIds: any = [];
   selectStandards(a:any,e: any) {
+
     if(e==true){
       this.stdIds.push(a.id);
+      if(this.buttonlabel == 'Select Standard'){
+        this.buttonlabel = ' '+a.name;
+      }
+      else{
+        this.buttonlabel += ' ' + a.name;
+      }
     }
     else if(e==false){
+      
+      let s : string = a.name; 
+      this.buttonlabel = this.buttonlabel.replace( ' '+s , '');
+      console.log(this.buttonlabel);
+      if(this.buttonlabel == ''){
+        this.buttonlabel = 'Select Standard';
+      }
       this.stdIds.forEach((element:any, index:any)=>{
          if (element==a.id){
           this.stdIds.splice(index,1);
@@ -102,6 +137,7 @@ export class AddPollComponent implements OnInit {
       })
     }
     this.addPollForm.controls['standardIds'].patchValue(this.stdIds);
+    console.log(this.stdIds);
   }
 
   public onStandards(ev: any) {

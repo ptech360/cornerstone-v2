@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LoaderStop } from './providers/loaderstop.service';
 declare let $: any;
 
 @Component({
@@ -6,7 +7,9 @@ declare let $: any;
   templateUrl : './app.component.html',
 })
 export class AppComponent  { name = 'Angular';
-  constructor(){
-
+  private loaderstop : any;
+  constructor(ls : LoaderStop){
+  	setInterval (()=>{this.loaderstop = ls.getLoader();},10)	
   }
+
 }

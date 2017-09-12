@@ -21,6 +21,8 @@ import { Router } from '@angular/router';
   public emptyStandards:boolean =  false;
   public emptyStudents: boolean = false;
   students:any=[];
+  public standardLoader:boolean=false;
+  public studentLoader:boolean=false;
   // subjects:any = [];
   constructor(  private suggestionService:SuggestionService,
                 private commonService:CommonService,
@@ -57,13 +59,16 @@ import { Router } from '@angular/router';
        this.router.navigate(['/error']);
     });
     }
+
   public getStandards() {
-    // this.nl.showLoader();
+    this.standardLoader=true;
     this.suggestionService.getStandards().subscribe((res) => {
       if(res.status===204){
+    this.standardLoader=false;        
         this.emptyStandards = true;
         return;
       }
+    this.standardLoader=false;              
       this.emptyStandards=false;
       this.standards = res;
 
@@ -73,13 +78,15 @@ import { Router } from '@angular/router';
   }
 
    public getStudents(standardId:any) {
-    // this.nl.showLoader();
+    this.studentLoader=true;
     this.suggestion.controls["studentId"].reset();
     this.suggestionService.getStudents(standardId).subscribe((res) => {
       if(res.status === 204){
+    this.studentLoader=false;        
         this.emptyStudents = true;
         return;
       }
+    this.studentLoader=false;      
       this.emptyStudents = false;;
       this.students = res;
     }, (err) => {

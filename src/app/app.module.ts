@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent} from './app.component';
 import { AuthGuard } from './AuthGuard';
+import { LoaderStop } from './providers/loaderstop.service';
 // import { ROUTER_PROVIDERS } from "@angular/router";
 import { LocationStrategy, HashLocationStrategy } from "@angular/common";
 
@@ -21,12 +22,12 @@ import { LocationStrategy, HashLocationStrategy } from "@angular/common";
 		},
 		{
 			path : '',
-			loadChildren : 'app/component/main/main.module#MainModule' , canActivate : [AuthGuard]
+			loadChildren : 'app/component/main/main.module#MainModule' , canLoad : [AuthGuard]
 		}
 	], { useHash: true }) ],
 	exports: [],
 	bootstrap : [AppComponent],
-	providers : [AuthGuard,{provide: LocationStrategy, useClass: HashLocationStrategy}]
+	providers : [AuthGuard,{provide: LocationStrategy, useClass: HashLocationStrategy}, LoaderStop]
 })
 export class AppModule{
 

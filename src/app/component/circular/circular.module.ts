@@ -3,6 +3,7 @@ import { CircularComponent } from './circular.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared.module';
 import { AddCircular } from './add/add';
+import { CircularService } from "../../providers/circular.service";
 
 @NgModule({
 	imports : [ SharedModule, RouterModule.forChild([
@@ -15,7 +16,8 @@ import { AddCircular } from './add/add';
 				component : AddCircular
 			}
 		])],
-	declarations : [ CircularComponent, AddCircular ]
+	declarations : [ CircularComponent, AddCircular ],
+	providers : [ CircularService ]
 }) 
 export class CircularModule {
 	

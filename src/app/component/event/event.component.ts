@@ -25,6 +25,7 @@ export class EventComponent implements OnInit, AfterViewInit {
   public calInstance:any;
   public thisdate:any;
   public eventsInfo:any;
+  public buttonlabel : string = 'Select Standard';
   public eventId:any;
   public pageNo:any=1;
   public eventMonth:any;
@@ -32,7 +33,7 @@ export class EventComponent implements OnInit, AfterViewInit {
   public planner:any; 
   public standard:any;
   public editEvent:FormGroup;
-  public start:any;
+  public start: any ;
   public end:any;
   public stdIds:any[]=[];
   public selectedEvent:any;
@@ -65,6 +66,7 @@ export class EventComponent implements OnInit, AfterViewInit {
     this.event=this.initForm(); 
   
   }
+
 
   ngAfterViewInit(){
       _('#calendar').fullCalendar('renderEvents', this.calendarOptions.events, true); 
@@ -200,11 +202,14 @@ export class EventComponent implements OnInit, AfterViewInit {
       this.event.addControl("startTime", new FormControl('', [Validators.required]));
       this.event.addControl("endTime", new FormControl('', [Validators.required]));
     }
+    this.start = "00:00";
+    this.end = "00:00";
 
   }
 
 
 public startT(e:any){
+
   this.startTime=e;
   this.event.controls['startTime'].patchValue(e);
   if((this.event.controls['startDate'].value)==(this.event.controls['endDate'].value)){
@@ -274,6 +279,7 @@ public endT(e:any){
 
   }
 
+ 
   public getPlanner(){
     this.plannerLoader=true;
     this.eventService.GetPlanner().subscribe((res)=>{
@@ -333,12 +339,25 @@ public endT(e:any){
     },(err)=>{});
   }
 
+ selectStandards(a:any,e: any) {
 
-public selectStandards(a:any,e:any){
     if(e==true){
       this.stdIds.push(a.id);
+      if(this.buttonlabel == 'Select Standard'){
+        this.buttonlabel = ' '+a.name;
+      }
+      else{
+        this.buttonlabel += ' ' + a.name;
+      }
     }
     else if(e==false){
+      
+      let s : string = a.name; 
+      this.buttonlabel = this.buttonlabel.replace( ' '+s , '');
+      console.log(this.buttonlabel);
+      if(this.buttonlabel == ''){
+        this.buttonlabel = 'Select Standard';
+      }
       this.stdIds.forEach((element:any, index:any)=>{
          if (element==a.id){
           this.stdIds.splice(index,1);
@@ -346,7 +365,27 @@ public selectStandards(a:any,e:any){
       })
     }
     this.event.controls['standardIds'].patchValue(this.stdIds);
+    console.log(this.stdIds);
   }
+
+// public selectStandards(e:any,a:any){
+//     if(e==true){
+//       this.stdIds.push(a.id);
+//     }
+//     else if(e==false){
+//       this.stdIds.forEach((element:any, index:any)=>{
+//          if (element==a.id){
+//           this.stdIds.splice(index,1);
+//         }
+//       })
+//     }
+//     // this.stdIds = [];
+//     // for(let x of e){
+//     //   this.stdIds.push(x.id);  
+//     // }
+//     // console.log(this.stdIds);
+//     this.event.controls['standardIds'].patchValue(this.stdIds);
+//   }
 
   public currentDate:any;
 
@@ -378,6 +417,18 @@ public selectStandards(a:any,e:any){
       }
     this.startT(this.startTime);
     this.endT(this.endTime);
+  }
+
+  checkcheckedbox(a:any){
+      if(a.checked == true){
+        return true;
+      }
+      else{
+         if( this.buttonlabel.indexOf(a.name) >= 0  ){
+           return true;
+         }
+         return false;
+      }
   }
 
 

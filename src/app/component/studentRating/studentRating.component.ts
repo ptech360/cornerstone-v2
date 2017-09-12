@@ -2,6 +2,7 @@ import { Component,OnInit } from '@angular/core';
 import { StudentRatingService } from '../../providers/studentRating.service';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoaderStop } from '../../providers/loaderstop.service';
 // import * as moment_ from 'moment';
 
 
@@ -18,9 +19,9 @@ declare let $: any;
 export class StudentRatingComponent implements OnInit{
 
   constructor(public srs: StudentRatingService,
-    public fb: FormBuilder, public router:Router,
+    public fb: FormBuilder, public ls: LoaderStop,  public router:Router,
   ) { 
-     
+     this.ls.setLoader(false);
   }
 
   ngOnInit(){

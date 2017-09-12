@@ -5,6 +5,8 @@ import { SharedModule } from '../../shared.module';
 import { ByMeComponent } from './by-me/byme';
 import { ForMeComponent } from './for-me/forme';
 import { AddAppreciation } from './add/add';
+import { AppreciationService } from "../../providers/appreciation.service";
+import { ComplaintService } from "../../providers/complaint.service";
 
 @NgModule({
 	imports : [ SharedModule, RouterModule.forChild([
@@ -29,7 +31,8 @@ import { AddAppreciation } from './add/add';
 			}
 			
 		])],
-	declarations : [ AddAppreciation, ByMeComponent, AppreciationComponent, ForMeComponent ]
+	declarations : [ AddAppreciation, ByMeComponent, AppreciationComponent, ForMeComponent ],
+	providers : [ AppreciationService,ComplaintService ]
 }) 
 export class AppreciationModule {
 	

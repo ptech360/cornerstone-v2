@@ -5,6 +5,7 @@ import { SharedModule } from '../../shared.module';
 import { CurrentPollComponent } from './current/poll';
 import { ClosedPollComponent } from './closed/poll';
 import { AddPollComponent } from './add/add';
+import { PollService } from "../../providers/poll.service";
 
 @NgModule({
 	imports : [ SharedModule, RouterModule.forChild([
@@ -29,7 +30,8 @@ import { AddPollComponent } from './add/add';
 			}
 			
 		])],
-	declarations : [ AddPollComponent, PollComponent, CurrentPollComponent, ClosedPollComponent ]
+	declarations : [ AddPollComponent, PollComponent, CurrentPollComponent, ClosedPollComponent ],
+	providers : [ PollService ]
 }) 
 export class PollModule {
 	

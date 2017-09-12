@@ -10,10 +10,10 @@
       <loader [condition]="loader"></loader>
     </div>
     <div>
-      <div *ngIf="!emptyPolls">
-        <div class="border margin" *ngFor="let p of polls">
+      <div *ngIf="!emptyPolls">Í
+        <div class="border margin" *ngFor="let p of polls;let i=index">
           <div class="nlPanel-header bg4">
-            {{p.question}}
+            Ques {{i+1}}. {{p.question}}
           </div>
           <div class="panel-body" style="padding: auto 0;">
             <div class="flot-chart" style="padding:auto 0;">
