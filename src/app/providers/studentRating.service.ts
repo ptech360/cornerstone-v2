@@ -7,7 +7,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
-import { Configuration } from './app.constant';
+import { CommonService } from './common.service';
 
 @Injectable()
 
@@ -17,22 +17,22 @@ export class StudentRatingService {
 
   constructor(private http: CustomHttpService,
     private htttp: Http,
-    private con: Configuration) {
-    this.getUrl();
+    private con: CommonService) {
+    // this.getUrl();
   }
 
-  getUrl() {
-    this.serverUrl = this.con.baseUrl + "class-teacher" + "/" + this.con.userId;
-  }
+  // getUrl() {
+  //   this.serverUrl = this.con.baseUrl + "class-teacher" + "/" + this.con.userId;
+  // }
 
   getStudents() {
-    var options = new RequestOptions({
-      headers: new Headers({
-        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-      })
-    });
+    // var options = new RequestOptions({
+    //   headers: new Headers({
+    //     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    //   })
+    // });
 
-    return this.http.get(this.serverUrl + "/student-profile/student", options)
+    return this.http.get(this.con.studentRatingUrl + "/student-profile/student")
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -43,7 +43,7 @@ export class StudentRatingService {
         'Authorization': 'Bearer ' + localStorage.getItem('access_token')
       })
     });
-    return this.http.get(this.serverUrl + '/student-profile/' + studentId, options)
+    return this.http.get(this.con.studentRatingUrl + '/student-profile/' + studentId, options)
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -56,12 +56,12 @@ export class StudentRatingService {
     });
 
     if (isEmpty) {
-      return this.http.post(this.serverUrl + '/student-profile/', data, options)
+      return this.http.post(this.con.studentRatingUrl + '/student-profile/', data, options)
         .map(this.extractData)
         .catch(this.handleError);
     }
     else {
-      return this.http.put(this.serverUrl + '/student-profile/', data, options)
+      return this.http.put(this.con.studentRatingUrl + '/student-profile/', data, options)
         .map(this.extractData)
         .catch(this.handleError);
     }

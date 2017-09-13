@@ -28,6 +28,7 @@ export class PassedHomework implements OnInit{
   }
 
   ngOnInit(): void {
+    this.ls.setLoader(false);
     this.fileUrl = localStorage.getItem("fileUrl") + "/";
     this.getHomeworks();
   }

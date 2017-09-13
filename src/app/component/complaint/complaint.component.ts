@@ -65,6 +65,7 @@ export class ComplaintComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.fileUrl = localStorage.getItem("fileUrl") + "/";
     this.fetchComplaints();
+    this.ls.setLoader(false);
     this.getEditInfo();
     this.loadForm();
     this.commentForm = new FormGroup({

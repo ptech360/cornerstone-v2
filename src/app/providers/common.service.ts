@@ -18,11 +18,13 @@ export class CommonService {
   public surveyUrl: string;
   public pollUrl: string;
   public circularUrl: string;
+  public studentRatingUrl : string;
 
   constructor(private http: CustomHttpService,
               private con: Configuration) {
     this.baseUrl = this.con.baseUrl;
     this.getSockJs();
+    this.getUrl();
   }
 
   getUrl() {
@@ -31,6 +33,7 @@ export class CommonService {
     this.surveyUrl = this.baseUrl.concat(this.con.role + "/" + this.con.userId + "/survey/save-info");
     this.pollUrl = this.baseUrl.concat(this.con.role + "/" + this.con.userId + "/poll/save-info");
     this.circularUrl = this.baseUrl.concat(this.con.role + "/" + this.con.userId + "/circular/type");
+    this.studentRatingUrl = this.baseUrl.concat("class-teacher/" + this.con.userId );
   }
 
   getStandards() {

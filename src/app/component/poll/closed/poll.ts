@@ -19,14 +19,15 @@ export class ClosedPollComponent implements OnInit {
   public emptyPolls: boolean = false;
   public polls: any[];
   public currentPage = 1;
-  public ls : LoaderStop;
+  
   public loader: boolean = false;
 
-  constructor(public ps: PollService, public router: Router) {
+  constructor(public ps: PollService,public ls : LoaderStop, public router: Router) {
   }
 
   ngOnInit() {
     this.getClosedPolls();
+    this.ls.setLoader(false);
   }
 
   ngOnDestroy(){
