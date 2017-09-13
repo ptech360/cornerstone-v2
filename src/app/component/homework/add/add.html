@@ -25,6 +25,7 @@
       <label for="subjectId">Select Subject</label>
       <select class="form-control"  id="subjectId" name="subjectId" formControlName="subjectId">
       <option selected="true" disabled="true" value="">Select Subject</option>
+      
       <option *ngIf="emptySubjects" disabled>No Subjects are added. Try again later.</option>
       <option *ngFor="let bx of subjects" [value]="bx.subjectId" >{{bx.subjectName}}</option>
     </select>

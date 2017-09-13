@@ -131,7 +131,7 @@
                         formControlName="plannerTypeId" 
                         (ngModelChange)="selectPlannerType($event)">
                             
-                            <option [attr.disabled]="true" [value]='null'>Select Planner</option>    
+                            <option disabled="true" selected="true" value=''>Select Planner</option>    
                             <option *ngFor="let p of planner" 
                             [value]="p.id" >
                                 {{p.name}}

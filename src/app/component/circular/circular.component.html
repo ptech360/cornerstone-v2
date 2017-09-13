@@ -5,16 +5,18 @@
 </h1> -->
 <div class="panel panel-default">
   <!-- Default panel contents -->
-  <div class="panel-heading">Circulars</div>
-
-  <!-- Table -->
-  <div class="panel-body">
-     <div class="add-button">
+  <div class="panel-heading">
+  Circulars 
+    <div style="display: inline-block;" class="add-button">
       <button type="button" class="btn btn-success btn-circle" [routerLink]="['/circular/add-circular']">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
       </button>
     </div>
-    <br>
+  </div>
+
+  <!-- Table -->
+  <div class="panel-body">
+     
     <div class="row text-center">
        <loader [condition]="loader"></loader>
      </div> 
