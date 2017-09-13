@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , OnDestroy } from '@angular/core';
 import { LoggedInGuard } from '../login/login.gaurd';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CommonService } from '../../providers/common.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../providers/auth.service';
+import { LoaderStop } from '../../providers/loaderstop.service';
 
 declare let $: any;
 
@@ -13,7 +14,7 @@ declare let $: any;
     styleUrls: ['./account.component.css']
 })
 
-export class AccountComponent implements OnInit {
+export class AccountComponent implements OnInit, OnDestroy {
     public details: any;
     public uploadPicForm: FormGroup;
     public id:any;
@@ -30,6 +31,7 @@ export class AccountComponent implements OnInit {
     public resetform:FormGroup;
     public passwordMismatch:any="";
     constructor(public lg: LoggedInGuard,
+        public ls : LoaderStop,
         public cs: CommonService,
         public au: AuthService,
         public router: Router,
@@ -45,6 +47,9 @@ export class AccountComponent implements OnInit {
         this.loadAccountDetails(this.details);
        this.initForm();
 
+    }
+    ngOnDestroy(){
+     this.ls.setLoader(true); 
     }
 
     public initForm(){

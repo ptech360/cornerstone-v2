@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { AdminService } from '../../../providers/admin.service';
 import { FormGroup, FormArray, FormControl, FormBuilder, Validators } from '@angular/forms';
@@ -17,7 +17,7 @@ declare let $: any;
   // pipes:['Order'];
 })
 
-export class ExistingStudentComponent {
+export class ExistingStudentComponent implements OnDestroy {
 
   public loader: boolean = false;
   public standardLoader:boolean=false;
@@ -95,6 +95,10 @@ export class ExistingStudentComponent {
     this.getStudents();    
     this.showStudent=true;
   }
+
+  ngOnDestroy(){
+     this.ls.setLoader(true); 
+    }
 
   public getStudents() {
     this.studentLoader = true;

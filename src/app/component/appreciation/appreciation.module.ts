@@ -7,6 +7,7 @@ import { ForMeComponent } from './for-me/forme';
 import { AddAppreciation } from './add/add';
 import { AppreciationService } from "../../providers/appreciation.service";
 import { ComplaintService } from "../../providers/complaint.service";
+import { FilterPipe } from "./filter.pipe";
 
 @NgModule({
 	imports : [ SharedModule, RouterModule.forChild([
@@ -31,7 +32,7 @@ import { ComplaintService } from "../../providers/complaint.service";
 			}
 			
 		])],
-	declarations : [ AddAppreciation, ByMeComponent, AppreciationComponent, ForMeComponent ],
+	declarations : [ AddAppreciation, ByMeComponent, FilterPipe , AppreciationComponent, ForMeComponent ],
 	providers : [ AppreciationService,ComplaintService ]
 }) 
 export class AppreciationModule {

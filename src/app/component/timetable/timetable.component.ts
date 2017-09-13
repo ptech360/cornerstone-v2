@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { TimeTableService } from '../../providers/timetable.service';
 import { FormsModule,FormGroup, FormControl, Validators } from '@angular/forms';
@@ -11,7 +11,7 @@ declare let $: any;
  styleUrls : ["./timetable.component.css"]
 })
 
-export class TimetableComponent implements OnInit{
+export class TimetableComponent implements OnInit, OnDestroy{
  private standards:any; 
  private standardLoader : any;
  private selectedStandard : any = 4 ;
@@ -41,6 +41,10 @@ export class TimetableComponent implements OnInit{
  	this.getStandards();
   this.getTimeTable(this.selectedStandard);
  }
+
+ ngOnDestroy(){
+    this.ls.setLoader(true);
+  }
 
  getTimeTable(selectedstandard:any){
    console.log(this.selectedStandard)

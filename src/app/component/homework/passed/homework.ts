@@ -1,6 +1,7 @@
-import { Component, OnInit,AfterViewInit } from '@angular/core';
+import { Component, OnInit,AfterViewInit, OnDestroy  } from '@angular/core';
 import { HomeworkService } from '../../../providers/homework.service';
 import { Router } from '@angular/router';
+import { LoaderStop } from '../../../providers/loaderstop.service';
 
 @Component({
   selector: 'passed-homework',
@@ -22,6 +23,7 @@ export class PassedHomework implements OnInit{
 
   constructor(private homeworkService: HomeworkService,
     public router: Router,
+    public ls : LoaderStop
   ) {
   }
 
@@ -30,6 +32,9 @@ export class PassedHomework implements OnInit{
     this.getHomeworks();
   }
 
+    ngOnDestroy(){
+      this.ls.setLoader(true);
+  }
 
   public getHomeworks() {
     this.loader = true;

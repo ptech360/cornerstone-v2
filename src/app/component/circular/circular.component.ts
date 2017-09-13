@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import { CircularService } from '../../providers/circular.service';
 import { Router } from '@angular/router';
 import { LoaderStop } from '../../providers/loaderstop.service';
@@ -7,7 +7,7 @@ import { LoaderStop } from '../../providers/loaderstop.service';
   templateUrl:'./circular.component.html',
   styleUrls:['./circular.component.css']
 })
-export class CircularComponent implements OnInit {
+export class CircularComponent implements OnInit, OnDestroy {
 
   title: string = 'Circular';
   public icon = "ios-paper-outline";
@@ -30,6 +30,10 @@ export class CircularComponent implements OnInit {
   ngOnInit() {
     this.fileUrl = localStorage.getItem("fileUrl") + "/";
     this.getCirculars();
+  }
+
+  ngOnDestroy(){
+    this.ls.setLoader(true);
   }
 
   private getCirculars() {

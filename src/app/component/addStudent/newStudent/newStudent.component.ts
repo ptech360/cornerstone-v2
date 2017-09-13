@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { AdminService } from '../../../providers/admin.service';
 import { FormGroup, FormArray, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ValidationService } from '../../../providers/formValidation.service';
 import { Router } from '@angular/router';
+import { LoaderStop } from '../../../providers/loaderstop.service';
 
 declare let $: any;
 @Component({
@@ -12,7 +13,7 @@ declare let $: any;
   styleUrls: ['./newStudent.component.css'],
 })
 
-export class NewStudentComponent {
+export class NewStudentComponent implements OnDestroy {
 
   public loader: boolean = false;
   public standardLoader:boolean=false;
@@ -30,6 +31,7 @@ export class NewStudentComponent {
   constructor(public _location: Location,
     public as: AdminService,
     public fb: FormBuilder,
+    public ls : LoaderStop,
     public router: Router) {
     this.getStandards();
     this.initNewStudentForm();
@@ -63,7 +65,9 @@ export class NewStudentComponent {
     });
   }
 
-
+  ngOnDestroy(){
+    this.ls.setLoader(true);
+  }
   public inItParent() {
     return this.fb.group({
       "name": ['', [Validators.required]],

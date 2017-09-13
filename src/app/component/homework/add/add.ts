@@ -41,8 +41,11 @@ export class HomeworkAddComponent implements OnInit {
   file: any;
 
   getFile(event: any) {
+
     var blob = event.srcElement.files[0];
 
+    console.log(event);
+    console.log(blob);
     if (blob.type == "image/png" || blob.type == "image/jpeg" || blob.type == "image/jpg") {
       this.file = event.srcElement.files[0];
     }

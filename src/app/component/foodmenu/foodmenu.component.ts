@@ -1,4 +1,4 @@
-import {Component, AfterViewInit} from '@angular/core';
+import {Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { FoodmenuService} from '../../providers/foodmenu.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as moment_ from 'moment';
@@ -15,7 +15,7 @@ import { LoaderStop } from '../../providers/loaderstop.service';
     styleUrls:['./foodmenu.component.css'],
 })
 
-export class FoodmenuComponent implements AfterViewInit{
+export class FoodmenuComponent implements AfterViewInit, OnDestroy{
 
     public addItem:FormGroup;
     public addMenu:FormGroup;
@@ -45,6 +45,9 @@ export class FoodmenuComponent implements AfterViewInit{
 
       ngAfterViewInit(){
     //   _('#menu').fullCalendar('renderEvents', this.menuOptions.events, true); 
+  }
+  ngOnDestroy(){
+      this.ls.setLoader(true);
   }
 
         public menuOptions:any={
