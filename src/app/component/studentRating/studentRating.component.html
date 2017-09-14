@@ -1,29 +1,17 @@
-<!-- <h1>Student Rating </h1> -->
-
-<!-- <br> -->
-<!-- <br> -->
-
-
-
-<div class="panel panel-default" *ngIf="emptyStudents">
-  <div class="panel panel-heading">
+<div *ngIf="emptyStudents">
+  <div class="nlPanel-header bg4">
     No students
   </div>
   <div class="panel panel-body">
     You cannot rate the student
   </div>
-
 </div>
-
-
-<div class="panel panel-default" *ngIf="!emptyStudents">
-  
+<div class="nlPanel-header bg4" *ngIf="!emptyStudents">
   <div class="panel-heading">
     Search Students
   </div>
   <div class="panel-body">  
       <div class="form-group">
-      
         <input class="form-control" *ngIf="selectedStudent==null" type="text" placeholder="Search by Student Name ... " (keyup)="dropdown=false;searchStudents($event)" >
         <input *ngIf="selectedStudent" class="form-control" type="text" value="{{selectedStudent.name}}" onfocus="this.value= ''"
           (keyup)="dropdown=false;searchStudents($event)" >
@@ -38,7 +26,6 @@
                </span>
           </ul>
         </div>
-
         <div class="studentList" *ngIf="(dropdown)">
           <ul class="list-group">
             <span *ngFor="let s of studentsCOPY">
@@ -69,15 +56,10 @@
               <td class="col-sm-9 col-xs-6" style="padding: 8px 8px 0px 8px;">
                 <input *ngIf="respStu.isEmpty" type="text" formControlName="profileId" style="display:none;">
                 <input *ngIf="!respStu.isEmpty" type="text" formControlName="profileId" style="display:none;" [value]="r.id" [ngModel]="r.id">
-
-
                 <input type="text" formControlName="responsibilityId" style="display:none;" [(value)]="r.responsibilityId" [ngModel]="r.responsibilityId">{{r.responsibility}}
               </td>
-
               <td class="col-sm-3 col-xs-6" style="padding: 8px 8px 0px 8px;">
                 <span  *ngFor="let p of respStu.rating;let ii=index">
-                  <!--<div class="star-rating" >-->
-                  <!--<div class="star-rating__wrap">-->
                     <fieldset class="rating" id="star{{i+'af'+ii+1}}">
 
                     <input *ngIf="respStu.isEmpty" id="star{{i+'a'+ii+1}}" (click)="updaterating($event,ii,i)" type="checkbox" formControlName="ratingId" [value]="p.id" [title]="p.name" >
@@ -87,26 +69,18 @@
    
                     <input *ngIf="!respStu.isEmpty" id="star{{i+'a'+ii+1}}" [ngModel]="r.ratingId" type="checkbox" formControlName="ratingId" [value]="p.id" [title]="p.name">
                     <label class="star-rating__ico fa fa-star-o fa-lg" id="star{{i+'af'+ii+1}}" for="star{{i+'a'+ii+1}}" *ngIf="!respStu.isEmpty"></label>
-                    </fieldset> 
-
-                    <!--</div>-->
-                  <!--</div>-->
+                    </fieldset>
                   </span>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-
-
-
     </div>
-
     <div class="panel-footer custom">
       <span class="pull-right">
       <button type="submit" class="btn btn-success" (click) ="submitRating()" [disabled]="(!ratingForm.controls.responsibilitiesWithRating.dirty) || (ratingForm.invalid)">Submit</button>
        <button type="button" class="btn btn-success" [disabled]="!ratingForm.controls.responsibilitiesWithRating.dirty" (click)="resetForm()">Reset</button>
-       <!--{{ratingForm.dirty}} (click) = "ratingForm.markAsDirty()"-->
       </span>
     </div>
   </form>
@@ -114,11 +88,8 @@
   </div>
   </div>
 </div>
-
 <br>
-
 <!---->
-
 <div id="submitModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
