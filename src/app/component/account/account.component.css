@@ -15,20 +15,10 @@
     background-color: white;
     margin-top:10%;
     padding: 2%;
-    text-align: center;
     font-size: 100%;
     box-shadow: 0px 8px 11px #7b7a7a, -2px 4px 5px #a59797, 10px 8px 15px #989898;
 }
-.profile-picture{
-    width: 150px;
-    height:150px;
-    border-radius: 100%;
-    /* margin-top: -50%; */
-    border: 3px solid white;
-    box-shadow: 0px 9px 16px grey;
-    /* display: block; */
-    margin: 10px auto;
-}
+
 
 .profile-picture:hover{
     border-radius: 100%;
@@ -82,12 +72,7 @@ hr.style-line {
 }
 
 .img-container{
-    background-image: url(../../../icons/profile_background.svg) , -webkit-linear-gradient(#bdbdbd, #303342);
-    background-image: url(../../../icons/profile_background.svg) , -moz-linear-gradient(#bdbdbd, #303342);
-    background-image: url(../../../icons/profile_background.svg) , -o-linear-gradient(#bdbdbd, #303342);
-    background-image: url(../../../icons/profile_background.svg) , linear-gradient(#bdbdbd, #303342);
-    background-repeat: no-repeat !important;
-    background-size: cover;
+
 }
 
 .fingerprint,.role{
@@ -121,4 +106,35 @@ hr.style-line {
 
 .editpassForm{
     padding: 15px;
+}
+
+
+
+/* ACCOUNT CSS */
+.acc_card{
+    width: 250px;
+    padding: 20px;
+    background-image: url(../../../icons/profile_background.svg) , -webkit-linear-gradient(var(--color4Light),var(--color4));
+    background-image: url(../../../icons/profile_background.svg) , -moz-linear-gradient(var(--color4Light),var(--color4));
+    background-image: url(../../../icons/profile_background.svg) , -o-linear-gradient(var(--color4Light),var(--color4));
+    background-image: url(../../../icons/profile_background.svg) , linear-gradient(var(--color4Light),var(--color4));
+    background-repeat: no-repeat !important;
+    background-size: cover;    
+}
+.acc_card button{
+    margin-top:5px;
+}
+.acc_card .card_details{
+    text-align:center;
+    color:var(--color4S);
+}
+.profile-picture{
+    width: 150px;
+    height:150px;
+    border-radius: 100%;
+    border: 3px solid white;
+    margin: 10px auto;
+}
+.margin10{
+    margin:10px;
 }
