@@ -1,168 +1,81 @@
-<div class="tab-pane">
-  <div class="panel panel-default">
-    <div class="panel-body" id="accordion">
-      <div class="add-button">
-        <button type="button" class="btn btn-success btn-circle" [routerLink]="['/homework/homework-add']">
-          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-        </button>
+<div class="add-button">
+    <button type="button" class="btn btn-success btn-circle" [routerLink]="['/homework/homework-add']">
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </button>
+  </div>
+  <br>
+  <div class="row text-center">
+    <loader [condition]="loader"></loader>
+  </div>
+  <div *ngIf="!EmptyHomeworks">
+    <!-- Cards -->
+    <div class="col-lg-3 col-md-4 col-xs-12" *ngFor="let a of homeworks; let i = index;">
+      <div class="nlCard pointerHand center-block" (click)="seletToExpand(a,i)" data-toggle="modal" data-target="#myModal-card">
+        <div class="download-image" *ngIf="a.fileTimestamp">
+          <span>
+                        <img class="image" [attr.src]="fileUrl + a.fileTimestamp">
+                      </span>
+          <div class="edit-image"><a [attr.href]="fileUrl + a.fileTimestamp"><i class="fa fa-download fa-lg"></i></a>
+          </div>
+        </div>
+        <img class="modal-image" *ngIf="!a.fileTimestamp" src="./app/img/preview.png" alt="No Preview Avalable">
+        <div class="text-center">
+          <div class="name" style="margin-top: 15px;">
+            {{ a.standardName}}
+          </div>
+          <span class="badge bg3">{{a.dueDate|date}}</span>
+        </div>
+        <hr>
+        <div class="cardTitle">
+          <b>{{a.subjectName}}</b>
+        </div>
+        <div class="cardDescription">
+          {{a.description}}
+        </div>
       </div>
-      <br>
-      <div class="row text-center">
-        <loader [condition]="loader"></loader>
-      </div>
-      <div  *ngIf="!EmptyHomeworks">
-          <!-- Cards -->
-          <div class="col-lg-3 col-md-4 col-xs-12" *ngFor="let a of homeworks; let i = index;">
-              <div class="nlCard pointerHand center-block" (click)="seletToExpand(a,i)" data-toggle="modal" data-target="#myModal-card">
-                <div class="download-image" *ngIf="a.fileTimestamp">
-                    <span>
-                      <img class="image" [attr.src]="fileUrl + a.fileTimestamp">
-                    </span>
-                    <div class="edit-image"><a [attr.href]="fileUrl + a.fileTimestamp"><i class="fa fa-download fa-lg"></i></a></div>
-                  </div>
-                <img class="modal-image" *ngIf="!a.fileTimestamp" src="./app/img/preview.png" alt="No Preview Avalable">
-                <div class="text-center">
-                  <div class="name" style="margin-top: 15px;">
-                      {{ a.standardName}} 
-                  </div>
-                  <span class="badge bg3">a.dueDate|date</span>
-                </div>
-                <hr>
-                <div class="cardTitle">
-                  <b>{{a.subjectName}}</b>
-                </div>
-                <div class="cardDescription">
-                    {{a.description}}
-                </div>
-              </div>
-            </div>
-      </div>
-      <div class="row " style="text-align: center" *ngIf="(EmptyHomeworks)&&(!loader)&&(currentPage==1)" ><b>No Homeworks are added to the view.</b></div>
-      <div class="row "style="text-align: center" *ngIf="(EmptyHomeworks)&&(!loader)&&(currentPage!=1)" ><b>No more Homeworks are added to the view.</b></div> 
-    </div>
-    <div class="panel-footer">
-      <div class="text-center"><button type="button" (click)="nextHomework()" [disabled]="EmptyHomeworks || noMore" class="btn btn-primary">Load More</button></div>
     </div>
   </div>
-</div>
-
-<!-- <div class="modal fade" id="myModal-card" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content" *ngIf="selectedHomework">
-      <div class="modal-header">
-        <h4 class="modal-title" id="gridSystemModalLabel">{{selectedHomework.subjectName}}</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      </div>
-      <div class="modal-body card-modal">
-        <div class="modal-heading">
-          <div class="row">
+  <div class="row " style="text-align: center" *ngIf="(EmptyHomeworks)&&(!loader)&&(currentPage==1)"><b>No Homeworks are added to the view.</b>
+  </div>
+  <div class="row " style="text-align: center" *ngIf="(EmptyHomeworks)&&(!loader)&&(currentPage!=1)"><b>No more Homeworks are added to the view.</b>
+  </div>
+  <div class="text-center">
+    <button type="button" (click)="nextHomework()" [disabled]="EmptyHomeworks || noMore" class="btn btn-primary">Load More</button>
+  </div>
+  <div class="modal fade" id="myModal-card" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="square" *ngIf="selectedHomework">
+        <div class="close pull-right">
+          <span data-dismiss="modal" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </div>
+        <h1 class="text-center"> Homework </h1>
+        <hr>
+        <div class="row head">
+          <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="download-image-modal" *ngIf="selectedHomework.fileTimestamp">
               <span>
                <img class="image" [attr.src]="fileUrl + selectedHomework.fileTimestamp">
               </span>
-              <div class="edit-image-modal"><a [attr.href]="fileUrl + selectedHomework.fileTimestamp"><i class="fa fa-download fa-lg"></i></a></div>
+              <div class="edit-image-modal"><a [attr.href]="fileUrl + selectedHomework.fileTimestamp"><i class="fa fa-download fa-lg"></i></a>
+              </div>
             </div>
-            <div *ngIf="!selectedHomework.fileTimestamp">
-              <img class="image" src="./app/img/preview.png" alt="No Preview Avalable">
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="details">
+              <b> {{selectedHomework.subjectName}}</b>
+              <p> {{selectedHomework.description}} </p>
+            </div>
+            <div class="details">
+              <b>
+                Creation date: {{selectedHomework.createdAt | date}}
+                <span class="pull-right"> Due Date: {{selectedHomework.dueDate | date}} </span>
+              </b>
             </div>
           </div>
         </div>
-        <div class=" row modal-class" style="font-size:15px;"><label>For : </label><span>{{selectedHomework.standardName}}</span></div>
-      </div>
-      <div class="row modal-description"><span class="white-space">{{selectedHomework.description}}</span></div>
-      <hr class="style-line">
-      <div class="row modal-date">
-        <div class="col-sm-2 col-xs-2"><i class="glyphicon glyphicon-calendar pull-right calendar-custom"></i></div>
-        <div class="col-sm-5 col-xs-5"><label class="heading">Created At</label>
-          <div class="result">{{selectedHomework.createdAt | date}}</div>
-        </div>
-        <div class="col-sm-5 col-xs-5"><label class="heading">Due date</label>
-          <div class="result">{{selectedHomework.dueDate | date}}</div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+  
+  
+        <div class="row"></div>
       </div>
     </div>
   </div>
-</div> -->
-<div class="modal fade" id="myModal-card" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="square" *ngIf="selectedHomework">
-      <div class="close pull-right">
-        <span data-dismiss="modal" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-      </div>
-      <div class="row head">
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <!-- <img class="center-block circle shadow-3" [attr.src]="fileUrl + selectedHomework.fileTimestamp" style="border-radius:50% !important"
-            width="150px" height="150px"> -->
-          <div class="text-center head">
-            <b>selectedComplaint.studentName</b>
-            <br>
-            <span class="badgel bg3">selectedComplaint.studentStandardName</span>
-          </div>
-        </div>
-        <div class="col-lg-8 col-md-8 col-sm-12">
-          <div class="row">
-            <ul class="list-group">
-              <li class="list-group-item">
-                <b>Category</b>
-                <span class="badgel bg3">selectedComplaint.againstCategoryName</span>
-              </li>
-              <li class="list-group-item">
-                <b>Assigned to</b>
-                <span class="badgel bg3">selectedComplaint.assignedEmployeeName</span>
-              </li>
-              <li class="list-group-item" >
-                <b>Against</b>
-                <span class="badgel bg3" >selectedComplaint.againstEmployeeName</span>
-              </li>
-              <li class="list-group-item">
-                <b>Status</b>
-                <span class="badgel bg3" >selectedComplaint.statusName</span>
-              </li>
-              <li class="list-group-item">
-                <b>Priority</b>
-                <span class="badgel bg3" >selectedComplaint.priorityName</span>
-              </li>
-              <li class="list-group-item">
-                <b>Date</b>
-                <span class="badgel bg3" >selectedComplaint.createdAt | date <span>- selectedComplaint.createdAt | date</span></span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="details">
-        <b>selectedComplaint.title</b>
-        <br> selectedComplaint.description
-        <br>
-        <b>Root Cause Analysis</b><br> selectedComplaint.rca
-      </div>
-      <div class="">
-        <div class="col-lg-4 col-sm-12">
-          <button  data-toggle="modal" data-target="#myModal" data-dismiss="modal" class="btn button4 btn-card"
-            style="width:100%;margin-bottom:10px">
-                <span class="glyphicon glyphicon-pencil pull-left"></span>
-                Edit
-            </button>
-        </div>
-        <div class="col-lg-4 col-sm-12">
-          <button onclick="$('.panel.panel-chat').show();" data-dismiss="modal" class="btn button4 btn-card"
-            style="">
-                <span class="glyphicon glyphicon-comment pull-left"></span>
-                Comment
-            </button>
-        </div>
-        <div class="col-lg-4 col-sm-12">
-          <button type="button" data-target="#myModal3"
-            data-toggle="modal" data-dismiss="modal" class="btn button4 btn-card" style="width:100%;margin-bottom:10px">
-                <span class="glyphicon glyphicon-resize-small pull-left"></span>
-                Close Complaint
-            </button>
-        </div>
-      </div>
-      <div class="row"></div>
-    </div>
-  </div>
-</div>
