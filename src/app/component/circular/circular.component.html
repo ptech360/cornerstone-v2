@@ -19,7 +19,7 @@
               <div class="nlCard pointerHand center-block" (click)="seletToExpand(circular)" data-toggle="modal" data-target="#myModal-card">
                   <div class="download-image" *ngIf="circular.fileTimestamp">
                       <span *ngIf="circular.fileTimestamp">
-                        <img class="modal-image" [attr.src]="fileUrl + circular.fileTimestamp">
+                        <img class="modal-image border" [attr.src]="fileUrl + circular.fileTimestamp">
                       </span>
                       <div class="edit-image">
                         <a [attr.href]="fileUrl + circular.fileTimestamp" [download]="custom">
@@ -27,7 +27,7 @@
                         </a>
                       </div>
                   </div>
-                <img class="modal-image" *ngIf="!circular.fileTimestamp" src="./app/img/preview.png" alt="No Preview Avalable">
+                <img class="modal-image border" *ngIf="!circular.fileTimestamp" src="./app/img/preview.png" alt="No Preview Avalable">
                 <div class="text-center">
                   <div class="name">
                       {{circular.employeeName}}
