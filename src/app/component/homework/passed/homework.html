@@ -7,12 +7,12 @@
       <div class="nlCard pointerHand center-block" (click)="seletToExpand(a,i)" data-toggle="modal" data-target="#myModal-card">
         <div class="download-image" *ngIf="a.fileTimestamp">
           <span>
-                        <img class="image" [attr.src]="fileUrl + a.fileTimestamp">
+                        <img class="image border" [attr.src]="fileUrl + a.fileTimestamp">
                       </span>
           <div class="edit-image"><a [attr.href]="fileUrl + a.fileTimestamp"><i class="fa fa-download fa-lg"></i></a>
           </div>
         </div>
-        <img class="modal-image" *ngIf="!a.fileTimestamp" src="./app/img/preview.png" alt="No Preview Avalable">
+        <img class="modal-image border" *ngIf="!a.fileTimestamp" src="./app/img/preview.png" alt="No Preview Avalable">
         <div class="text-center">
           <div class="name" style="margin-top: 15px;">
             {{ a.standardName}}
@@ -48,7 +48,7 @@
           <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="download-image-modal" *ngIf="selectedHomework.fileTimestamp">
               <span>
-               <img class="image" [attr.src]="fileUrl + selectedHomework.fileTimestamp">
+               <img class="image border" [attr.src]="fileUrl + selectedHomework.fileTimestamp">
               </span>
               <div class="edit-image-modal"><a [attr.href]="fileUrl + selectedHomework.fileTimestamp"><i class="fa fa-download fa-lg"></i></a>
               </div>
