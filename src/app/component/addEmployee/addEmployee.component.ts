@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormControl, FormArray } from '@angular/forms';
 import { AdminService } from '../../providers/admin.service';
 import { HomeworkService } from '../../providers/homework.service';
@@ -6,6 +6,7 @@ import { ValidationService } from '../../providers/formValidation.service';
 import { AuthService } from '../../providers/auth.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { LoaderStop } from '../../providers/loaderstop.service';
 
 declare let $: any;
 
@@ -15,7 +16,7 @@ declare let $: any;
   styleUrls: ['./addEmployee.component.css']
 })
 
-export class AddEmployeeComponent implements OnInit {
+export class AddEmployeeComponent implements OnInit, OnDestroy {
   public standards: any = [];
   public subjects: any = [[]];
   public imgFile: any;
@@ -34,6 +35,7 @@ export class AddEmployeeComponent implements OnInit {
     public au: AuthService,
     public hs: HomeworkService,
     public fb: FormBuilder,
+    public ls : LoaderStop,
     public router: Router,
     public _location: Location, ) {
         
@@ -50,6 +52,10 @@ export class AddEmployeeComponent implements OnInit {
 
     // this.getStandards();
   }
+
+  ngOnDestroy(){
+     this.ls.setLoader(true); 
+    }
 
   initForm() {
     this.profilePic = 'parent%2f39945169084408330481.jpg?alt=media';

@@ -17,7 +17,7 @@ export class ForMeComponent extends ComplaintComponent{
   	public ls : LoaderStop,
     public router: Router,
     public route: ActivatedRoute) {
-    super(cs,router,route);
+    super(cs,ls,router,route);
     if(this.url == "/appreciation/for-me") this.url = "/appreciation";
     this.ls.setLoader(false);
   }  

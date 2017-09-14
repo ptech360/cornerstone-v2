@@ -28,13 +28,20 @@
       </div>
       <div class="form-group" *ngIf="standardId && standardId >= 0 ">
         <label for="studentId">Student Name</label>
-        <select class="form-control" formControlName="studentId"  name="studentId">
-          <option *ngIf="emptyStudents" disabled>No students are added yet. Try again later.</option>
+<!--         <select class="form-control" formControlName="studentId"  name="studentId">
+          
           <option selected="true" disabled="true" value="">Select Student</option>
 
-            <option *ngFor="let s of students" [ngValue]="s.id" >{{s.name}}</option>
+          <option *ngIf="emptyStudents" disabled>No students are added yet. Try again later.</option>
+          
+            <option *ngFor="let s of students" [value]="s.id" >{{s.name}}</option>
             
-          </select>
+          </select> -->
+
+          <input type="text" class="form-control" placeholder="Select Student" name="studentId" id="try" (keyup)="trychange($event)">
+          <ul class="list-group" *ngIf="!isEmpty">
+            <li class="list-group-item" *ngFor=" let s of students" (click)="selectstudent(s)">{{s.name}}</li>
+          </ul>
       <loader [condition]="studentLoader" class="dropdownLoader"></loader>                  
       <div>
         <div [hidden]="appreciation.controls.studentId.untouched  ||appreciation.controls.studentId.valid" class="alert alert-warning">This field is required</div>  

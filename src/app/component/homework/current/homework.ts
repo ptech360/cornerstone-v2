@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HomeworkService } from '../../../providers/homework.service';
 import { Router } from '@angular/router';
 import { LoaderStop } from '../../../providers/loaderstop.service';
+
 
 @Component({
   selector: 'current-homework',
@@ -9,7 +10,7 @@ import { LoaderStop } from '../../../providers/loaderstop.service';
   styleUrls: ['./../homework.component.css']
 })
 
-export class CurrentHomework implements OnInit {
+export class CurrentHomework implements OnInit, OnDestroy {
   public selectedHomework: any;
   public fileUrl: string;
   public title: string = "Homework";
@@ -28,6 +29,9 @@ export class CurrentHomework implements OnInit {
     this.getHomeworks();
   }
 
+    ngOnDestroy(){
+      this.ls.setLoader(true);
+  }
   public getHomeworks() {
     // this.nl.showLoader();
     this.loader = true;

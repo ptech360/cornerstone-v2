@@ -144,7 +144,7 @@
           <select class="form-control" id="sel1"  [(ngModel)]="standard" [ngModelOptions]="{standalone: true}" (ngModelChange)="onStandard($event)"> 
                            
             <option *ngIf="standardsArray == null" disabled>No standards are added. Please try again later</option>
-            <option selected="true" disabled="true" value="">Select Standard</option>
+            <option selected="true" disabled="true" value="-1">Select Standard</option>
               <option *ngFor="let s of standardsArray"  [value]="s.id">{{s.name}}</option>
             </select>
 

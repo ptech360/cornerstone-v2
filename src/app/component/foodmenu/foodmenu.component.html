@@ -18,7 +18,8 @@
         <form [formGroup]="addItem">
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" name="name" formControlName="name" placeholder="Enter name of food item here">
+                <input type="text" class="form-control" id="name" (keyup)="notValid()" name="name" formControlName="name" placeholder="Enter name of food item here">
+                <div class="alert alert-warning" *ngIf="duplicate">* Item Already Exist</div>
                 <div [hidden]="addItem.controls.name.valid || addItem.controls.name.pristine || addItem.controls.name.untouched" class="alert alert-warning" >This field is required</div>
               </div>
 
@@ -36,7 +37,8 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="postItem()" [disabled]="addItem.invalid" data-dismiss="modal">Submit</button>
+        <button type="button" class="btn btn-primary" (click)="postItem()" 
+        [disabled]=" addItem.invalid || duplicate " >Submit</button>
       </div>
     </div>
   </div>
@@ -53,9 +55,9 @@
         <form [formGroup]="addMenu">
             <div class="form-group">
                 <label for="foodId">Food Item</label>
-                <select [(ngModel)]="tryfoodtype" formControlName="foodId" name="foodId" id="foodId" class="form-control" (ngModelChange)="func()">
-                <option [attr.disabled]="true" [value]="0">Select</option>
-                  <option *ngFor="let item of foodItems" [attr.disabled] = " item.id == -1 ? true : null" [value]="item.id">{{item.name}}</option>
+                <select  formControlName="foodId" name="foodId" id="foodId" class="form-control" (ngModelChange)="func()">
+                <option disabled="true" selected="true" value="">Select Food Item</option>
+                  <option *ngFor="let item of foodItems"  [value]="item.id">{{item.name}}</option>
                 </select>
                 <loader [condition]="itemLoader" class="dropdownLoader"></loader>
               </div>

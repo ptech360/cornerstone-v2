@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import { CommonService } from '../../../providers/common.service';
 import { PollService } from '../../../providers/poll.service';
 import { Router } from '@angular/router';
-
+import { LoaderStop } from '../../../providers/loaderstop.service';
 
 declare let $: any;
 
@@ -19,15 +19,21 @@ export class ClosedPollComponent implements OnInit {
   public emptyPolls: boolean = false;
   public polls: any[];
   public currentPage = 1;
+  
   public loader: boolean = false;
 
-  constructor(public ps: PollService, public router: Router) {
+  constructor(public ps: PollService,public ls : LoaderStop, public router: Router) {
   }
 
   ngOnInit() {
     this.getClosedPolls();
+    this.ls.setLoader(false);
   }
 
+  ngOnDestroy(){
+      this.ls.setLoader(true);
+  }
+  
   public getClosedPolls() {
     this.loader = true;
     this.ps.getClosedPolls(this.currentPage).subscribe(res => {

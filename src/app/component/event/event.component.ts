@@ -1,13 +1,17 @@
-import { Component, Input, OnInit, AfterViewInit, AfterContentChecked, AfterViewChecked, ElementRef} from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, AfterViewInit, AfterContentChecked, AfterViewChecked, ElementRef} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { EventService } from '../../providers/event.service';
+import { LoaderStop } from '../../providers/loaderstop.service';
 import {CommonService} from '../../providers/common.service';
 import * as moment_ from 'moment';
 import { Http } from '@angular/http';
 import 'fullcalendar';
 import * as _ from 'jquery';
 import { Router } from '@angular/router';
+
+
 declare let $: any;
+
 
 @Component({
   selector: 'event',
@@ -18,7 +22,7 @@ declare let $: any;
     color: var(--color4s);
 }`]
 })
-export class EventComponent implements OnInit, AfterViewInit {
+export class EventComponent implements OnInit, AfterViewInit, OnDestroy {
   public event:FormGroup;
   public currentMonth: any;
   public newEvents: any;
@@ -51,6 +55,7 @@ export class EventComponent implements OnInit, AfterViewInit {
      
     private eventService: EventService,
     private http: Http,
+    public ls : LoaderStop, 
     private element:ElementRef,
     private cs:CommonService,
     private router:Router,
@@ -66,8 +71,9 @@ export class EventComponent implements OnInit, AfterViewInit {
     this.event=this.initForm(); 
   
   }
-
-
+  ngOnDestroy(){
+    this.ls.setLoader(true);
+  }
   ngAfterViewInit(){
       _('#calendar').fullCalendar('renderEvents', this.calendarOptions.events, true); 
   }

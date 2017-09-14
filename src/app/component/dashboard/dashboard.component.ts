@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChartService } from "../../providers/chart.service";
 import { LoaderStop } from "../../providers/loaderstop.service";
@@ -8,7 +8,7 @@ import { LoaderStop } from "../../providers/loaderstop.service";
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnDestroy {
   public complaintByStatus: any;
   public suggestionByStatus: any;
   public complaintByCategoryAndStatus: any;
@@ -40,6 +40,8 @@ export class DashboardComponent {
       this.router.navigate(['/error']);
     });
     
+
+
     cs.getComplaintByStatus().subscribe((response:any) => {
       if(response.status === 204){
         this.loader1=false;
@@ -204,5 +206,7 @@ export class DashboardComponent {
     }
     this.loader2 = false;
   }
-
+  ngOnDestroy(){
+     this.ls.setLoader(true); 
+    }
 }

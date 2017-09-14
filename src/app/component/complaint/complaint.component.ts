@@ -1,4 +1,5 @@
-import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
+import { LoaderStop } from '../../providers/loaderstop.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ComplaintService } from '../../providers/complaint.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -9,7 +10,7 @@ declare let $: any;
   templateUrl: './complaint.component.html',
   styleUrls: ['./complaint.component.css']
 })
-export class ComplaintComponent implements OnInit, AfterViewInit {
+export class ComplaintComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public editForm: FormGroup;
   public closeForm: FormGroup;
@@ -17,6 +18,7 @@ export class ComplaintComponent implements OnInit, AfterViewInit {
   public employees: any;
   public priorities: any;
   public comments: any;
+
   public commentForm: FormGroup;
   public EmptyComments: boolean = false;
   public complaintStatus: any;
@@ -38,6 +40,7 @@ export class ComplaintComponent implements OnInit, AfterViewInit {
   public status: string = "";
   public count: any = 0;
   constructor(public cs: ComplaintService,
+    public ls : LoaderStop,  
     public router: Router,
     public route: ActivatedRoute ) {
        
@@ -62,6 +65,7 @@ export class ComplaintComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.fileUrl = localStorage.getItem("fileUrl") + "/";
     this.fetchComplaints();
+    this.ls.setLoader(false);
     this.getEditInfo();
     this.loadForm();
     this.commentForm = new FormGroup({
@@ -71,6 +75,10 @@ export class ComplaintComponent implements OnInit, AfterViewInit {
       rca: new FormControl("", [Validators.required]),
       comment: new FormControl("", [Validators.required])
     })
+  }
+
+    ngOnDestroy(){
+    this.ls.setLoader(true);
   }
 
   public getEditInfo() {

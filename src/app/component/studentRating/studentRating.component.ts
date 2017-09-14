@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component,OnInit, OnDestroy } from '@angular/core';
 import { StudentRatingService } from '../../providers/studentRating.service';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -16,7 +16,7 @@ declare let $: any;
   styleUrls: ['./studentRating.component.css']
 })
 
-export class StudentRatingComponent implements OnInit{
+export class StudentRatingComponent implements OnInit, OnDestroy{
 
   constructor(public srs: StudentRatingService,
     public fb: FormBuilder, public ls: LoaderStop,  public router:Router,
@@ -27,7 +27,10 @@ export class StudentRatingComponent implements OnInit{
   ngOnInit(){
      this.getStudents();
   }
-
+    ngOnDestroy(){
+      this.ls.setLoader(true);
+  }
+  
   public students: any[];
   public studentsCOPY: any[];
   public emptyStudents: boolean = false;

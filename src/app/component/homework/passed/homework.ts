@@ -1,6 +1,7 @@
-import { Component, OnInit,AfterViewInit } from '@angular/core';
+import { Component, OnInit,AfterViewInit, OnDestroy  } from '@angular/core';
 import { HomeworkService } from '../../../providers/homework.service';
 import { Router } from '@angular/router';
+import { LoaderStop } from '../../../providers/loaderstop.service';
 
 @Component({
   selector: 'passed-homework',
@@ -22,14 +23,19 @@ export class PassedHomework implements OnInit{
 
   constructor(private homeworkService: HomeworkService,
     public router: Router,
+    public ls : LoaderStop
   ) {
   }
 
   ngOnInit(): void {
+    this.ls.setLoader(false);
     this.fileUrl = localStorage.getItem("fileUrl") + "/";
     this.getHomeworks();
   }
 
+    ngOnDestroy(){
+      this.ls.setLoader(true);
+  }
 
   public getHomeworks() {
     this.loader = true;

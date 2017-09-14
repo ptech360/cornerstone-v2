@@ -1,8 +1,9 @@
-import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
 import { MessageService } from '../../providers/message.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { CommonService } from '../../providers/common.service'
 import { Router } from '@angular/router';
+import { LoaderStop } from '../../providers/loaderstop.service';
 
 declare let $: any;
 
@@ -48,7 +49,7 @@ export class MessageComponent implements AfterViewInit, OnInit {
   public newMessageForm: FormGroup;
   public students: any[];
   public categories: any[];
-  public standard: any = -1;
+  public standard: any = "-1";
   public selectedStudent: any;
   public newMsg:any;
 
@@ -56,7 +57,10 @@ export class MessageComponent implements AfterViewInit, OnInit {
   public studentLoader:boolean=false;
   public categoryLoder:boolean=false;
   public submitProgress:boolean=false;
-  constructor(public ms: MessageService, public cs: CommonService,public router:Router) {
+  constructor(public ms: MessageService, 
+    public cs: CommonService,
+    public router:Router,
+    public ls : LoaderStop) {
      
   }
 
@@ -74,6 +78,9 @@ export class MessageComponent implements AfterViewInit, OnInit {
 
   }
 
+    ngOnDestroy(){
+      this.ls.setLoader(true);
+  }
   ngAfterViewInit() {
 
   }
@@ -135,6 +142,7 @@ export class MessageComponent implements AfterViewInit, OnInit {
     this.getSelectedMessage(this.selectedId);
   }
 
+  
   public getSelectedMessage(id: any) {
     this.loader = true;    
     var oldMessages: any[];
@@ -324,7 +332,7 @@ export class MessageComponent implements AfterViewInit, OnInit {
       }
     this.standardLoader = false;          
       this.standardsArray = res;
-      this.standardsArray.splice(0,0,{ name : 'Select Standards', id : -1});
+     
     },
       err => {
         this.errPage();

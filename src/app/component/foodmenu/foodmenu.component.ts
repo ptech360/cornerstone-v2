@@ -1,4 +1,4 @@
-import {Component, AfterViewInit} from '@angular/core';
+import {Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { FoodmenuService} from '../../providers/foodmenu.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as moment_ from 'moment';
@@ -15,7 +15,7 @@ import { LoaderStop } from '../../providers/loaderstop.service';
     styleUrls:['./foodmenu.component.css'],
 })
 
-export class FoodmenuComponent implements AfterViewInit{
+export class FoodmenuComponent implements AfterViewInit, OnDestroy{
 
     public addItem:FormGroup;
     public addMenu:FormGroup;
@@ -23,6 +23,7 @@ export class FoodmenuComponent implements AfterViewInit{
     public heading:any;
     public menuMonth:any;
     public foodItems:any;
+    public duplicate :any = false;
     public loader:boolean=false;
     public itemLoader:boolean=false;
     public start:any;
@@ -45,6 +46,9 @@ export class FoodmenuComponent implements AfterViewInit{
 
       ngAfterViewInit(){
     //   _('#menu').fullCalendar('renderEvents', this.menuOptions.events, true); 
+  }
+  ngOnDestroy(){
+      this.ls.setLoader(true);
   }
 
         public menuOptions:any={
@@ -180,24 +184,40 @@ export class FoodmenuComponent implements AfterViewInit{
         this.itemLoader=false;            
         // this.foodItems=JSON.parse(res);
         this.foodItems=res;
-        this.foodItems.splice(0,0,{ id : -1, name : 'Select Item'});
         console.log(this.foodItems);
         console.log(this.tryfoodtype);
         },err=>{
         })
     }
 
-    public postItem(){
-        this.loader=true;
-        this.fs.postItem(this.addItem.value).subscribe(res=>{
-            this.loader=false;            
-            this.message="You have successfully added the food item";
-            this.heading="Successfully added";
-            $('#messageModal').modal();
-            this.getMenu();
+    public postItem(){ 
+        $('#addItemModal').modal('hide'); 
+            this.loader=true;
+            this.fs.postItem(this.addItem.value).subscribe(res=>{
+                this.loader=false;            
+                this.message="You have successfully added the food item";
+                this.heading="Successfully added";
+                $('#messageModal').modal();
+                
+                this.getItem();
+                this.getMenu();
+                
+
         },err=>{
 
         })
+        
+    }
+
+    notValid(){
+        let food = this.addItem.controls["name"].value;
+        for(let x of this.foodItems){
+            if(x.name == food){
+                this.duplicate = true;
+                return;
+            }
+        }
+        this.duplicate = false;
     }
 
     public postMenu(){
