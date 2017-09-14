@@ -14,7 +14,7 @@
       <div class="nlCard pointerHand center-block" onclick="$('.panel.panel-chat').hide();" (click)="seletToExpand(c,i)" data-toggle="modal"
         data-target="#myModal-card">
         <span class="badge" [style.background]="c.statusColor">@{{c.statusName}}</span>
-        <img class="cardImage img-center" [attr.src]="fileUrl + c.studentPicUrl" style="border-radius:50% !important">
+        <img class="cardImage img-center text-center" [attr.src]="fileUrl + c.studentPicUrl" style="border-radius:50% !important">
         <div class="text-center">
           <div class="name">
             {{c.studentName}}
@@ -61,7 +61,7 @@
           </div>
           <div class="row head">
             <div class="col-lg-4 col-md-4 col-sm-12">
-              <img class="center-block circle shadow-3" [attr.src]="fileUrl + selectedComplaint.studentPicUrl" style="border-radius:50% !important"
+              <img class="center-block circle text-center" [attr.src]="fileUrl + selectedComplaint.studentPicUrl" style="border-radius:50% !important"
                 width="150px" height="150px">
               <div class="text-center head">
                 <b>{{selectedComplaint.studentName}}</b>
