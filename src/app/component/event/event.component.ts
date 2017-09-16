@@ -256,6 +256,7 @@ public endT(e:any){
         else{ 
           this.loader=false;
       this.newEvents=res;
+      console.log(this.newEvents);
       _('#calendar').fullCalendar('removeEvents');
       _('#calendar').fullCalendar('addEventSource', this.newEvents);
         }
@@ -287,6 +288,7 @@ public endT(e:any){
     this.eventService.GetPlanner().subscribe((res)=>{
     this.plannerLoader=false;      
       this.planner=res;
+      console.log(this.planner);
       this.loader=false;
     },(err)=>{
        this.router.navigate(['/error']);
@@ -299,6 +301,7 @@ public endT(e:any){
     this.eventService.getStandards().subscribe((res) => {
     this.standardLoader=false;      
       this.standard = res;
+      console.log(res);
     }, (err) => {
        this.router.navigate(['/error']);      
     });

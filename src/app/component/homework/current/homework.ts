@@ -46,6 +46,7 @@ export class CurrentHomework implements OnInit, OnDestroy {
   public noMore: boolean = true;
   public onSuccess(res: any) {
     // this.nl.hideLoader();
+    console.log(res);
     this.loader = false;
     if (res.status === 204) {
       this.EmptyHomeworks = true;
@@ -55,6 +56,7 @@ export class CurrentHomework implements OnInit, OnDestroy {
       this.homeworks = res;
       else
       this.homeworks = this.homeworks.concat(res);
+      console.log(this.homeworks);
       if (res.length < 12) this.noMore = true;
       else this.noMore = false;
 

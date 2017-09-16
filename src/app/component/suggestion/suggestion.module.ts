@@ -6,6 +6,7 @@ import { SuggestionForStudent } from './for-student/forstudent';
 import { SuggestionForMe } from './for-me/forme';
 import { SuggestionAddComponent } from './add/add';
 import { SuggestionService } from "../../providers/suggestion.service";
+import { ComplaintService } from "../../providers/complaint.service";
 
 @NgModule({
 	imports : [ SharedModule, RouterModule.forChild([
@@ -30,7 +31,7 @@ import { SuggestionService } from "../../providers/suggestion.service";
 			
 		])],
 	declarations : [ SuggestionAddComponent, SuggestionComponent, SuggestionForStudent, SuggestionForMe ],
-	providers : [SuggestionService]
+	providers : [SuggestionService, ComplaintService]
 }) 
 export class SuggestionModule {
 	

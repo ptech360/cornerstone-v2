@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { LoaderStop } from '../../providers/loaderstop.service';
 @Component({
   selector:'suggestion',
   templateUrl:'./suggestion.component.html',
@@ -10,8 +11,8 @@ export class SuggestionComponent{
   public status: string = "";
   public url:string ="";
   public tab:boolean = false;
-  constructor(private route: ActivatedRoute,private router:Router){
-     
+  constructor(private route: ActivatedRoute,private router:Router, ls:LoaderStop){
+     ls.setLoader(false);
     this.url = this.router.url;
     if(this.url == "/suggestion/for-me" || this.url == "/suggestion/for-student")
       this.tab = true;

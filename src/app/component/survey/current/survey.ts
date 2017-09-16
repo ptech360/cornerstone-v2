@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SurveyService } from '../../../providers/survey.service';
 import { Router } from '@angular/router';
-
+import { LoaderStop } from '../../../providers/loaderstop.service';
 declare let $: any;
 
 @Component({
@@ -18,7 +18,9 @@ export class CurrentSurveyComponent implements OnInit {
   public noMore: boolean = false;
   public loader: boolean = false;
 
-  constructor(public ss: SurveyService, public router: Router) { }
+  constructor(public ss: SurveyService, public ls : LoaderStop, public router: Router) { 
+ls.setLoader(false);
+  }
 
   ngOnInit() {
     this.getSurveys();

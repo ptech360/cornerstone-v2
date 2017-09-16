@@ -34,14 +34,15 @@
         </div>-->
         <div class="row">
           <!-- <img class="image" [attr.src]="fileUrl + circular.employeePicUrl"> -->
-              <div class="download-image" *ngIf="circular.fileTimestamp">
-                <span  *ngIf="circular.fileTimestamp">
-                <img class="modal-image" [attr.src]="fileUrl + circular.fileTimestamp">
+              <div class="download-image" *ngIf="circular.files">
+                <span  *ngIf="circular.files">
+                <img class="modal-image" 
+                [attr.src]="fileUrl + circular.files[0].fileTimestamp ">
                 </span>
                     <div class="edit-image"><a [attr.href]="fileUrl + circular.fileTimestamp" [download]="custom"><i class="fa fa-download fa-lg"></i></a></div>
               </div>
               <span>
-                <img class="modal-image" *ngIf="!circular.fileTimestamp" src="./app/img/preview.png" alt="No Preview Avalable">
+                <img class="modal-image" *ngIf="!circular.files" src="./app/img/preview.png" alt="No Preview Avalable">
               </span>.
         </div>
         <div class="row name">{{circular.employeeName}}</div>
@@ -99,14 +100,14 @@
       <div class="modal-body card-modal">
         <div class="row modal-heading">
           <!-- <img class="modal-image" [attr.src]="fileUrl + selectedCircular.employeePicUrl" style="margin-top:10px;"> -->
-            <div class="download-image-modal" *ngIf="selectedCircular.fileTimestamp">
+            <div class="download-image-modal" *ngIf="selectedCircular.files">
               <span  >
-               <img class="modal-image" [attr.src]="fileUrl + selectedCircular.fileTimestamp">
+               <img class="modal-image" [src]="tryfile">
               </span>
-              		<div class="edit-image-modal"><a [attr.href]="fileUrl + selectedCircular.fileTimestamp" [download]="custom"><i class="fa fa-download fa-lg"></i></a></div>
+              		<div class="edit-image-modal"><a [attr.href]=" fileUrl + selectedCircular.files[0].fileTimestamp " [download]="custom"><i class="fa fa-download fa-lg"></i></a></div>
             </div>
             <span>
-              <img class="modal-image" *ngIf="!selectedCircular.fileTimestamp" src="./app/img/preview.png" alt="No Preview Avalable">
+              <img class="modal-image" *ngIf="!selectedCircular.files" src="./app/img/preview.png" alt="No Preview Avalable">
             </span>
         </div>
         <div class="row modal-name">{{selectedCircular.employeeName}}
