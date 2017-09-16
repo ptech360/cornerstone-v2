@@ -1,11 +1,4 @@
 /*comment box css*/
-*
-{
-    -webkit-border-radius: 0px  !important;
-    -moz-border-radius: 0px  !important;
-    border-radius: 0px !important;
-    box-sizing: border-box;
-}
 htlm, body
 {
     padding: 0;

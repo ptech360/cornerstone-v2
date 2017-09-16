@@ -41,11 +41,11 @@ const rootRouterConfig:Routes = [
     { path: 'foodmenu', component: FoodmenuComponent, canActivate: [LoggedInGuard] },
     
     { path: 'survey', loadChildren: 'app/component/survey/survey.module#SurveyModule', canActivate: [LoggedInGuard] },
-    
+  
     { path: 'student-profile', loadChildren: 'app/component/studentRating/studentRating.module#StudentRatingModule', canActivate: [LoggedInGuard] },
     { path: 'view-survey/:id', component: ViewSurveyComponent, canActivate: [LoggedInGuard] },
     { path: 'suggestion', loadChildren: 'app/component/suggestion/suggestion.module#SuggestionModule' },
-    { path: 'foodmenu', loadChildren: 'app/component/foodmenu/foodmenu.module#FoodmenuModule', canActivate: [LoggedInGuard] },    
+    { path: 'foodmenu', loadChildren: 'app/component/foodmenu/foodmenu.module#FoodmenuModule', canActivate: [LoggedInGuard] }, 
   ]
     
   },

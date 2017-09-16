@@ -1,14 +1,33 @@
-<div class="row">
-  <!--<div class="col-lg-12">
-    <h1>Dashboard</h1>
-  </div>-->
-  <!-- /.col-lg-12 -->
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-lg-4 col-sm-12 bottom-margin">
+        <div class="card-panel stats-card lighten-1 indigo-text">
+          <i class="fa fa-comment-o"></i>
+          <span class="count">145</span>
+          <div class="name">Complaints</div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-sm-12 bottom-margin">
+          <div class="card-panel stats-card lighten-2 indigo-text">
+            <i class="fa fa-send"></i>
+            <span class="count">145</span>
+            <div class="name">Complaints</div>
+          </div>
+      </div>
+      <div class="col-lg-4 col-sm-12 bottom-margin">
+          <div class="card-panel stats-card lighten-3 indigo-text">
+            <i class="fa fa-spinner"></i>
+            <span class="count">145</span>
+            <div class="name">Complaints</div>
+          </div>
+      </div>                       
+  </div>
 </div>
 <!-- /.row -->
 <div class="row" (window:resize)="onResize($event)">
   <div class="col-lg-6 col-sm-12">
-    <div class="panel panel-default" >
-      <div class="panel-heading">
+    <div class="shadow-4" >
+      <div class="nlPanel-header  bg4">
         Complaint Status and Categorywise
       </div>
       <!-- /.panel-heading -->
@@ -30,8 +49,8 @@
   <!-- /.col-lg-12 -->
   <div class="col-lg-6 col-sm-12">
      
-    <div class="panel panel-default">
-      <div class="panel-heading">
+    <div class="shadow-4">
+      <div class="nlPanel-header bg4">
         Complaint Statuswise
       </div>
       <!-- /.panel-heading -->

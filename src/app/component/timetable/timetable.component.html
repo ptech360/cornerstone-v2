@@ -1,23 +1,20 @@
-
-       
-<div class="row">
-  <div class="col-sm-4 col-sm-offset-8">
-    Select Standard
-    <select class="form-control" id="standardIds" name="standardIds" [(ngModel)]="selectedStandard" (ngModelChange)="getTimeTable($event)">
-    <option *ngFor=" let s of standards" [value]="s.id"> {{s.name}}</option>
-
-    </select>
-  </div>
-</div>
-
-<div class="panel panel-default"  *ngIf="selectedStandard">
-    <div class="panel-heading text-center" *ngIf="selectedStandard && standards ">Time Table For {{ standards[selectedStandard -1 ].name }} </div>
+<div *ngIf="selectedStandard">
+    <div class="nlPanel-header bg4 text-center" *ngIf="selectedStandard && standards ">
+        <form class="form-inline">
+            <div class="form-group">
+              <label>Time Table For </label>
+              <select class="form-control" id="standardIds" name="standardIds" [(ngModel)]="selectedStandard" (ngModelChange)="getTimeTable($event)">
+                  <option *ngFor=" let s of standards" [value]="s.id"> {{s.name}}</option>
+                </select>
+            </div>
+        </form>
+    </div>
     <div style="overflow:auto">
     	<table width="100%">
     		<thead>
           <tr *ngIf= " days ">
           <th class="tt-head"></th>
-            <th class="tt-head" *ngFor=" let day of days">{{ day }}</th>
+          <th class="tt-head" *ngFor=" let day of days">{{ day }}</th>
           </tr>
         </thead>
         <tbody *ngIf="daysdata">
@@ -25,7 +22,6 @@
             <loader [condition]="loader"></loader>
           </div>
           <tr *ngFor=" let x1 of daysdata[0]; let i = index ">
-
             <td class="tt-head1" >  {{x1.startTime}} - {{x1.endTime}}  </td>
             <ng-container *ngIf="i%4!=0" >
               <td class="tt-blocks"  *ngFor=" let x1 of daysdata; let i1 = index" (click) = "getModal( selectedStandard, x1[i],i1 )">
@@ -35,30 +31,22 @@
             <td class="tt-blocks" style="cursor:default;" colspan="5" *ngIf="i%4==0">
               {{ getValue(i) }}
             </td>
-
           </tr>
         </tbody>
-
     	</table>
     </div>
 </div>
-<!-- <div *ngIf= " timetable " >
-<span  *ngFor=" let x of daysdata">{{x.id}}</span>
-</div> -->
-
-
 <div class="modal fade" id="editSubject" role="dialog">
   <div class="modal-dialog">
-    <!-- Update Modal content-->
-   <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+   <div class="square">
+      <div class="container-fluid bg4">
         <h4 class="modal-title">Add or View subject</h4>
       </div>
-        <div style="width:94%;margin:auto">
-          <h4>{{day}}   ( {{starttime}} - {{endtime}} )</h4>
-          <!-- <br *ngIf="showsubjectlist"> -->
-          <h3 *ngIf="showsubjectname">{{subjectName}}  <i style="font-size: 15px" (click)="showlist()" class="glyphicon glyphicon-pencil"></i></h3>
+        <div class="container-fluid">
+          <div style="padding: 25px;">
+            <b>{{day}}   ({{starttime}} - {{endtime}}):</b>
+            <span *ngIf="showsubjectname">{{subjectName}}  <i (click)="showlist()" class="glyphicon glyphicon-pencil"></i> </span>
+          </div>
           <span *ngIf="showsubjectlist">Select subject :</span>
           <br *ngIf="showsubjectlist">
           <select *ngIf="showsubjectlist" class="form-control" [(ngModel)]="selectedSubject"  required>
@@ -66,11 +54,19 @@
             <option *ngFor=" let s of subjects" [value]="s.id"> {{s.name}}</option>
           </select>
         </div>  
-    <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="onSubmit()" data-dismiss="modal">Submit</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-    </div>
-
+        <div class="col-lg-6 col-sm-12">
+            <button type="button" class="btn button4 btn-card"  (click)="onSubmit()" data-dismiss="modal" style="width:100%;margin-bottom:10px">
+                  <span class="glyphicon glyphicon-ok-circle pull-left"></span>
+                  Save
+              </button>
+          </div>
+          <div class="col-lg-6 col-sm-12">
+              <button type="button" class="btn button4 btn-card" data-dismiss="modal" style="width:100%;margin-bottom:10px">
+                    <span class="glyphicon glyphicon-remove-circle pull-left"></span>
+                    Cancel
+                </button>
+          </div>
+            <div class="row"></div>
     </div>
   </div>
 </div>

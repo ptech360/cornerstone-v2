@@ -9,7 +9,7 @@ declare let $: any;
 @Component({
   selector: 'current-poll',
   templateUrl: './poll.html',
-  styleUrls: ['./poll.css'],
+  styleUrls: ['./poll.css']
 })
 
 export class CurrentPollComponent implements OnInit , OnDestroy{
