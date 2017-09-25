@@ -120,11 +120,12 @@
         </button>
       </div>
       <div class="modal-body">
-        
+        <ul class="list-group" *ngFor="let x of mes">
+          <li class="list-group-item" style="cursor:pointer" (click)="navigateToExisting(x.standardId,x.studentId)">{{x.studentName}}</li>
+        </ul>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="formType=null;navigateToExisting()"   >Close</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Add More</button>
       </div>
     </div>
   </div>

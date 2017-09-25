@@ -26,9 +26,9 @@ export class NewStudentComponent implements OnDestroy {
   public parent: any[];
 
   public newStudentForm: FormGroup;
-
-  public stuId:any;
-  public stanId:any;
+  public mes:any[];
+  public stuId:any[]=[];
+  public stanId:any[]=[];
   constructor(public _location: Location,
     public as: AdminService,
     public fb: FormBuilder,
@@ -104,10 +104,13 @@ export class NewStudentComponent implements OnDestroy {
           console.log(err.json());
           this.messages =err.json() ;
           console.log(this.messages);
-          var mes = JSON.parse(this.messages.message);
-          console.log(mes);
-          this.stuId = mes[0].studentId ;
-          this.stanId = mes[0].standardId;
+          this.mes = JSON.parse(this.messages.message);
+          console.log(this.mes);
+          for(let i=0;i<this.mes.length;i++){
+            this.stuId[i] = this.mes[i].studentId ;
+          this.stanId[i] = this.mes[i].standardId;  
+          }
+          
           console.log(this.stuId);
           console.log(this.stanId);
           $('#errModal').modal('show');
@@ -124,11 +127,9 @@ export class NewStudentComponent implements OnDestroy {
      this.router.navigate(['/error']);
   }
 
-  navigateToExisting(){
+  navigateToExisting( standardid:any,studentid:any){
     console.log("gh");
-    this.router.navigate(["/add-student","existing-student",this.stanId,this.stuId]);
+    $('#errModal').modal('hide');
+    this.router.navigate(["/add-student","existing-student",standardid,studentid]);
   }
-
-
-
 }

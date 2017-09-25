@@ -49,7 +49,7 @@ export class ExistingStudentComponent implements OnDestroy {
   public selectedStandardId:any;
   public showStudent:boolean=false;
   public totalStudents:any;
-  public studentsInfo:any;
+  public studentsInfo:any[];
   public showSearch:boolean=false;
   public showTable:boolean=false;
   public filter:any=1;
