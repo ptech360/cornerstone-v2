@@ -199,6 +199,9 @@ export class FoodmenuComponent implements AfterViewInit, OnDestroy{
                 this.heading="Successfully added";
                 $('#messageModal').modal();
                 
+                      setTimeout(()=>{
+          $('#messageModal').modal('hide');
+      },3000);    
                 this.getItem();
                 this.getMenu();
                 
@@ -227,6 +230,9 @@ export class FoodmenuComponent implements AfterViewInit, OnDestroy{
             this.message="You have successfully added the food menu";
             this.heading="Successfully added";
             $('#messageModal').modal();
+            setTimeout(()=>{
+          $('#messageModal').modal('hide');
+      },3000);
             this.getMenu();            
         },err=>{
             
@@ -237,7 +243,10 @@ export class FoodmenuComponent implements AfterViewInit, OnDestroy{
         if(new Date(e.target.value) < new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate())){
       this.message="Please choose an upcoming date from the calendar";
       this.heading="Invalid date input";
-      $('#messageModal').modal('show');               
+      $('#messageModal').modal('show'); 
+      setTimeout(()=>{
+          $('#messageModal').modal('hide');
+      },3000);              
       this.addMenu.controls['day'].patchValue(this.start);
     }
 

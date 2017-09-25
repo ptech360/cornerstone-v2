@@ -71,7 +71,7 @@ export class MessageComponent implements AfterViewInit, OnInit {
     this.initForm();
     this.initnewMessageForm();
     this.getStandards();
-    
+    this.ls.setLoader(false); 
     this.pictureForm = new FormGroup({
       // message: new FormControl('', [Validators.required]),
     })
@@ -152,6 +152,9 @@ export class MessageComponent implements AfterViewInit, OnInit {
         this.selectedOldRecipient = [];
         this.emptyOldMessages = true;
         $("#noMessageModal").modal('show');
+        setTimeout(()=>{
+          $("#noMessageModal").modal('hide');
+        },3000);
         this.currentMessagePage -= 1;
         this.getSelectedMessage(this.selectedId);
         this.loader = false;
@@ -231,6 +234,9 @@ export class MessageComponent implements AfterViewInit, OnInit {
     }
     else{
        $('#errorModal').modal('show');
+       setTimeout(()=>{
+         $('#errorModal').modal('hide');
+       },3000)
       // this.newMessageForm.controls['file'].reset();      
     }
     reader.onload = function (e: any) {
@@ -374,6 +380,9 @@ export class MessageComponent implements AfterViewInit, OnInit {
     this.ms.newConversation(temp).subscribe(res => {
       this.getMessages();
       $("#submitModal").modal('show');
+      setTimeout(()=>{
+        $("#submitModal").modal('hide');
+      },3000)
       this.initnewMessageForm();
     },
       err => {

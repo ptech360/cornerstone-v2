@@ -9,7 +9,7 @@
           <div class="row">
           <label for="standardId">Standard</label>
               <select [(ngModel)]="standardId" (change)="onSelectStandard($event.target.value)" class="form-control">
-                <option disabled="disabled" selected="selected">Select a standard</option>
+                <option disabled="disabled" selected="selected" value="">Select a standard</option>
                 <option *ngFor="let s of standards" [value]="s.id" >{{s.name}}</option>
               </select>
               <loader [condition]="standardLoader" class="dropdownLoader"></loader>
@@ -309,7 +309,7 @@
                 <div class="form-group col-sm-5">
                   <label for="stnd5">Select Standard</label>
                   <select id="stnd" class="form-control" formControlName="standardId">
-                        <option disabled="disabled" selected="selected">Select Standard</option>                                 
+                        <option disabled="disabled" selected="selected" value="">Select Standard</option>                                 
                         <option *ngFor="let s of standards" [value]="s.id">{{s.name}}</option>
                     </select>
                   <div [hidden]="addSiblingForm.controls.students.controls[i].controls.standardId.valid || addSiblingForm.controls.students.controls[i].controls.standardId.untouched" class="alert alert-warning">This field is required</div> 

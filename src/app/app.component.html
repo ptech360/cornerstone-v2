@@ -1,7 +1,5 @@
-<div class="img-center" *ngIf="loaderstop">
-      <img src="app/img/loader.gif"  width="50px"><br>
-      Loading...
-</div>
+ <div class="loader" *ngIf="loaderstop"></div>
+ <div class="loader-text" *ngIf="loaderstop">Loading...</div>
 
 <router-outlet>
 		

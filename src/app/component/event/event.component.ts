@@ -69,7 +69,7 @@ export class EventComponent implements OnInit, AfterViewInit, OnDestroy {
     ngOnInit() {   
     this.id = localStorage.getItem("id");
     this.event=this.initForm(); 
-  
+    this.ls.setLoader(false);
   }
   ngOnDestroy(){
     this.ls.setLoader(true);
@@ -316,7 +316,10 @@ public endT(e:any){
     this.eventService.postEvent(this.event.value).subscribe((res)=>{
       this.loader=false;
       this.message="You have successfully added an event";
-      $('#modal-success').modal();  
+      $('#modal-success').modal();
+      setTimeout(()=>{
+        $('#modal-success').modal('hide');
+      },3000)  
       // $('#message').html(this.eventsInfo.eventTitle);       
       this.getEvents();
     },(err)=>{
@@ -329,7 +332,10 @@ public endT(e:any){
     this.eventService.deleteEvent(this.eventsInfo.id).subscribe((res)=>{
       this.loader=false;
       this.message="You have successfully deleted the event";
-      $('#modal-success').modal('show');             
+      $('#modal-success').modal('show');
+      setTimeout(()=>{
+        $('#modal-success').modal('hide');
+      },3000)             
       this.getEvents();
     },(err)=>{
        this.router.navigate(['/error']);            
@@ -343,7 +349,10 @@ public endT(e:any){
       this.loader=false;
       this.newEvents=res;
       this.message="You have successfully updated the event";
-      $('#modal-success').modal('show');         
+      $('#modal-success').modal('show');
+      setTimeout(()=>{
+        $('#modal-success').modal('hide');
+      },3000)         
       this.getEvents();
     },(err)=>{});
   }
@@ -402,14 +411,20 @@ public endT(e:any){
     this.currentDate=e.target.value;
     if(new Date(e.target.value) < new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate())){
       this.message="Please choose an upcoming date from the calendar";
-      $('#modal-success').modal('show');               
+      $('#modal-success').modal('show');
+      setTimeout(()=>{
+        $('#modal-success').modal('hide');
+      },3000)               
       this.event.controls['startDate'].patchValue(this.start);
       this.event.controls['endDate'].patchValue(this.start);
     }
       
     if(new Date(e.target.value)> new Date(this.event.controls['endDate'].value)){
       this.message="Please choose date before end date from the calendar";
-      $('#modal-success').modal('show');               
+      $('#modal-success').modal('show');
+      setTimeout(()=>{
+        $('#modal-success').modal('hide');
+      },3000)               
       this.event.controls['startDate'].patchValue(this.start);
     }
     this.startT(this.startTime);
@@ -421,7 +436,10 @@ public endT(e:any){
     if(new Date(e.target.value)<new Date(this.event.controls['startDate'].value))
       {
       this.message="Please choose a date after start date";
-      $('#modal-success').modal('show'); 
+      $('#modal-success').modal('show');
+      setTimeout(()=>{
+        $('#modal-success').modal('hide');
+      },3000) 
       this.event.controls['endDate'].patchValue(this.start);
       }
     this.startT(this.startTime);
@@ -445,13 +463,19 @@ public endT(e:any){
 public onStartDate(e:any){
     if(new Date(e.target.value) < new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate())){
       this.message="Please choose an upcoming date from the calendar";
-      $('#modal-success').modal('show'); 
+      $('#modal-success').modal('show');
+      setTimeout(()=>{
+        $('#modal-success').modal('hide');
+      },3000) 
       this.editEvent.controls['startDate'].patchValue(this.selectedEvent.startDate);
       this.editEvent.controls['endDate'].patchValue(this.selectedEvent.startDate);
     }
     if(new Date(e.target.value)> new Date(this.editEvent.controls['endDate'].value)){
       this.message="Please choose date before end date from the calendar";
-      $('#modal-success').modal('show');               
+      $('#modal-success').modal('show');
+      setTimeout(()=>{
+        $('#modal-success').modal('hide');
+      },3000)               
       this.editEvent.controls['startDate'].patchValue(this.selectedEvent.startDate);
     this.checkStart(this.startTime);
     this.checkEnd(this.endTime);  
@@ -462,7 +486,10 @@ public onStartDate(e:any){
     if(new Date(e.target.value)<new Date(this.editEvent.controls['startDate'].value))
       {
       this.message="Please choose a date after start date";
-      $('#modal-success').modal('show'); 
+      $('#modal-success').modal('show');
+      setTimeout(()=>{
+        $('#modal-success').modal('hide');
+      },3000) 
       this.editEvent.controls['endDate'].patchValue(this.selectedEvent.startDate);
       }
     this.checkStart(this.startTime);
@@ -476,7 +503,10 @@ public onStartDate(e:any){
   if((this.editEvent.controls['startDate'].value)==(this.editEvent.controls['endDate'].value)){
   if(this.endTime<this.startTime){
       this.message="Please choose start time less than end time";
-      $('#modal-success').modal('show'); 
+      $('#modal-success').modal('show');
+      setTimeout(()=>{
+        $('#modal-success').modal('hide');
+      },3000) 
       this.editEvent.controls['startTime'].patchValue("");  
       this.editEvent.controls['endTime'].patchValue("");
       $("input[type=time]").val("");
@@ -494,7 +524,10 @@ public onStartDate(e:any){
   if((this.editEvent.controls['startDate'].value)==(this.editEvent.controls['endDate'].value)){  
     if(this.endTime<this.startTime){
       this.message="Please choose end time greater than start time";
-      $('#modal-success').modal('show'); 
+      $('#modal-success').modal('show');
+      setTimeout(()=>{
+        $('#modal-success').modal('hide');
+      },3000) 
       this.event.controls['startTime'].patchValue("")    
       this.editEvent.controls['startTime'].patchValue("");  
       this.editEvent.controls['endTime'].patchValue("");   

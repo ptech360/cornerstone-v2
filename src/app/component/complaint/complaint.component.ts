@@ -218,6 +218,10 @@ export class ComplaintComponent implements OnInit, AfterViewInit, OnDestroy {
     this.cs.closeComplaint(this.selectedComplaint.id, this.closeForm.value, this.urlForComment).subscribe(response => {
       this.complaints[this.selectedIndex] = response;
       $('#myModal3').modal('hide');
+      setTimeout(()=>{
+        $('#myModal4').modal('hide');
+      },3000);
+
     }, error => {
       this.router.navigate(['/error']);
     });

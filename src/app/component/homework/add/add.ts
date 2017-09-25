@@ -4,6 +4,7 @@ import { HomeworkService } from '../../../providers/homework.service';
 import { Location } from '@angular/common';
 import { CommonService } from '../../../providers/common.service';
 import { Router } from '@angular/router'
+import { LoaderStop } from '../../../providers/loaderstop.service';
 
 declare let $: any;
 
@@ -29,11 +30,13 @@ export class HomeworkAddComponent implements OnInit {
   constructor(private homeworkService: HomeworkService,
     private commonService: CommonService,
     private _location: Location,
-    public router: Router) {              
+    public router: Router,
+    public ls?:LoaderStop) {              
  }
 
 
   ngOnInit() {
+    this.ls.setLoader(false);
     this.initForm();
     this.getStandards();
   }
@@ -147,6 +150,9 @@ export class HomeworkAddComponent implements OnInit {
       this.initForm();
       this.submitProgress = false;
       $('#homeworkModal').modal('show');
+            setTimeout(()=>{
+          $('#homeworkModal').modal('hide');
+      },3000);
     }, (err) => {
       // this.submitProgress = false;
       this.router.navigate(['/error']);

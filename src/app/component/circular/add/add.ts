@@ -5,7 +5,7 @@ import { CircularService } from '../../../providers/circular.service';
 import { CommonService } from '../../../providers/common.service';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-
+import { LoaderStop } from '../../../providers/loaderstop.service';
 declare let $: any;
 
 @Component({
@@ -19,6 +19,7 @@ export class AddCircular implements OnInit, AfterViewInit {
   public title: string = 'Add Circular';
   public newCircular: any;
   public standards: any;
+  
   public buttonlabel : string = 'Select Standard';
   public emptyStandards = false;
   public circularType: any;
@@ -31,9 +32,11 @@ export class AddCircular implements OnInit, AfterViewInit {
   constructor(private circserv: CircularService,
     private commonService: CommonService,
     private _location: Location,
-    public router: Router, ) { }
+    public router: Router,
+    private ls? : LoaderStop ) { }
 
   ngOnInit() {
+    this.ls.setLoader(false);
     this.circular = this.initForm();
   }
 
@@ -205,6 +208,9 @@ export class AddCircular implements OnInit, AfterViewInit {
       this.circular = this.initForm();
       this.loader= false;
       $('#circularModal').modal('show');
+      setTimeout(()=>{
+        $('#circularModal').modal('hide');
+      },3000);
     }, (err) => {
       this.loader = false;
       this.router.navigate(['/error']);

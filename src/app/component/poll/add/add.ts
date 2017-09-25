@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import { CommonService } from '../../../providers/common.service';
 import { PollService } from '../../../providers/poll.service';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { LoaderStop } from '../../../providers/loaderstop.service';
 
 declare let $: any;
 
@@ -13,7 +14,7 @@ declare let $: any;
   styleUrls: ['./add.css'],
 })
 
-export class AddPollComponent implements OnInit {
+export class AddPollComponent implements OnInit, OnDestroy {
 
   public pollInfo: any;
   public standards: any;
@@ -33,13 +34,19 @@ export class AddPollComponent implements OnInit {
     public cs: CommonService,
     public ps: PollService,
     public router:Router,
-    private _location: Location) {
+    private _location: Location,
+    public ls? : LoaderStop,
+) {
   }
 
   ngOnInit() {
     this.getPollInfo();
     this.initForm();
+    this.ls.setLoader(false);
     this.getStandards(); 
+  }
+  ngOnDestroy(){
+    this.ls.setLoader(true);
   }
 
   public initForm() {
@@ -172,10 +179,18 @@ export class AddPollComponent implements OnInit {
   }
 
   public submitPoll(obj: any) {
+    setTimeout(()=>{
+      $('#submitModal').modal('hide');
+
+    },3000)
     this.submitProgress=true;
     this.ps.createPoll(obj).subscribe(res => {
     this.submitProgress=false;      
       $('#submitModal').modal('show');
+    setTimeout(()=>{
+      $('#submitModal').modal('hide');
+
+    },3000)
       this.initForm();
     },
       err => {

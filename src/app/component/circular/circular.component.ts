@@ -18,7 +18,6 @@ export class CircularComponent implements OnInit, OnDestroy {
   public loader:boolean = false;
   public fileUrl: string;
   public selectedCircular:any;
-  public tryfile :any;
    public noMore:boolean = true;
 
   constructor(private circularService: CircularService,
@@ -47,7 +46,6 @@ export class CircularComponent implements OnInit, OnDestroy {
   }
  
   private onSuccess(data:any) {
-    console.log(data);
     this.loader = false;
     if (data.status === 204) {  
       this.circulars = [];    
@@ -90,19 +88,8 @@ export class CircularComponent implements OnInit, OnDestroy {
 
  public seletToExpand(circular:any){
     this.selectedCircular = circular;
-    this.tryfile = this.fileUrl + this.selectedCircular.files[1].fileTimestamp;
-    console.log(circular);
-    console.log(this.tryfile);
-    console.log(circular.files);
-    console.log(circular.files[0]);
-    console.log(circular.files[0].filestamp);
   }
 
-  getimgurl(){
-    var url = this.fileUrl + this.selectedCircular.files[0].fileTimestamp;
-    console.log(url);
-    return url;
-  }
   // public doRefresh(refresher) {
   //   setTimeout(() => {
   //     this.circularService.GetCirculars(1).subscribe((res) => {

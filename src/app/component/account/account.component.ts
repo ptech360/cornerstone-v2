@@ -47,6 +47,7 @@ export class AccountComponent implements OnInit, OnDestroy {
         this.loadAccountDetails(this.details);
        this.initForm();
 
+     this.ls.setLoader(false);
     }
     ngOnDestroy(){
      this.ls.setLoader(true); 
@@ -129,6 +130,9 @@ export class AccountComponent implements OnInit, OnDestroy {
     .subscribe(response => {
     },err => {
         $('#mismatch').modal('show');
+        setTimeout(()=>{
+            $('#mismatch').modal('hide');
+        },3000)
     });
     
 

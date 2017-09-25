@@ -1,0 +1,653 @@
+From adfaff6e9b5f859fe8cb008b046c47e7186834cd Mon Sep 17 00:00:00 2001
+From: Abhay2012 <abhay.sehgal2012@gmail.com>
+Date: Sat, 16 Sep 2017 09:23:44 +0530
+Subject: [PATCH] duplicate parent and filter
+
+---
+ src/app/component/addStudent/addStudent.module.ts  | 18 +++++----
+ .../existingStudent/existingStudent.component.html |  4 +-
+ .../existingStudent/existingStudent.component.ts   | 13 ++++--
+ .../newStudent/newStudent.component.html           | 20 ++++++++++
+ .../addStudent/newStudent/newStudent.component.ts  | 23 +++++++++--
+ src/app/component/appreciation/add/add.html        |  2 +-
+ src/app/component/circular/add/add.html            |  4 +-
+ src/app/component/circular/add/add.ts              | 36 +++++++++++------
+ src/app/component/circular/circular.component.html | 17 ++++----
+ src/app/component/circular/circular.component.ts   | 13 ++++++
+ src/app/component/event/event.component.ts         |  3 ++
+ src/app/component/homework/add/add.html            |  2 +-
+ src/app/component/homework/add/add.ts              | 46 ++++++++++++----------
+ src/app/component/homework/current/homework.ts     |  2 +
+ .../component/suggestion/suggestion.component.ts   |  5 ++-
+ src/app/component/suggestion/suggestion.module.ts  |  3 +-
+ src/app/component/survey/current/survey.ts         |  6 ++-
+ src/app/providers/admin.service.ts                 |  2 +-
+ src/app/providers/app.constant.ts                  | 10 +++--
+ 19 files changed, 161 insertions(+), 68 deletions(-)
+
+diff --git a/src/app/component/addStudent/addStudent.module.ts b/src/app/component/addStudent/addStudent.module.ts
+index fbc8a3c..e8fbb39 100644
+--- a/src/app/component/addStudent/addStudent.module.ts
++++ b/src/app/component/addStudent/addStudent.module.ts
+@@ -12,14 +12,18 @@ import { NewStudentComponent } from './newStudent/newStudent.component';
+ 				path : '',
+ 				component : AddStudentComponent,
+ 				children : [
+-							{
+-				path : 'existing-student',
+-				component : ExistingStudentComponent
++				{
++					path : 'existing-student',
++					component : ExistingStudentComponent
+ 				},
+-			{
+-				path : 'new-student',
+-				component : NewStudentComponent
+-			}
++				{
++					path : 'existing-student/:standardId/:studentId',
++					component : ExistingStudentComponent
++				},
++				{
++					path : 'new-student',
++					component : NewStudentComponent
++				}
+ 				]
+ 			}
+ 			
+diff --git a/src/app/component/addStudent/existingStudent/existingStudent.component.html b/src/app/component/addStudent/existingStudent/existingStudent.component.html
+index e8857e0..6ce81ca 100644
+--- a/src/app/component/addStudent/existingStudent/existingStudent.component.html
++++ b/src/app/component/addStudent/existingStudent/existingStudent.component.html
+@@ -8,7 +8,7 @@
+             </div> 
+           <div class="row">
+           <label for="standardId">Standard</label>
+-              <select (change)="onSelectStandard($event.target.value)" class="form-control">
++              <select [(ngModel)]="standardId" (change)="onSelectStandard($event.target.value)" class="form-control">
+                 <option disabled="disabled" selected="selected">Select a standard</option>
+                 <option *ngFor="let s of standards" [value]="s.id" >{{s.name}}</option>
+               </select>
+@@ -73,7 +73,7 @@
+         <div class=" col-sm-4 col-xs-6">
+           <label>Filter</label>
+           <select (ngModelChange)="filterDetails($event)" [(ngModel)]="filter" class="form-control" >
+-            <option [value]="1" *ngIf="!showParent || !showSibling">All Details</option>
++            <option [value]="1">All Details</option>
+             <option [value]="2">Only Sibling Details</option>
+             <option [value]="3">Only Parent Details</option> 
+             <option [value]="4">Only Student List</option>                                   
+diff --git a/src/app/component/addStudent/existingStudent/existingStudent.component.ts b/src/app/component/addStudent/existingStudent/existingStudent.component.ts
+index 8d2b55d..dfd2b76 100644
+--- a/src/app/component/addStudent/existingStudent/existingStudent.component.ts
++++ b/src/app/component/addStudent/existingStudent/existingStudent.component.ts
+@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
+ import { AdminService } from '../../../providers/admin.service';
+ import { FormGroup, FormArray, FormControl, FormBuilder, Validators } from '@angular/forms';
+ import { ValidationService } from '../../../providers/formValidation.service';
+-import { Router } from '@angular/router';
++import { Router, ActivatedRoute } from '@angular/router';
+ import { LoaderStop } from '../../../providers/loaderstop.service';
+ // import { Order } from '../../../providers/order.filter'; 
+ 
+@@ -52,17 +52,24 @@ export class ExistingStudentComponent implements OnDestroy {
+   public studentsInfo:any;
+   public showSearch:boolean=false;
+   public showTable:boolean=false;
+-  public filter:any;
++  public filter:any=1;
+   public showSibling:boolean=true;
+   public showParent:boolean=true;
+   public showStudentOnly:boolean=false;
+   public noStudents:boolean=false;
++  public standardId:any;
+   // public showStudentDetails:boolean=false;
+   constructor(public _location: Location,
+     public as: AdminService,
+     public fb: FormBuilder,
+     public router: Router,
+-    public ls : LoaderStop) {
++    public ls : LoaderStop,
++    public actRoute:ActivatedRoute) {
++
++    this.actRoute.params.subscribe((param:any)=>{
++      if(param['standardId'])  this.standardId = param['standardId'];
++      if(param['studentId'])  this.getStudentDetails(param['studentId']);
++    })
+ 
+     this.fileUrl = localStorage.getItem('fileUrl');
+     this.ls.setLoader(false);
+diff --git a/src/app/component/addStudent/newStudent/newStudent.component.html b/src/app/component/addStudent/newStudent/newStudent.component.html
+index a54e1f3..98f54f1 100644
+--- a/src/app/component/addStudent/newStudent/newStudent.component.html
++++ b/src/app/component/addStudent/newStudent/newStudent.component.html
+@@ -108,4 +108,24 @@
+       </div>
+     </div>
+   </div>
++</div>
++
++<div class="modal fade" id="errModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
++  <div class="modal-dialog" role="document">
++    <div class="modal-content">
++      <div class="modal-header">
++        <h4 class="modal-title" id="exampleModalLabel">Student Already Exist</h4>
++        <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
++          <span aria-hidden="true">&times;</span>
++        </button>
++      </div>
++      <div class="modal-body">
++        
++      </div>
++      <div class="modal-footer">
++        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="formType=null;navigateToExisting()"   >Close</button>
++        <button type="button" class="btn btn-primary" data-dismiss="modal">Add More</button>
++      </div>
++    </div>
++  </div>
+ </div>
+\ No newline at end of file
+diff --git a/src/app/component/addStudent/newStudent/newStudent.component.ts b/src/app/component/addStudent/newStudent/newStudent.component.ts
+index 6ed9a98..140512b 100644
+--- a/src/app/component/addStudent/newStudent/newStudent.component.ts
++++ b/src/app/component/addStudent/newStudent/newStudent.component.ts
+@@ -17,7 +17,7 @@ export class NewStudentComponent implements OnDestroy {
+ 
+   public loader: boolean = false;
+   public standardLoader:boolean=false;
+-
++  public messages : any;
+   //NewStudent
+   public standards: any[];
+   // public parents: any[] = [{ id: 1, name: 'Father' },
+@@ -27,7 +27,8 @@ export class NewStudentComponent implements OnDestroy {
+ 
+   public newStudentForm: FormGroup;
+ 
+-
++  public stuId:any;
++  public stanId:any;
+   constructor(public _location: Location,
+     public as: AdminService,
+     public fb: FormBuilder,
+@@ -96,8 +97,19 @@ export class NewStudentComponent implements OnDestroy {
+       this.loader= false;
+     },
+       err => {
+-        if (err === "400 - Bad Request") {
++        console.log(err);
++        if (err.status == 400) {
++          
+           this.initNewStudentForm();
++          console.log(err.json());
++          this.messages =err.json() ;
++          console.log(this.messages);
++          var mes = JSON.parse(this.messages.message);
++          console.log(mes);
++          this.stuId = mes[0].studentId ;
++          this.stanId = mes[0].standardId;
++          console.log(this.stuId);
++          console.log(this.stanId);
+           $('#errModal').modal('show');
+         }
+         else{
+@@ -112,6 +124,11 @@ export class NewStudentComponent implements OnDestroy {
+      this.router.navigate(['/error']);
+   }
+ 
++  navigateToExisting(){
++    console.log("gh");
++    this.router.navigate(["/add-student","existing-student",this.stanId,this.stuId]);
++  }
++
+ 
+ 
+ }
+\ No newline at end of file
+diff --git a/src/app/component/appreciation/add/add.html b/src/app/component/appreciation/add/add.html
+index 1a7cd00..15e652f 100644
+--- a/src/app/component/appreciation/add/add.html
++++ b/src/app/component/appreciation/add/add.html
+@@ -39,7 +39,7 @@
+           </select> -->
+ 
+           <input type="text" class="form-control" placeholder="Select Student" name="studentId" id="try" (keyup)="trychange($event)">
+-          <ul class="list-group" *ngIf="!isEmpty">
++          <ul class="list-group" style="height:165px; overflow: auto;" *ngIf="!isEmpty">
+             <li class="list-group-item" *ngFor=" let s of students" (click)="selectstudent(s)">{{s.name}}</li>
+           </ul>
+       <loader [condition]="studentLoader" class="dropdownLoader"></loader>                  
+diff --git a/src/app/component/circular/add/add.html b/src/app/component/circular/add/add.html
+index 0dc61f2..6d236f3 100644
+--- a/src/app/component/circular/add/add.html
++++ b/src/app/component/circular/add/add.html
+@@ -90,8 +90,8 @@
+         <div class="col-lg-6">
+           <div class="form-group">
+             <div>Attachment<span class="small">(Optional)</span></div>
+-            <input type="file" accept="images/*" class="form-control-file" formControlName="file" id="exampleInputFile" aria-describedby="fileHelp"
+-              (change)="getFile($event)" accept="image/*">
++            <input type="file"  class="form-control-file" formControlName="files" id="exampleInputFile" aria-describedby="fileHelp"
++              (change)="getFile($event)"  multiple>
+             <!--<small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>-->
+           </div>
+         </div>
+diff --git a/src/app/component/circular/add/add.ts b/src/app/component/circular/add/add.ts
+index ab2eda4..6dad794 100644
+--- a/src/app/component/circular/add/add.ts
++++ b/src/app/component/circular/add/add.ts
+@@ -22,7 +22,7 @@ export class AddCircular implements OnInit, AfterViewInit {
+   public buttonlabel : string = 'Select Standard';
+   public emptyStandards = false;
+   public circularType: any;
+-  public file: any;
++  public file: any[]=[];
+   public loader: boolean = false;
+   public submitProgress: boolean = false;
+   public standardLoader:boolean=false;
+@@ -55,7 +55,7 @@ export class AddCircular implements OnInit, AfterViewInit {
+       description: new FormControl('', [Validators.required]),
+       date: new FormControl(this.commonService.getTomorrow(), [Validators.required]),
+       circularTypeId: new FormControl('', [Validators.required]),
+-      file: new FormControl('')
++      files: new FormControl('')
+       // standardIds: new FormControl([], [Validators.required])
+     });
+   }
+@@ -148,6 +148,7 @@ export class AddCircular implements OnInit, AfterViewInit {
+     this.submitProgress = true;
+ 
+     let formData = new FormData();
++    console.log(formData);
+     formData.append('title', this.circular.value['title']);
+     formData.append('description', this.circular.value['description']);
+     formData.append('circularTypeId', this.circular.value['circularTypeId']);
+@@ -155,8 +156,13 @@ export class AddCircular implements OnInit, AfterViewInit {
+       formData.append('standardIds', this.circular.value['standardIds']);
+     }
+     formData.append('date', this.circular.value['date']);
+-    formData.append('file', this.file);
++    for(let i=0; i< this.file.length;i++){
++      formData.append('files', this.file[i]);  
++    }
++    
+     this.onSubmit(formData);
++     console.log(formData);
++
+     // this.submitProgress = false;
+   }
+   stdIds: any = [];
+@@ -193,6 +199,7 @@ export class AddCircular implements OnInit, AfterViewInit {
+ 
+   public onSubmit(formData: any) {
+     this.submitProgress = true;
++    console.log(formData);
+     this.circserv.PostCircular(formData).subscribe((data) => {
+       this.submitProgress = false;
+       this.circular = this.initForm();
+@@ -206,13 +213,20 @@ export class AddCircular implements OnInit, AfterViewInit {
+   }
+ 
+     getFile(event: any) {
+-    var blob = event.srcElement.files[0];
+-    if(blob.type=="image/png" || blob.type=="image/jpeg" || blob.type=="image/jpg"){
+-      this.file = event.srcElement.files[0];
+-    }
+-    else{
+-       $('#errorModal').modal('show');
+-      this.circular.controls['file'].reset();
+-    }
++      
++      for(let i=0;i<event.srcElement.files.length;i++){
++        var blob = event.srcElement.files[i];
++        console.log(event.srcElement.files);
++        console.log(blob);
++        
++          // if(blob.type=="image/png" || blob.type=="image/jpeg" || blob.type=="image/jpg"){
++            this.file[i] = event.srcElement.files[i];
++            console.log(this.file);
++          // }
++          // else{
++          //   $('#errorModal').modal('show');
++          //   this.circular.controls['files'].reset();
++          //  }
++        }
+   }
+ }
+\ No newline at end of file
+diff --git a/src/app/component/circular/circular.component.html b/src/app/component/circular/circular.component.html
+index a3a75bf..39fe395 100644
+--- a/src/app/component/circular/circular.component.html
++++ b/src/app/component/circular/circular.component.html
+@@ -34,14 +34,15 @@
+         </div>-->
+         <div class="row">
+           <!-- <img class="image" [attr.src]="fileUrl + circular.employeePicUrl"> -->
+-              <div class="download-image" *ngIf="circular.fileTimestamp">
+-                <span  *ngIf="circular.fileTimestamp">
+-                <img class="modal-image" [attr.src]="fileUrl + circular.fileTimestamp">
++              <div class="download-image" *ngIf="circular.files">
++                <span  *ngIf="circular.files">
++                <img class="modal-image" 
++                [attr.src]="fileUrl + circular.files[0].fileTimestamp ">
+                 </span>
+                     <div class="edit-image"><a [attr.href]="fileUrl + circular.fileTimestamp" [download]="custom"><i class="fa fa-download fa-lg"></i></a></div>
+               </div>
+               <span>
+-                <img class="modal-image" *ngIf="!circular.fileTimestamp" src="./app/img/preview.png" alt="No Preview Avalable">
++                <img class="modal-image" *ngIf="!circular.files" src="./app/img/preview.png" alt="No Preview Avalable">
+               </span>.
+         </div>
+         <div class="row name">{{circular.employeeName}}</div>
+@@ -99,14 +100,14 @@
+       <div class="modal-body card-modal">
+         <div class="row modal-heading">
+           <!-- <img class="modal-image" [attr.src]="fileUrl + selectedCircular.employeePicUrl" style="margin-top:10px;"> -->
+-            <div class="download-image-modal" *ngIf="selectedCircular.fileTimestamp">
++            <div class="download-image-modal" *ngIf="selectedCircular.files">
+               <span  >
+-               <img class="modal-image" [attr.src]="fileUrl + selectedCircular.fileTimestamp">
++               <img class="modal-image" [src]="tryfile">
+               </span>
+-              		<div class="edit-image-modal"><a [attr.href]="fileUrl + selectedCircular.fileTimestamp" [download]="custom"><i class="fa fa-download fa-lg"></i></a></div>
++              		<div class="edit-image-modal"><a [attr.href]=" fileUrl + selectedCircular.files[0].fileTimestamp " [download]="custom"><i class="fa fa-download fa-lg"></i></a></div>
+             </div>
+             <span>
+-              <img class="modal-image" *ngIf="!selectedCircular.fileTimestamp" src="./app/img/preview.png" alt="No Preview Avalable">
++              <img class="modal-image" *ngIf="!selectedCircular.files" src="./app/img/preview.png" alt="No Preview Avalable">
+             </span>
+         </div>
+         <div class="row modal-name">{{selectedCircular.employeeName}}
+diff --git a/src/app/component/circular/circular.component.ts b/src/app/component/circular/circular.component.ts
+index 52b3242..cf037cd 100644
+--- a/src/app/component/circular/circular.component.ts
++++ b/src/app/component/circular/circular.component.ts
+@@ -18,6 +18,7 @@ export class CircularComponent implements OnInit, OnDestroy {
+   public loader:boolean = false;
+   public fileUrl: string;
+   public selectedCircular:any;
++  public tryfile :any;
+    public noMore:boolean = true;
+ 
+   constructor(private circularService: CircularService,
+@@ -46,6 +47,7 @@ export class CircularComponent implements OnInit, OnDestroy {
+   }
+  
+   private onSuccess(data:any) {
++    console.log(data);
+     this.loader = false;
+     if (data.status === 204) {  
+       this.circulars = [];    
+@@ -88,8 +90,19 @@ export class CircularComponent implements OnInit, OnDestroy {
+ 
+  public seletToExpand(circular:any){
+     this.selectedCircular = circular;
++    this.tryfile = this.fileUrl + this.selectedCircular.files[1].fileTimestamp;
++    console.log(circular);
++    console.log(this.tryfile);
++    console.log(circular.files);
++    console.log(circular.files[0]);
++    console.log(circular.files[0].filestamp);
+   }
+ 
++  getimgurl(){
++    var url = this.fileUrl + this.selectedCircular.files[0].fileTimestamp;
++    console.log(url);
++    return url;
++  }
+   // public doRefresh(refresher) {
+   //   setTimeout(() => {
+   //     this.circularService.GetCirculars(1).subscribe((res) => {
+diff --git a/src/app/component/event/event.component.ts b/src/app/component/event/event.component.ts
+index 092cc1c..b1b7c2b 100644
+--- a/src/app/component/event/event.component.ts
++++ b/src/app/component/event/event.component.ts
+@@ -256,6 +256,7 @@ public endT(e:any){
+         else{ 
+           this.loader=false;
+       this.newEvents=res;
++      console.log(this.newEvents);
+       _('#calendar').fullCalendar('removeEvents');
+       _('#calendar').fullCalendar('addEventSource', this.newEvents);
+         }
+@@ -287,6 +288,7 @@ public endT(e:any){
+     this.eventService.GetPlanner().subscribe((res)=>{
+     this.plannerLoader=false;      
+       this.planner=res;
++      console.log(this.planner);
+       this.loader=false;
+     },(err)=>{
+        this.router.navigate(['/error']);
+@@ -299,6 +301,7 @@ public endT(e:any){
+     this.eventService.getStandards().subscribe((res) => {
+     this.standardLoader=false;      
+       this.standard = res;
++      console.log(res);
+     }, (err) => {
+        this.router.navigate(['/error']);      
+     });
+diff --git a/src/app/component/homework/add/add.html b/src/app/component/homework/add/add.html
+index bf490c4..d12f8eb 100644
+--- a/src/app/component/homework/add/add.html
++++ b/src/app/component/homework/add/add.html
+@@ -52,7 +52,7 @@
+     <div class="form-group">
+       <label>Attachment</label> &nbsp;&nbsp;<span class="small">(Optional)</span>
+         <!--<label for="exampleInputFile" class="exampleInputFile">Choose a file...<span class="glyphicon glyphicon-circle-arrow-up custom"></span></label>-->
+-        <input type="file" accept="image/*" class="form-control-file" formControlName="file" id="exampleInputFile" aria-describedby="fileHelp" (change)="getFile($event)" accept="image/*" multiple>
++        <input type="file"  class="form-control-file" formControlName="file" id="exampleInputFile" aria-describedby="fileHelp" (change)="getFile($event)"  multiple>
+       </div>
+       </div>
+     </div>
+diff --git a/src/app/component/homework/add/add.ts b/src/app/component/homework/add/add.ts
+index 5af3ca3..7315625 100644
+--- a/src/app/component/homework/add/add.ts
++++ b/src/app/component/homework/add/add.ts
+@@ -29,8 +29,7 @@ export class HomeworkAddComponent implements OnInit {
+   constructor(private homeworkService: HomeworkService,
+     private commonService: CommonService,
+     private _location: Location,
+-    public router: Router) {        
+-      
++    public router: Router) {              
+  }
+ 
+ 
+@@ -38,24 +37,23 @@ export class HomeworkAddComponent implements OnInit {
+     this.initForm();
+     this.getStandards();
+   }
+-  file: any;
++  file: any[]=[];
+ 
+   getFile(event: any) {
+-
+-    var blob = event.srcElement.files[0];
+-
+-    console.log(event);
+-    console.log(blob);
+-    if (blob.type == "image/png" || blob.type == "image/jpeg" || blob.type == "image/jpg") {
+-      this.file = event.srcElement.files[0];
+-    }
+-    else {
+-      $('#errorModal').modal('show');
+-      this.homework.controls['file'].reset();
+-     
+-      // this.homework.controls.file.markAsPristine();
+-      //   this.homework.controls.file.reset();
+-    }
++        for(let i=0;i<event.srcElement.files.length;i++){
++        var blob = event.srcElement.files[i];
++        console.log(event.srcElement.files);
++        console.log(blob);
++        
++          if(blob.type=="image/png" || blob.type=="image/jpeg" || blob.type=="image/jpg"){
++            this.file[i] = event.srcElement.files[i];
++            console.log(this.file);
++          }
++          else{
++            $('#errorModal').modal('show');
++            this.homework.controls['files'].reset();
++           }}   
++    
+   }
+ 
+   onDueDate(e: any) {
+@@ -107,13 +105,20 @@ export class HomeworkAddComponent implements OnInit {
+ 
+   submitHomework() {
+     this.submitProgress = true;
+-    let formData = new FormData();
++    let formData : FormData = new FormData();
+     formData.append('description', this.homework.value['description']);
+     formData.append('standardId', this.homework.value['standardId']);
+     formData.append('subjectId', this.homework.value['subjectId']);
+     formData.append('dueDate', this.homework.value['dueDate']);
+-    formData.append('file', this.file);
++    
++    for(let i = 0;i<this.file.length;i++){
++      formData.append('files', this.file[i]);
++    }
++    
++    
++    console.log(formData);
+     this.saveHomework(formData);
++    
+     // this.submitProgress = false;
+   }
+ 
+@@ -148,5 +153,4 @@ export class HomeworkAddComponent implements OnInit {
+     });
+     this.file=null;
+   }
+-
+ }
+\ No newline at end of file
+diff --git a/src/app/component/homework/current/homework.ts b/src/app/component/homework/current/homework.ts
+index 4bae948..ae41658 100644
+--- a/src/app/component/homework/current/homework.ts
++++ b/src/app/component/homework/current/homework.ts
+@@ -46,6 +46,7 @@ export class CurrentHomework implements OnInit, OnDestroy {
+   public noMore: boolean = true;
+   public onSuccess(res: any) {
+     // this.nl.hideLoader();
++    console.log(res);
+     this.loader = false;
+     if (res.status === 204) {
+       this.EmptyHomeworks = true;
+@@ -55,6 +56,7 @@ export class CurrentHomework implements OnInit, OnDestroy {
+       this.homeworks = res;
+       else
+       this.homeworks = this.homeworks.concat(res);
++      console.log(this.homeworks);
+       if (res.length < 12) this.noMore = true;
+       else this.noMore = false;
+ 
+diff --git a/src/app/component/suggestion/suggestion.component.ts b/src/app/component/suggestion/suggestion.component.ts
+index 64b1533..d7c4741 100644
+--- a/src/app/component/suggestion/suggestion.component.ts
++++ b/src/app/component/suggestion/suggestion.component.ts
+@@ -1,5 +1,6 @@
+ import {Component} from '@angular/core';
+ import { ActivatedRoute, Params, Router } from '@angular/router';
++import { LoaderStop } from '../../providers/loaderstop.service';
+ @Component({
+   selector:'suggestion',
+   templateUrl:'./suggestion.component.html',
+@@ -10,8 +11,8 @@ export class SuggestionComponent{
+   public status: string = "";
+   public url:string ="";
+   public tab:boolean = false;
+-  constructor(private route: ActivatedRoute,private router:Router){
+-     
++  constructor(private route: ActivatedRoute,private router:Router, ls:LoaderStop){
++     ls.setLoader(false);
+     this.url = this.router.url;
+     if(this.url == "/suggestion/for-me" || this.url == "/suggestion/for-student")
+       this.tab = true;
+diff --git a/src/app/component/suggestion/suggestion.module.ts b/src/app/component/suggestion/suggestion.module.ts
+index 92581bf..2430ccf 100644
+--- a/src/app/component/suggestion/suggestion.module.ts
++++ b/src/app/component/suggestion/suggestion.module.ts
+@@ -6,6 +6,7 @@ import { SuggestionForStudent } from './for-student/forstudent';
+ import { SuggestionForMe } from './for-me/forme';
+ import { SuggestionAddComponent } from './add/add';
+ import { SuggestionService } from "../../providers/suggestion.service";
++import { ComplaintService } from "../../providers/complaint.service";
+ 
+ @NgModule({
+ 	imports : [ SharedModule, RouterModule.forChild([
+@@ -30,7 +31,7 @@ import { SuggestionService } from "../../providers/suggestion.service";
+ 			
+ 		])],
+ 	declarations : [ SuggestionAddComponent, SuggestionComponent, SuggestionForStudent, SuggestionForMe ],
+-	providers : [SuggestionService]
++	providers : [SuggestionService, ComplaintService]
+ }) 
+ export class SuggestionModule {
+ 	
+diff --git a/src/app/component/survey/current/survey.ts b/src/app/component/survey/current/survey.ts
+index 5d69c0d..881b28e 100644
+--- a/src/app/component/survey/current/survey.ts
++++ b/src/app/component/survey/current/survey.ts
+@@ -1,7 +1,7 @@
+ import { Component, OnInit } from '@angular/core';
+ import { SurveyService } from '../../../providers/survey.service';
+ import { Router } from '@angular/router';
+-
++import { LoaderStop } from '../../../providers/loaderstop.service';
+ declare let $: any;
+ 
+ @Component({
+@@ -18,7 +18,9 @@ export class CurrentSurveyComponent implements OnInit {
+   public noMore: boolean = false;
+   public loader: boolean = false;
+ 
+-  constructor(public ss: SurveyService, public router: Router) { }
++  constructor(public ss: SurveyService, public ls : LoaderStop, public router: Router) { 
++ls.setLoader(false);
++  }
+ 
+   ngOnInit() {
+     this.getSurveys();
+diff --git a/src/app/providers/admin.service.ts b/src/app/providers/admin.service.ts
+index 59633bd..24c2c3a 100644
+--- a/src/app/providers/admin.service.ts
++++ b/src/app/providers/admin.service.ts
+@@ -59,7 +59,7 @@ export class AdminService {
+     });
+     return this.http.post(this.baseUrl + "admin/student", data, option)
+       .map(this.extractData)
+-      .catch(this.handleError);
++      
+   }
+ 
+   public getAllStudents(stdId:any){
+diff --git a/src/app/providers/app.constant.ts b/src/app/providers/app.constant.ts
+index f344c56..7ae5907 100644
+--- a/src/app/providers/app.constant.ts
++++ b/src/app/providers/app.constant.ts
+@@ -9,13 +9,17 @@ export class Configuration {
+   // public baseUrl: string = " http://cornerstone-testing.njs.jelastic.vps-host.net/";
+   // public Server: string = " http://cornerstone-testing.njs.jelastic.vps-host.net/";
+ 
++  public url: string = " http://cornerstone.njs.jelastic.vps-host.net";
++  public baseUrl: string = " http://cornerstone.njs.jelastic.vps-host.net/";
++  public Server: string = " http://cornerstone.njs.jelastic.vps-host.net/";
++
+   // public url: string = " https://cornerstone.ind-cloud.everdata.com";
+   // public baseUrl: string = " https://cornerstone.ind-cloud.everdata.com/";
+   // public Server: string = " https://cornerstone.ind-cloud.everdata.com/";
+     
+-  public url: string = "http://nxtlife-testing.ind-cloud.everdata.com";
+-  public baseUrl: string = "http://nxtlife-testing.ind-cloud.everdata.com/";
+-  public Server: string = "http://nxtlife-testing.ind-cloud.everdata.com/";
++  // public url: string = "http://nxtlife-testing.ind-cloud.everdata.com";
++  // public baseUrl: string = "http://nxtlife-testing.ind-cloud.everdata.com/";
++  // public Server: string = "http://nxtlife-testing.ind-cloud.everdata.com/";
+ 
+   
+   // public url: string = "http://yugma.ind-cloud.everdata.com";
+-- 
+1.9.1
+

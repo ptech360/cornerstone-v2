@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component,OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { AdminService } from '../../../providers/admin.service';
 import { FormGroup, FormArray, FormControl, FormBuilder, Validators } from '@angular/forms';
@@ -13,7 +13,7 @@ declare let $: any;
   styleUrls: ['./newStudent.component.css'],
 })
 
-export class NewStudentComponent implements OnDestroy {
+export class NewStudentComponent implements OnDestroy, OnInit {
 
   public loader: boolean = false;
   public standardLoader:boolean=false;
@@ -26,9 +26,9 @@ export class NewStudentComponent implements OnDestroy {
   public parent: any[];
 
   public newStudentForm: FormGroup;
-
-  public stuId:any;
-  public stanId:any;
+  public mes:any[];
+  public stuId:any[]=[];
+  public stanId:any[]=[];
   constructor(public _location: Location,
     public as: AdminService,
     public fb: FormBuilder,
@@ -55,6 +55,9 @@ export class NewStudentComponent implements OnDestroy {
   //   this.selectedParent.push(p);
 
   // }
+  ngOnInit(){
+    this.ls.setLoader(false);
+  }
 
   public initNewStudentForm() {
     this.newStudentForm = this.fb.group({
@@ -92,6 +95,9 @@ export class NewStudentComponent implements OnDestroy {
     this.as.addStudent(this.newStudentForm.value).subscribe(res => {
       this.loader=true;
       $('#addModal').modal('show');
+      setTimeout(()=>{
+        $('#addModal').modal('hide');
+      },3000);
       // this.selectedStudent = null;
       this.initNewStudentForm();
       this.loader= false;
@@ -104,10 +110,13 @@ export class NewStudentComponent implements OnDestroy {
           console.log(err.json());
           this.messages =err.json() ;
           console.log(this.messages);
-          var mes = JSON.parse(this.messages.message);
-          console.log(mes);
-          this.stuId = mes[0].studentId ;
-          this.stanId = mes[0].standardId;
+          this.mes = JSON.parse(this.messages.message);
+          console.log(this.mes);
+          for(let i=0;i<this.mes.length;i++){
+            this.stuId[i] = this.mes[i].studentId ;
+          this.stanId[i] = this.mes[i].standardId;  
+          }
+          
           console.log(this.stuId);
           console.log(this.stanId);
           $('#errModal').modal('show');
@@ -124,11 +133,9 @@ export class NewStudentComponent implements OnDestroy {
      this.router.navigate(['/error']);
   }
 
-  navigateToExisting(){
+  navigateToExisting( standardid:any,studentid:any){
     console.log("gh");
-    this.router.navigate(["/add-student","existing-student",this.stanId,this.stuId]);
+    $('#errModal').modal('hide');
+    this.router.navigate(["/add-student","existing-student",standardid,studentid]);
   }
-
-
-
 }

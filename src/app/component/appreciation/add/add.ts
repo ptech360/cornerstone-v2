@@ -43,6 +43,7 @@ export class AddAppreciation implements OnDestroy{
   }
 
   ngOnInit() {
+    this.ls.setLoader(false);
     this.initForm();
   }
   ngOnDestroy(){
@@ -75,6 +76,10 @@ export class AddAppreciation implements OnDestroy{
       this.submitProgress=false;        
       this.initForm();
       $('#appreciationModal').modal('show');
+          setTimeout(()=>{
+      $('#appreciationModal').modal('hide');
+
+    },3000)
     }, (err) => {
       this.router.navigate(['/error']);
 

@@ -41,8 +41,8 @@ export class MainComponent implements OnInit, AfterViewInit {
     { title: 'Circular', icon: 'icons/circular.png', url: '/circular' },
     { title: 'Homework', icon: 'icons/homework.png', url: '/homework' },
     { title: 'Student Rating', icon: 'icons/rating.png', url: '/student-profile' },
-    { title: 'Time Table', icon : 'icons/time-table.png', url:'/time-table' }
-    //  { title: 'Add Employee', component: AddEmployeeComponent, icon: '', url:'/add-employee'},
+    // { title: 'Time Table', icon : 'icons/time-table.png', url:'/time-table' }
+    // //  { title: 'Add Employee', component: AddEmployeeComponent, icon: '', url:'/add-employee'},
     //  {title: 'Add Student', component: AddStudentComponent, icon: '', url: '/add-student'},
     // { title: 'Profile', component: AccountComponent, icon: 'icons/profile.png', url: '/account'},      
     // { title: 'Message', component: MessageComponent, icon: 'icons/message.png', url: '/messaging'},

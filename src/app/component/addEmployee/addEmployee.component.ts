@@ -45,7 +45,7 @@ export class AddEmployeeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initForm();
-
+    this.ls.setLoader(false);
     this.uploadPicForm = new FormGroup ({
       imgFile: new FormControl(''),
     })
